@@ -257,7 +257,7 @@ surface.append10-18
 	collisionex2,Buttons,polygon,45,50,97,43,101,55,46,61
 	
 	//antenna
-	animation1.interval,always
+	animation1.interval,runonce
 	animation1.pattern0,interpolate,3050,0,0,0
 	
 	//dial

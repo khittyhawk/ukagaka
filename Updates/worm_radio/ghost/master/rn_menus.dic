@@ -417,7 +417,7 @@ Select.functionslol
 	\![*]\q[Test Wait Times,OnTestW]\n/
 	\![*]\q[Check Your Clock,OnSNTPCompare]\n/
 	\![*]\q[Check Your Email,script:\![biff\]]\n/
-	\![*]\q[Load the weather,OnGetSomeWeather]\n/\n/
+	\![*]\q[Load the weather,OnGetSomeWeather]\n\n/
 	
 	\![*]\q[Main Menu,OnMenuRunPre]     \![*]\q[Cancel,Cancel]"
 }
@@ -428,11 +428,11 @@ Select.updort
 {
 	if updortresult == "empty"
 	{
-		"Cry to me: \![updatebymyself,checkonly] \nResult is: %(updortresult) \![Raise,updort]"
+		"It howls: \![updatebymyself,checkonly] \nIt is: %(updortresult) \![Raise,updort]"
 	}
 	else
 	{
-		"Reply to me: %(updortresult)"
+		"It howls: %(updortresult)"
 		updortresult = "empty"
 	}
 }
