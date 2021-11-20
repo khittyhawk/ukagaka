@@ -23,9 +23,9 @@ ghost/master/censored0.png6300169e6f54b8b051964f842864b3a0size=217date=2021-1
 ghost/master/descript.txt0851c4018c2aa6753030d5da18a671bdsize=603date=2021-11-19T16:48:19
 ghost/master/rn_bootclose.dicbb2f97ff92b5070d9a4097faffa651f5size=8054date=2021-11-19T17:52:32
 ghost/master/rn_cursor.diccf927925fc0ef9ca516528817fe56192size=6904date=2021-11-19T17:54:18
-ghost/master/rn_fancetop.dic941d8c2206a41b1f679f0dc776ad84c9size=17493date=2021-11-19T07:23:06
+ghost/master/rn_fancetop.dicfcc0825580069b7f71f7524c1600c76csize=17494date=2021-11-19T21:07:56
 ghost/master/rn_func.dic64b41bf16760867e72809ce11476b3fbsize=16164date=2021-11-18T20:58:57
-ghost/master/rn_menus.dic95144dd084e44da6cbacb11e4973127csize=8517date=2021-11-19T17:32:30
+ghost/master/rn_menus.dic8f557f29a5ac26d67b84f19d055119e1size=8517date=2021-11-19T21:13:51
 ghost/master/rn_parser.dic42bc00d65e1d47d7b6835d7efcc835f0size=13421date=2021-11-19T19:39:49
 ghost/master/rn_ramble.dic6dc9992ab8e16b49d1a82d1dd3e178b6size=13298date=2021-11-19T18:14:18
 ghost/master/rn_time.dic2df92b7db546100b4931f5214f5ea42asize=2833date=2021-11-18T20:01:35
@@ -94,7 +94,7 @@ shell/Radio/surface5498.png826042a27bdf801758b318cff1d3756esize=301date=2021-
 shell/Radio/surface5600.png2b032c0adeef4626a40146fa70b31d53size=308date=2021-11-13T17:31:46
 shell/Radio/surface5760.png70f93997771676532e3aea55000fbf6dsize=277date=2021-11-13T17:31:53
 shell/Radio/surface6203.png099b839ca1da6fe09d19032b613cc727size=292date=2021-11-13T17:32:02
-shell/Radio/surfaces.txt93617e188795d284e52809d0f250cfe9size=12680date=2021-11-19T17:38:24
+shell/Radio/surfaces.txt30f936e517a9d792e02c0893dc579477size=12681date=2021-11-19T20:58:26
 shell/Radio/surfacetable.txt4ba8741eaf723acf6fde35366e9c3cbesize=886date=2021-11-14T13:36:02
 shell/Ship/descript.txtcd16a7c15cfba7bdd752effeb7f1f5b0size=3116date=2021-11-07T13:10:35
 shell/Ship/menu_background.png8aa325851a995b06de856c95e0eade29size=90366date=2021-09-10T15:02:23
