@@ -1,0 +1,459 @@
+//devtools
+// 
+// .-. .-')     ('-.                                                       .-') _        .-') _     ('-.    .-')    .-') _               .-') _             
+// \  ( OO )   ( OO ).-.                                                  ( OO ) )      (  OO) )  _(  OO)  ( OO ). (  OO) )             ( OO ) )            
+//  ;-----.\   / . --. / ,--.      ,--.      .-'),-----.  .-'),-----. ,--./ ,--,'       /     '._(,------.(_)---\_)/     '._ ,-.-') ,--./ ,--,'  ,----.     
+//  | .-.  |   | \-.  \  |  |.-')  |  |.-') ( OO'  .-.  '( OO'  .-.  '|   \ |  |\       |'--...__)|  .---'/    _ | |'--...__)|  |OO)|   \ |  |\ '  .-./-')  
+//  | '-' /_).-'-'  |  | |  | OO ) |  | OO )/   |  | |  |/   |  | |  ||    \|  | )      '--.  .--'|  |    \  :` `. '--.  .--'|  |  \|    \|  | )|  |_( O- ) 
+//  | .-. `.  \| |_.'  | |  |`-' | |  |`-' |\_) |  |\|  |\_) |  |\|  ||  .     |/          |  |  (|  '--.  '..`''.)   |  |   |  |(_/|  .     |/ |  | .--, \ 
+//  | |  \  |  |  .-.  |(|  '---.'(|  '---.'  \ |  | |  |  \ |  | |  ||  |\    |           |  |   |  .--' .-._)   \   |  |  ,|  |_.'|  |\    | (|  | '. (_/ 
+//  | '--'  /  |  | |  | |      |  |      |    `'  '-'  '   `'  '-'  '|  | \   |           |  |   |  `---.\       /   |  | (_|  |   |  | \   |  |  '--'  |  
+//  `------'   `--' `--' `------'  `------'      `-----'      `-----' `--'  `--'           `--'   `------' `-----'    `--'   `--'   `--'  `--'   `------'   
+
+//This is my balloon tester. There are (probably) many like it, but this one is mine.
+//pretty much everything related to the balloon tester is here. you just need to have some place that links to OnBalloonTest (most likely the main menu)
+
+
+/*
+//uncomment the following and include it somewhere. i have this saved in a different dic file, but it might make more sense for you here
+//this tells the ghost to save the user's fonts somewhere they can access it
+OnNotifyFontInfo
+{
+	thesefonts = ARRAYSIZE(reference) //how many fonts they have
+	morefonts = ASORT(reference) //the fonts in alphabetical order. alphabetizing them technically isn't necessary, but if they have a ton of fonts it's probably easier to find them again like this
+}
+
+*/
+
+OnBalloonTest
+{
+	"\b2\_q" //use big balloon and stop the text from scrolling
+	--
+	if ARRAYSIZE(fontsparty) >= 1 //if the user has anything in their favorite fonts array, display em!
+	{
+		"Your favorited fonts are"
+		--
+		Select.favfonts
+	}
+	else
+	{
+		"You haven't selected any favorite fonts yet!"
+	}
+	--
+	if kloon == ""; {kloon = 0}
+	if sloon == ""; {sloon = 0}
+	//setting unset variables so we don't bork stuff up
+	if ft_name == ""; {ft_name = "default"}
+	if ft_size == ""; {ft_size = "default"}
+	if ft_color == ""; {ft_color = "default"}
+	if customstring == ""; {customstring = ""}
+	--
+	//our link to the font choice menu and our current display configuration
+	"\n\_l[1em]\![*]\q[Select more fonts?,OnFindFonts]\n\n/
+	Font name: %ft_name\n/
+	\q[Font size:,optftsize] %ft_size\n/
+	\q[Font Color:,optftcolor] "
+	--
+	if ft_color != "default"
+	//i realized if i just had the RGB display in there, it would show up 'R: default G: B:' OTL
+	{
+		"R: %ft_color[0] G: %ft_color[1] B: %ft_color[2]"
+	}
+	else
+	{
+		"default"
+	}
+	--
+	"\n\q[Special characters?,inputspecial]"
+	--
+	"%(placeholder_text)"
+	--
+	//send us back to the main menu, or close the balloon
+	//these balloons don't seem to time out for some reason, so i'd want to give the user a break, y'know? ^_^;
+	//change the menu command to whatever gets you to the Main Menu
+	"\n\q[Sakura balloon?,sakloon]"
+	--
+	if SHIORI3FW.IsVisible[1] == 1
+	{
+		"   \q[Kero balloon?,keroloon]\n"
+	}
+	--
+	"\n\q[Try other balloons?,bloonsplore]\n/
+	\q[Restore balloon defaults?,defolt]\n"
+	--
+	if (ft_name != "default") || (ft_size != "default") || (ft_color != "default")
+	{
+		"\![*]\q[Reload Balloon?,reblog]\n"
+	}
+	--
+	"\n\![*]\q[Main Menu,OnMenuRunPre] \![*]\q[Cancel,fancycancel]"
+}
+
+placeholder_text
+{
+	//you can replace this placeholder text with something else if you want! That said, i have two pangrams - one lowercase, one uppercase - and a bunch of lorem ipsum that should give you the gist of what the text will look like. the autoscroll,disable thing prevents the balloon from automatically scrolling to the bottom (especially if the user makes the font big for whatever reason) and we have the font name, size, and color changed to the user's assigned configurations, then return it to the balloon's defaults afterwards!
+	"\n\n\![set,autoscroll,disable]\f[shadowcolor,none]\f[name,%ft_name]\f[size,%ft_size]\f[color,%ft_color]the quick brown fox jumped over the lazy dogs. SPHINX OF BLACK QUARTZ JUDGE MY VOW.\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n0123456789 %(customstring)\n\f[name,default]\f[color,default]\f[size,default]"
+}
+
+Select.fancycancel
+{
+	kloon = 0
+	sloon = 0
+	"\![raise,Cancel]"
+}
+
+Select.reblog
+{
+	"\![reload,descript,shell balloon]"
+	--
+	if kloon == 1
+	{
+		Select.keroloon
+	}
+	--
+	if sloon == 1
+	{
+		Select.sakloon
+	}
+}
+
+Select.keroloon
+{
+	kloon = 1
+	"\1\_q%(placeholder_text)\n\n\![*]\q[Cancel?,setkloon]"
+	--
+	"\0\_q"
+	--
+	OnBalloonTest
+}
+
+Select.sakloon
+{
+	sloon = 1
+	"\0\_q%(placeholder_text)\n\n\![*]\q[Return?,setsloon]"
+	--
+	"\0\_q"
+}
+
+Select.setkloon
+{
+	kloon = 0
+	--
+	OnBalloonTest
+}
+
+Select.setsloon
+{
+	sloon = 0
+	--
+	OnBalloonTest
+}
+
+Select.inputspecial
+{
+	if customstring != ""
+	{
+		"\![open,inputbox,OnCustomChars,-1,%(customstring)]"
+	}
+	else
+	{
+		"\![open,inputbox,OnCustomChars,-1,Enter special characters]"
+	}
+}
+
+OnCustomChars
+{
+	customstring = reference0
+	--
+	OnBalloonTest
+}
+
+OnFindFonts
+//the most important function, tbh
+{
+	//this commented-out function is if you want to remove some fonts from visibility based on keywords, such as all italics or bold variants. i ended up not needing it, but perhaps you might find it useful.
+	/*
+	singlefriends = IARRAY //this is an empty array for font names we want to remove
+	hissfriends = IARRAY //this is an empty array for font names we want to keep
+	--
+	for _f = 0; _f < ARRAYSIZE(morefonts); _f++ //iterate through the array
+	{
+		if "italic" _in_ TOLOWER(morefonts[_f]) || "bold" _in_ TOLOWER(morefonts[_f]) || "black" _in_ TOLOWER(morefonts[_f]) || "narrow" _in_ TOLOWER(morefonts[_f]) || "light" _in_ TOLOWER(morefonts[_f]) || "semi" _in_ TOLOWER(morefonts[_f]) || "condensed" _in_ TOLOWER(morefonts[_f]) || "extended" _in_ TOLOWER(morefonts[_f]) ||  "medium" _in_ TOLOWER(morefonts[_f]) ||  " ui" _in_ TOLOWER(morefonts[_f]) || "elongated" _in_ TOLOWER(morefonts[_f])
+		//add or remove keywords as needed
+		{
+			singlefriends = (singlefriends,morefonts[_f])
+		}
+		else
+		{
+			hissfriends = (hissfriends,morefonts[_f])
+		}	
+	}
+	--
+	*/
+	hissfriends = morefonts //probably unnecessary renaming of the variable, but eh. it makes me feel safer knowing i'm less likely to overwrite our fonts list ¯\_(ツ)_/¯
+	
+	"\b2\_q\![set,autoscroll,disable]%(ARRAYSIZE(hissfriends)) fonts!\n" //how many fonts you have; given it's probably a lot, we stop the ghost from automatically scrolling to the bottom of the list.
+	--
+	//this following code lists the fonts they have selected
+	_len = ARRAYSIZE(fontsparty)
+	_yayfonts = "" //i wrote the later code first so i had already used _output so have _yayfonts instead (￣ー￣;)
+	if _len > 1
+	{
+		"You've selected:\n"
+		--
+		for _val = 0; _val < (_len-1); _val++
+		{
+			_yayfonts += "%(fontsparty[_val]) \q[(x),OnRemoveFont,%(fontsparty[_val]),_hoverme,Remove this font from the list?] "
+		}
+
+		_yayfonts += "and %fontsparty[_len-1] \q[(x),OnRemoveFont,%(fontsparty[_len-1]),_hoverme,Remove this font from the list?]." //i really wanted to grammar to be right. sue me orz
+	}
+	elseif _len == 1
+	{
+		_yayfonts += "You've selected %fontsparty."
+	}
+	else
+	{
+		_yayfonts = "No fonts selected yet!."
+	}
+	--
+	"%_yayfonts\n\n" //yeah, to output the contents of an array with tweaking, you have to save it all into a variable ¯\_(ツ)_/¯ idek, man
+	--
+	if ARRAYSIZE(deadtome) >= 1 //if you've removed any fonts, this option should show
+	{
+		"\q[Restore disabled fonts?,restorefts]\n"
+	}
+	--
+	"\![*]\q[Return to balloon test menu?,OnBalloonTest]\n\n" //return to menu before fonts list because fonts list can get >huge< 0_0;
+	--
+	_output = ""
+	for _val = 0; _val < ARRAYSIZE(hissfriends); _val++ //how many viable fonts do we have~
+	{
+		_xl = hissfriends[_val] //just to make it less of a pain to keep retyping
+		if ASEARCH(_xl,deadtome) != -1
+		{
+			//if the font is in our list of removed fonts, we skip it
+		}
+		elseif ASEARCH(_xl,fontsparty) == -1
+		{
+			_output += "\f[name,%(_xl)]\f[shadowcolor,none]\f[cursornotselectfontcolor,default]\q[%(_xl),OnChooseFont,%(_xl),_hoverme,Save this font?]\_l[15em]\f[name,default]\q[(x),OnRemoveFont,%(_xl),_hoverme,Remove this font from the list?]\n"
+			//(＠_＠) okay. so. if the font isn't in our favorites, we want each font name to display 1)in its respective typeface, 2) without any extra dohickeys like shadows, 3) in the default color, 4) as a selectable option, and 5) with a tooltip
+			//ugh, just check the ukadoc if you want to parse it
+		}
+		else
+		{
+			_output += "\f[name,%(_xl)]\f[cursornotselectfontcolor,178,34,34]\q[%(_xl),OnChooseFont,%(_xl)]\n"
+			//similar to the above, 1) displayed in its typeface, 2) in a highlighted color	(i have this as a brick red, but you can change the RGB values to whatever works best for you), and 3) as a selectable option
+		}
+	}
+	--
+	_output
+}
+
+
+Select.defolt
+{
+//apparently 'default' is already a thing by its lonesome, so have a terrible, terrible pun instead
+	ft_name = "default"
+	ft_size = "default"
+	ft_color = "default"
+	--
+	if kloon == 1
+	{
+		Select.keroloon
+	}
+	else
+	{
+		OnBalloonTest
+	}
+}
+
+Select.bloonsplore
+{
+	"\![open,balloonexplorer]"
+	balloontest = 1
+	--
+	OnBalloonTest
+}
+
+Select.optftsize
+//i dunno if you need this to be its own function, but eh
+{
+	if ft_size != "default"
+	//if you have default values, the text populating the box is instructions. otherwise, it's the current value
+	{
+		"\![open,inputbox,OnFtSize,-1,%ft_size]"
+	}
+	else
+	{
+		"\![open,inputbox,OnFtSize,-1,Enter an integer]"
+	}
+	--
+	if kloon == 1
+	{
+		Select.keroloon
+	}
+	else
+	{
+		OnBalloonTest
+	}
+}
+
+Select.optftcolor
+{
+	"\![open,dialog,color,--id=OnFtColor]"
+	--
+	if kloon == 1
+	{
+		Select.keroloon
+	}
+	else
+	{
+		OnBalloonTest
+	}
+}
+
+OnFtSize
+{
+	ft_size = reference0 //what the user input
+	if TOINT(ft_size) != 0 //if a non-integerable input is entered TOINT makes it zero. and besides, i don't think you can have a 0-sized font anyway
+	{
+		ft_size = TOINT(ft_size)
+		//you might be wondering why i didn't just set the input to be a slider to ensure the user enters an integer. thing is, the sliders here suck.
+	}
+	elseif reference0 == "default" 
+	{
+		ft_size = "default"	
+	}
+	else
+	{
+		Select.optftsize
+		//if they entered anything we didn't want, we kick em back to the input box
+	}
+	--
+	if kloon == 1
+	{
+		Select.keroloon
+	}
+	else
+	{
+		OnBalloonTest
+	}
+}
+
+OnFtColor
+{
+	_setr=(reference2[0])
+	_setg=(reference2[1])
+	_setb=(reference2[2])
+	
+	ft_color = (_setr,_setg,_setb) //set the font color as an array with our integer'd input
+	--
+	Select.optftcolor
+}
+
+
+Select.favfonts
+{
+	//unscrolling all the fonts you've favorited specifically for the balloon test menu
+	_output = ""
+	_len = ARRAYSIZE(fontsparty)
+	for _val = 0; _val < (_len-1); _val++
+	{
+		_ft = fontsparty[_val]
+		_output += " \f[shadowcolor,none]\f[name,%(_ft)]\q[%_ft,OnOptFont,%_ft]\f[name,default]," //no shadows, write the font in its own typeface, make it selectable
+	}
+	--
+	if _len != 1
+	{
+		_output += " and "
+	}
+	_output += "\f[shadowcolor,none]\f[name,%(fontsparty[_len-1])]\q[%(fontsparty[_len-1]),OnOptFont,%(fontsparty[_len-1])]\f[name,default]."
+	--
+	_output
+	--
+}
+
+OnOptFont
+//in the balloon test menu, if you click on a font you've favorited, the placeholder text is then displayed in that font
+{
+	ft_name = reference0
+	--
+	if kloon == 1
+	{
+		Select.keroloon
+	}
+	else
+	{
+		OnBalloonTest
+	}
+}
+
+
+
+Select.restorefts
+{
+	//restore fonts you've removed in case you change your mind
+	"\b2\_q"
+	--
+	_output = ""
+	for _val = 0; _val < ARRAYSIZE(deadtome); _val++
+	{
+		_ft = (deadtome[_val])
+		_output += "\f[name,%_ft]\f[shadowcolor,none]\q[%_ft,OnRestoreFonts,%_ft]\f[name,default]\n\_l[2em](%_ft)\n"
+		//output the font name in its own typeface and then in the default typeface for readability reasons
+	}
+	_output
+	--
+	"\n\n\![*]\q[Fonts Menu,OnFindFonts] \![*]\q[Balloon Test Menu,OnBalloonTest]"
+	//can go to either menu from here ¯\_(ツ)_/¯
+}
+
+OnRemoveFont
+//never talk to me or my font son ever again
+{
+	deadtome = (deadtome,reference0) //basically the simplest way to append something to an array ¯\_(ツ)_/¯
+	if ASEARCH(reference0,fontsparty) != -1
+	{
+		_pos = ASEARCH(reference0,fontsparty)
+		fontsparty[_pos] = IARRAY
+	}
+	--
+	OnFindFonts
+}
+
+OnRestoreFonts
+{
+	//basically, find where the font is located in the array, then erase that value
+	_pos = ASEARCH(reference0,deadtome)
+	deadtome[_pos] = IARRAY
+	--
+	Select.restorefts
+}
+
+
+On_balloon_tooltip
+//this probably should go in func.dic, huh. 
+{
+	if reference3 == "_hoverme"
+	{
+		"%reference4"
+	}
+}
+
+OnChooseFont
+{
+	if ASEARCH(reference0,fontsparty) != -1
+	//if the font is found in our list of favorites, balete it!
+	{
+		_pos = ASEARCH(reference0,fontsparty)
+		fontsparty[_pos] = IARRAY
+	}
+	else
+	//otherwise, add the font!
+	{
+		fontsparty = (fontsparty,reference0)
+	}
+	--
+	OnFindFonts
+}

@@ -1,0 +1,451 @@
+//-------_--_-----__----_---__---_--------_--_----____---__---_---_---_-----
+//------/ \/ \---/  \--| |-|  \-| |------/ \/ \--| ___|-|  \-| |-| | | |----
+//-----| ^.,^ |-/ /\ \-| |-| . \| |-----| ^.,^ |-| |_---| . \| |-| | | |----
+//-----| |--| |-| __ |-| |-| |\   |-----| |--| |-| |__--| |\   |-` \_/ '----
+//-----|_|--|_|-|_||_|-|_|-|_|-\__|-----|_|--|_|-|____|-|_|-\__|--`._,'-----
+
+
+
+OpenSakuraMenu
+{
+	"\![set,autoscroll,disable]\b2%(s0)Hallo and ahoy!\n\n\_q" //big balloon for menu + calls idles for the specific mode
+	--
+	OnMenuRun
+}
+
+OnMenuRunPre
+{
+	kloon = 0
+	sloon = 0
+	"\![set,autoscroll,disable]\b2%(s0)\_q"
+	--
+	OnMenuRun
+}
+
+OnMenuRun
+{
+	if lastTalk != ""
+	{
+		"\![*]\q[Say again?,OnLastTalk]\n\n"
+	}
+	--
+	"\![*]\q[Speak!,OnAiTalk,_talkplease]\n\n/
+	\![*]\q[Settings,settingmenu]\n/
+	\![*]\q[Functions,functionslol]\n/
+	\![*]\q[%(diskero) Kero,shookero]\n"
+	--
+	if optweather == "On"
+	{
+		"\![*]\q[Current Weather?,OnWeatherMe]\n"
+	}
+	--
+	"\n\![*]\q[Cancel,Cancel]     \![*]\q[Goodbye,CloseGhost]    %(moonmoon[0])"
+	
+}
+
+
+Select.settingmenu
+{
+	//setting unset variables w00t!
+	if jumpingfrog == ""; {jumpingfrog = "Allowed"}
+	if remindhr == ""; {remindhr = "On"}
+	if washurmouth == ""; {washurmouth = "Fuck yes"}
+	
+	"\b2\_q\n\n\f[align,center]Settings\n\n\f[align,left]/
+	\![*]\q[Change username?,gonamae]:\n\_l[2em]Now: %(urname)\n/
+	\![*]\q[Change talk rate?,toggletalk]:\n\_l[2em]Now: %(talkrate)\n/
+	\![*]\q[Enable long-winded rambles?,storytime]:\n\_l[2em]%(jumpingfrog)\n/	
+	\![*]\q[Change shell,shellshell]:"
+	--
+	if shelly == 1
+	{
+		_output = "\n"
+		for _var = 0; _var < labalone; _var++
+		{
+			_shell = abalone[_var]
+			if _shell == SHIORI3FW.ShellName
+			{
+				_output += "\_l[2em]\q[%_shell,OnShelltering,%_shell] (Current)\n"
+			}
+			else
+			{
+				_output += "\_l[2em]\q[%_shell,OnShelltering,%_shell]\n"
+			}
+		}
+		_output
+	}
+	else
+	{
+		" %(SHIORI3FW.ShellName)\n"
+	}
+	--
+	if SHIORI3FW.ShellName == "Ship"
+	{
+		"\![*]\q[Change Animation?,togglespeed]:\n\_l[2em]Currently #%(boatspeed)\n"
+	}
+	--
+	"\![*]\q[Hourly Notifications?,hournotifs]: %(remindhr)\n/
+	\![*]\q[Weather on the hour?,weatherget]: %(optweather)"
+	--
+	if optweather == "On"
+	{
+		"\n\_l[2em]Selected Location: \q[%(curloc[0]) %(curloc[1]),OnLoc]\n"
+	}
+	else
+	{
+		"\n"
+	}
+	--
+	"\![*]\q[Allow Reminders,remindset]: %(remindme)\n/
+	\![*]\q[Keep things worksafe?,fffff]:\nCurrently: %(washurmouth)"
+	--
+	"\n\n\![*]\q[Main Menu,OnMenuRunPre]     \![*]\q[Cancel,Cancel]"
+	
+}
+
+
+Select.shookero
+{
+	if SHIORI3FW.IsVisible[1] != 1
+	{
+		diskero = "Shoo"
+		"%(k0)"
+	}
+	elseif SHIORI3FW.IsVisible[1] == 1
+	{
+		diskero = "Call"
+		"\1\s[-1]"
+	}
+	--
+	"\0"
+	--
+	Select.settingmenu
+}
+
+Select.gonamae
+{
+	"\![open,inputbox,Onamae,-1]"
+}
+
+Onamae
+{
+	_newname = reference0
+	"%(s0)The pact is settled.\w7 %(urname) is cast to ashes.\w7 "
+	--
+	if TOLOWER(reference0) == "default"
+	{
+		_newname = "My good bitch"
+	}
+	--
+	"Flames peel the skin from the bones.\w7 %(_newname) walks from the pyre.\e"
+	urname = _newname
+	
+}
+
+Select.toggletalk
+{
+	"\b2\_qChange talk rate?\nCurrently %(talkrate)\n\n/
+	\q[Every three minutes,OnChangeTalk,3]\n/
+	\q[Every five minutes,OnChangeTalk,5]\n/
+	\q[Every ten minutes,OnChangeTalk,10]\n/
+	\q[Don't talk at all,OnChangeTalk,0]\n/
+	\q[Custom rate?,OnChangeTalk,custom]\n\n/
+	\![*]\q[Main Menu,OnMenuRunPre]  \![Settings,settingmenu]"
+}
+
+OnChangeTalk
+{
+	case reference0
+	{
+		when 3
+		{
+			talkrate = "every three minutes"
+			aitalkinterval = 180
+		}
+		when 5
+		{
+			talkrate = "every five minutes"
+			aitalkinterval = 300
+		}
+		when 10
+		{
+			talkrate = "every ten minutes"
+			aitalkinterval = 600
+		}
+		when 0
+		{
+			talkrate = "never"
+			aitalkinterval = 0
+		}
+		when "custom"
+		{
+			"\![open,inputbox,OnChangeTalk,-1,--text=Unspecified intervals are evaluated in minutes]"
+		}
+		when "Try again"
+		{
+			"\![open,inputbox,OnChangeTalk,-1]"
+		}
+		others
+		{
+			_input = reference0
+			_intype = GETTYPE(_input)
+			if (_intype == 1) || (_intype == 2) || (ISINTSTR(_input) == 1) || (ISREALSTR(_input == 1))
+			{
+				_min = (_input*60)
+				aitalkinterval = _min
+				if _min == 1
+				{
+					talkrate = "every minute"
+				}
+				else
+				{
+					talkrate = "every %_input minutes"
+				}
+			}
+			else
+			{
+				_rrate = ""
+				_rate = ""
+				_time = ""
+				_newinput = SPLIT(_input,' ')
+				_len = ARRAYSIZE(_newinput)
+				for _var = 0; _var < _len; _var++
+				{
+					_sect = _newinput[_var]
+					if "min" _in_ _sect
+					{
+						_rate = "*60"
+						_time = "minutes"
+					}
+					elseif ("hr" _in_ _sect) || ("hour" _in_ _sect)
+					{
+						_rate = "*60*60"
+						_time = "hours"
+					}
+					elseif "day" _in_ _sect
+					{
+						_rate = "*60*60*24"
+						_time = "days"
+					}
+					elseif "sec" _in_ _sect
+					{
+						_time = "seconds"
+					}
+					elseif ISINTSTR(_sect)
+					{
+						_rrate = _sect
+					}
+					elseif ISREALSTR(_sect)
+					{
+						_rrate = _sect
+					}
+					else
+					{
+						//
+					}
+				}
+				_result = EVAL("%_rrate%_rate")
+				if (GETTYPE(_result) == 1) || (GETTYPE(_result) == 2)
+				{
+					aitalkinterval = _result
+					talkrate = "every %_rrate %_time"
+				}
+				else
+				{
+					"\![open,inputbox,OnChangeTalk,-1,--text=Try again]"
+				}
+				
+			}
+		}
+	}
+	--
+	Select.toggletalk
+}
+
+Select.storytime
+{
+	if jumpingfrog != "Allowed"
+	{
+		jumpingfrog = "Allowed"
+	}
+	else
+	{
+		jumpingfrog = "Disabled"
+	}
+	--
+	Select.settingmenu
+}
+
+Select.shellshell
+{
+	if shelly != 1
+	{
+		shelly = 1
+	}
+	else
+	{
+		shelly = 0
+	}
+	--
+	Select.settingmenu
+}
+
+OnShelltering
+{
+	shelly = 0
+	--
+	if reference0 == "Ship"
+	{
+		"\b[3]%(tmo)Note: While the 'Ship of Theseus' shell is\w5, arguably\w5, the intended body of this ghost\w5, it is also a bunch of barely-readable garbage bullshit most likely only amusing to the dev.\w5\w5 Are you sure you want to change to this shell?\n\n/
+		
+		\q[I'm sure,script:\![change,shell,Ship\]]   \q[Keep current shell,script:\![raise,Select.settingmenu\]]"
+	}
+	else
+	{
+		"\![change,shell,%(reference)]"
+	}t
+}
+
+Select.togglespeed
+{
+	"\_qCurrent sequence: #%(boatspeed)/
+	\![open,sliderinput,OnFast,-1,%(boatspeed),0,9,--option=noclose]/
+	\n\n/
+	\![*]\q[Settings,settingmenu]   \![*]\q[Cancel,Cancel]"
+	
+}
+
+OnFast
+{
+	boatspeed = reference0
+	--
+	"\C%(s0)"
+	--
+	togglespeed
+}
+
+Select.hournotifs
+{
+	if remindhr != "On"
+	{
+		remindhr = "On"
+	}
+	else
+	{
+		remindhr = "Off"
+	}
+	--
+	Select.settingmenu
+}
+
+Select.remindset
+{
+	if remindme != "Allowed"
+	{
+		remindme = "Allowed"
+	}
+	else
+	{
+		remindme = "Disabled"
+	}
+	--
+	Select.settingmenu
+}
+
+Select.weatherget
+{
+	if optweather != "Off"
+	{
+		optweather = "Off"
+	}
+	else
+	{
+		OnWhitherWeather
+	}
+	--
+	Select.settingmenu
+}
+
+OnWhitherWeather
+{
+	"\b2\_q%(s0)Let the %(TOLOWER(SHIORI3FW.ShellName)) respond to local weather?\n\n"
+	--
+	if curloc == "" || curloc == " : " || curloc == " "
+	{
+		curloc = "\q[Enter your location,OnLoc]"
+	}
+	else
+	{
+		"Current Location: %(curloc[0]) %(curloc[1])\n/
+		\_l[2em]\q[(Not your location?),OnLoc]\n\n"
+	}
+	--
+	"\![*]\q[Looks good!,yesweather]   \![*]\q[Nevermind,settingmenu]\e"
+	
+}
+
+Select.yesweather
+{
+	optweather = "On"
+	Select.settingmenu
+}
+
+Select.fffff
+{
+	LOGGING("feck==================")
+	if washurmouth != "Fuck yes"
+	{
+		washurmouth = "Fuck yes"
+	}
+	else
+	{
+		washurmouth = "Fuck no"
+	}
+	--
+	Select.settingmenu
+}
+
+
+Select.functionslol
+{
+	_updortSSP = "\![update\,platform\]"
+	
+	"\b2\_qFunctions\n\n/
+	\![*]\q[Update Check Ghost,updort]\n/
+	\![*]\q[Update Check SSP,script:%_updortSSP]\n/
+	\![*]\q[Balloon Test,OnBalloonTest]\n/
+	\![*]\q[Test Wait Times,OnTestW]\n/
+	\![*]\q[Check Your Clock,OnSNTPCompare]\n/
+	\![*]\q[Check Your Email,script:\![biff\]]\n/
+	\![*]\q[Load the weather,OnGetSomeWeather]\n/\n/
+	
+	\![*]\q[Main Menu,OnMenuRunPre]     \![*]\q[Cancel,Cancel]"
+}
+
+
+Select.updort
+//this is for updorting the ghost
+{
+	if updortresult == "empty"
+	{
+		"Cry to me: \![updatebymyself,checkonly] \nResult is: %(updortresult) \![Raise,updort]"
+	}
+	else
+	{
+		"Reply to me: %(updortresult)"
+		updortresult = "empty"
+	}
+}
+
+
+Select.CloseGhost
+{
+	CloseVars
+	OnTimeDifference
+	
+	"%(s0)Fare well, %(urname)"
+	"%(a0)On next week's episode%(lps6)"
+	--
+	"\w8\w8\-\e"
+}
+

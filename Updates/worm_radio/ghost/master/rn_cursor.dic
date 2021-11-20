@@ -1,0 +1,413 @@
+//-----_---_-----___----_---_----____---_____-------_____-_---_---__---_----____.--_______-_----___----__---_----____----
+//----/*\_/*\---/*_*\--|*|-|*|--/*,__)-/*____]-----/*____]*|-|*|-|**\-|*|--/**__*\[__***__]*|--/*_*\--|**\-|*|--/*,__)---
+//---|*******|-|*/-\*|-|*|-|*|-|**\__--|*|_--------|*|_--|*|-|*|-|***\|*|-,**/--\|---|*|--|*|-|*/-\*|-|***\|*|-|**\__----
+//---|*|\_/|*|-|*|-|*|-|*\_/*|--\__**\-|**_]-------|**_]-|*\_/*|-|*|\***|-|*|--------|*|--|*|-|*|-|*|-|*|\***|--\__**\---
+//---|*|---|*|-|*\_/*|-`*****;-____)*)-|*|___------|*|---`*****;-|*|-\**|-`**\__/|---|*|--|*|-|*\_/*|-|*|-\**|-____)*)---
+//---|_|---|_|--\___/---\___/--\____/--\_____]-----|_|----\___/--|_|--\_|--\_____/---|_|--|_|--\___/--|_|--\_|-\____/----
+
+//+++++(   )++(  ___)+(__   __)+++++++++____++___++______+++++888~-_++++,88~-_++++...888...+++++
+//+++++( O  )+( )++++++++( )+++++++++++/ __ \/   |/_  __/+++++888   \++d888   \+++...888...+++++
+//+++++( __)++(  _)++++++( )++++++++++/ /_/ / /| |+/ /++++++++888   /+88888    |++   888   +++++
+//+++++( )++++( )++++++++( )+++++++++/ ____/ ___ |/ /+++++++++888_-~+++Y888   /+++   888   +++++
+//+++++(_)++++(_____)++++(_)++++++++/_/+++/_/++|_/_/++++++++++888+++++++`88_-~++++   888   +++++
+
+OnMouseClick
+{
+	if reference4 == "Buttons"
+	{
+		if stopfunction == 1
+		{
+			stopfunction = 0
+			"%(k0)"
+		}
+		else
+		{
+			stopfunction = 1
+			"%(k0)"
+		}
+	}
+}
+
+
+OnMouseDoubleClick
+// (＾＾)ｂ Inbuilt!
+{
+	if reference5 == 0
+	{
+		if reference3 == 0 //this is the character, as above
+		{
+			MouseDoubleClickSakura
+		}
+		else
+		{
+			MouseDoubleClickKero
+		}
+	}
+}
+
+
+MouseDoubleClickSakura
+{
+	OpenSakuraMenu
+}
+
+MouseDoubleClickKero
+{
+	"\1\s[10]"
+	--
+	if SHIORI3FW.ShellName == "Radio"
+	{
+		"-bzzt-\e"
+	}
+	elseif SHIORI3FW.ShellName == "Ship"
+	{
+		"[creak]\e"
+	}
+}
+
+OnMouseMultipleClick
+// (＾＾)ｂ Inbuilt!
+{
+	if reference3 == 0
+	{
+		if reference7 == 3
+		{
+			MouseMultipleClickSakura
+		}
+		else
+		{
+			"%(s0)Had I %(reference7) ears I'd hear ye!\b2\_q\n\n"
+		}
+		--
+		OnMenuRun
+
+	}
+	else
+	{
+		MouseMultipleClickKero
+	}
+
+}
+
+MouseMultipleClickSakura
+{
+	
+	_open = 0
+	_b = BalloonCheck
+	if _b == 0
+	{
+		_open = 1
+	}
+	"%(s0)\b2\_qHad I three ears I'd hear ye!\n\n"
+	--
+	if _open == 1
+	{
+		OnMenuRun
+	}
+}
+
+
+OnMouseMove
+// (^^)b Inbuilt!
+{
+	if reference3 == 0
+	{
+		if reference4 == "Speaker"
+		{
+			stroke[0]++
+			stroke[1]++
+			
+			if stroke[0] >= 40
+			{
+				stroke[0] = 0
+				
+				OnSpeakerMenu
+			}
+		}
+		elseif reference4 == "Sail"
+		{
+			stroke[0]++
+			stroke[1]++
+			
+			if stroke[0] >= 40
+			{
+				stroke[0] = 0
+				pettingsail = 1
+				"\0\s[14]"
+				"\0\s[15]"
+				"\0\s[16]"
+				"\0\s[17]"
+			}
+		}
+	}
+}
+
+OnMouseDragStart
+// (＾＾)ｂ Inbuilt!
+{
+    if reference3 == 0
+	{
+		_b = BalloonCheck
+     
+		if _b == 1
+		{
+		   "\C%(s0)"
+		}
+			
+		else
+		{
+		   "%(s0)"
+		}
+	}
+	elseif reference3 == 1
+	{
+		_b = BalloonCheck
+     
+		if _b == 1
+		{
+		   "\C%(k0)"
+		}
+			
+		else
+		{
+		   "%(k0)"
+		}
+	}
+}
+ 
+OnMouseDragEnd
+// (＾＾)ｂ Inbuilt!
+{
+	if reference3 == 0
+	{
+		"%(s0)\![get,property,OnMe,currentghost.scope(0).rect]"
+		_b = BalloonCheck
+     
+		if _b == 1
+		{
+		   "\C%(s0)"
+		}
+			
+		else
+		{
+		   "%(s0)"
+		}
+	}
+	elseif reference3 == 1
+	{
+		"%(k0)\![get,property,OnMe2,currentghost.scope(1).rect]"
+		_b = BalloonCheck
+     
+		if _b == 1
+		{
+		   "\C%(k0)"
+		}
+			
+		else
+		{
+		   "%(k0)"
+		}
+	}
+}
+
+
+OnMouseWheel
+{
+	if reference4 == "Sail"
+	{
+		pettingsail = 1
+		"\0\s[14]"
+		"\0\s[15]"
+		"\0\s[16]"
+		"\0\s[17]"
+	}
+}
+
+OnMouseLeaveAll
+{
+	if reference3 == 0
+	{
+		stroke[0] = 0
+		stroke[1] = 0
+		if pettingsail == 1
+		{
+			"%(s0)"
+			pettingsail = 0
+		}
+	}
+}
+
+/*
+    _previous = RE_SPLIT(SPLIT(SHIORI3FW.LastTalk,"\e")[0],"\\!\[raise,OnTalkingChar,\d\]",TalkingParagraph + 1)
+    _notsaidyet = ""
+    if ARRAYSIZE(_previous) == 1; _notsaidyet = _previous
+    else; _notsaidyet = _previous[TalkingParagraph]
+
+
+*/
+
+//do i even need radians, though? can i just get the slope?
+
+	/*
+	77 = pi/4      0.785397
+	75 = pi/6      0.523590
+	74 = 0 | 2pi   0 | 6.203180
+	73 = 11pi/6    5.759582
+	71 = 7pi/4     5.497782
+	68-69 = 3pi/2  4.712385
+	67 = 4pi/3     4.188787
+	66 = 5pi/4     3.926988
+	65 = 7pi/6     3.665188
+	64 = pi        3.14159
+	63 = 5pi/6     2.617992
+	   = 3pi/4 (//70,72,76)    2.356192
+	62 = 2pi/3     2.094393
+	61 = pi/2      1.570795
+	60 = pi/3      1.047197
+*/
+
+
+OneWingedAngle
+{
+	//LOGGING("%x_cursor,%y_cursor")
+	stopfunction = 0
+	"\![get,property,OnWhereRU,system.cursor.pos]"
+}
+
+//ghost position and cursor position
+OnWhereRU
+{
+	_cursorloc = reference0
+	
+	x_cursor = _cursorloc[0]
+	y_cursor = _cursorloc[1]
+	
+	if stopfunction == 0
+	{
+		OnAngleBetween
+	}
+}
+
+OnMe
+{
+	_ghostloc = reference0
+	
+	_x_ghost = _ghostloc[0]
+	_y_ghost = _ghostloc[1]
+	_x2_ghost = _ghostloc[2]
+	_y2_ghost = _ghostloc[3]
+	
+	_midpointx = TOINT(TOINT(_x_ghost)+((_x2_ghost-_x_ghost)/2))
+	
+	_midpointy = TOINT(((_y2_ghost-_y_ghost)/2)+TOINT(_y_ghost))
+	
+	topme = (_midpointx,_y_ghost)
+	midme = (_midpointx,_midpointy)
+}
+
+OnMe2
+{
+	//dial of radio kero is 85,91
+	_ghostloc = reference0
+	
+	_x_ghost = _ghostloc[0]
+	_y_ghost = _ghostloc[1]
+	_x2_ghost = _ghostloc[2]
+	_y2_ghost = _ghostloc[3]
+	
+	_midpointx = TOINT(TOINT(_x_ghost)+((_x2_ghost-_x_ghost)/2))
+	
+	_midpointy = TOINT(((_y2_ghost-_y_ghost)/2)+TOINT(_y_ghost))
+	
+	_dialx = (TOINT(_x_ghost)+85)
+	_dialy = (TOINT(_y_ghost)+91)
+	
+	topme2 = (_midpointx,_y_ghost)
+	midme2 = (_midpointx,_midpointy)
+	dialme2 = (_dialx,_dialy)
+}
+
+
+OnAngleBetween
+{
+	quadrant = ""
+	x_distance = (x_cursor-dialme2[0])
+	y_distance = (y_cursor-dialme2[1])
+	h_distance = SQRT(POW(x_distance,2)+POW(y_distance,2))
+	
+	slope = (y_distance/x_distance)
+	remaining = slope/(pi/2)
+	
+	angle = ATAN(slope)
+	angle2 = ATAN(remaining)
+	
+	if (x_distance <= 0) && (y_distance < 0)
+	//-x,-y
+	{
+		if (x_distance == 0)
+		{
+			quadrant = "n"
+		}
+		else
+		{
+			quadrant = 2
+		}
+	}
+	elseif (x_distance > 0) && (y_distance <= 0)
+	//+x,-y
+	{
+		if (y_distance == 0)
+		{
+			quadrant = "e"
+		}
+		else
+		{
+			quadrant = 1
+		}
+	}
+	elseif (x_distance >= 0) && (y_distance > 0)
+	//+x,+y
+	{
+		if (x_distance == 0)
+		{
+			quadrant = "n"
+		}
+		else
+		{
+			quadrant = 4
+		}
+	}
+	elseif (x_distance < 0) && (y_distance >= 0)
+	//-x,+y
+	{
+		if (x_distance == 0)
+		{
+			quadrant = "w"
+		}
+		else
+		{
+			quadrant = 3
+		}
+	}
+	else
+	//if both are 0, the cursor's on the dot
+	{
+		quadrant = "c"
+	}
+	
+	--
+	_b = BalloonCheck
+	
+	if _b == 1
+	{
+		"\C%(k0)"
+	}
+	else
+	{
+		"%(k0)"
+	}			  
+	//"%(k0)%(x_distance),%(y_distance), %quadrant"
+	//now how do i make the ghost respond to the cursor :thonking:
+
+}
+

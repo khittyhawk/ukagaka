@@ -1,0 +1,21 @@
+charset, UTF-8
+charset.dic, UTF-8
+charset.output, UTF-8
+charset.file, UTF-8
+charset.save, UTF-8
+charset.extension, UTF-8
+
+include, system_config.txt
+dic, rn_bootclose.dic
+dic, rn_cursor.dic
+dic, rn_fancetop.dic
+dic, rn_func.dic
+dic, rn_menus.dic
+dic, rn_parser.dic
+dic, rn_ramble.dic
+dic, rn_time.dic
+dic, Dev_Tools/rn_balloontest.dic
+dic, Dev_Tools/rn_cipher.dic
+
+//log, ayame.log
+msglang,english

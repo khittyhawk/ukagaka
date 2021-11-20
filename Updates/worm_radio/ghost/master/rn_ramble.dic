@@ -1,0 +1,253 @@
+//....| |.../_\...| ,_ \..| ,_ \..|  __).| ,_ \........| |.../_\...| ,_ \..| ,_ \..|  __).| ,_ \
+//....| |../ _ \..| |_) ).| |_) ).| |_...| |_) ).......| |../ _ \..| |_) ).| |_) ).| |_...| |_) )
+//.,_.| |./ /.\ \.| --.<..| --.<..|  _)..|    /.....,_.| |./ /.\ \.| --.<..| --.<..|  _)..|    /
+//.\ U  |.| |.| |.| |_) ).| |_) ).| |__..| |\ \.....\ U  |.| |.| |.| |_) ).| |_) ).| |__..| |\ \
+//.`.__/..|_|.|_|.|____/..|____/..|____).|_|.\_\....`.__/..|_|.|_|.|____/..|____/..|____).|_|.\_\
+
+
+AiTalk
+{
+	if CHAIN.IDName == ""
+	{
+		lastTalk = RandomTalk
+	}
+	else
+	{
+		lastTalk = ChainTalk
+	}
+	
+	lastTalk
+}
+
+RandomTalk
+{
+	if MenuCheck != 1 || reference0 == "_talkplease"
+	{
+		speakboy
+	}
+	--
+	if huggingboats == 1
+	{
+		overlaptalk
+	}
+}
+
+overlaptalk
+{
+	"%(tmo)"
+	--
+	"%(a0)We cannot be returned to what we once were.\e"
+	"%(a0)We have changed far, far too much to be one again.\e"
+	"%(a0)You cannot take the volume of two spheres and reshape it into one.\e"
+	--
+	"\w8\w8"
+}
+
+speakboy : nonoverlap
+{
+	parallel Pool("Pool_username","%(urname != '')")
+	parallel Pool("Pool_radio","%(SHIORI3FW.ShellName == 'Radio')")
+	parallel Pool("Pool_kerohere","%(SHIORI3FW.IsVisible[1] == 1)")
+	parallel Pool("Pool_windy","%(windthing > 2)")
+	parallel Pool("Pool_midsun","%(weatheris == 'Sunny' && timeslot=='lunch')")
+	parallel Pool("Pool_rain","%(weatheris == 'Rain')")
+	parallel Pool("Pool_CalaverasCounty", "%(jumpingfrog=='Allowed')")
+	parallel Pool("Pool_winter","%(GETTIME()[1]==12) || %(GETTIME()[1]==1) || %(GETTIME()[1]==2)")
+	
+	"%(s0)Broken wings and eyes.\w6 Thousands upon thousands of eyes.\e"
+	"%(a0)Bi-B-B-B-B-B-B-Bi-\w3 Bi-B-B-B-B-B-B-Bi-\w3 Bi-B-B-B-B-B-B-Bi-\e"
+	"%(a0)S-s-s-seven- S-s-s-severing-\e"
+	"%(a0)See, if you unwind time and steal his shape, then...\e"
+	"%(s0)...Bearing the weight of weaving entropy\w5, folding back upon itself\w6, building up and kinking timespace beyond its shape\w5, as plastic as it naturally is...\e"
+	"%(a0)Lunacy.\w6 Affected by the phases of the moon.\e"
+	"%(a0)If a tomato is a fruit,\w5 then whales are fish.\e"
+	"%(a0)You taste like rain.\e"
+	"%(a0)You look good by siren light.\e"
+	"%(s0)Seraphs.\w8\w8 Seraphim.\e"
+	"%(a0)The last refuge of the scoundrel.\e"
+	"%(a0)Indifference\w6 or malice?\e"
+	"%(a0)A big bundle of anxiety.\e"
+	"%(a0)BAKE BAKE is MOVE\e"
+	"%(a0)It is an anomaly.\e"
+	"%(a1)Defenestration of plague...\e"
+	"%(a0)He's a liar!\w6 He's a liar!\w6 And a good one at that.\e"
+	"%(a1)Walk like a monkey.\w7 Kick like a mule.\e"
+	"%(s0)I'm\w7\w3 soooooooooooooooooo\c[char,17]\_qrry\_q\w5 for the mess\w5, the stupid way I dress\e"
+	"%(a1)We can, should, must, and will fuck the moon.\e"
+	"%(a0)Don't dead open inside\e"
+	_pro = prons
+	"%(a0)Who %(_pro[3]) %(_pro[0])? Who %(_pro[3]) %(_pro[0])? Who %(_pro[3]) %(_pro[0])?\e"
+	"%(a0)Angles of Incidence and Experience.\e"
+	"%(a0)Can bees feel want?\e"
+	"%(a0)'So you are not the cleverest man within twenty kingdoms?'\n\n\w6\w6'Well as you can see, I am no man'\e"
+	"%(a0)Fixed.\w6\w6 As in 'immovable',\w6 fixed in place.\w6 Cannot be separated.\e"
+	"%(a0)The lion and the unicorn went to sea\w3, in a beautiful pea-green boat.\e"
+	"%(a0)'Nevada' means 'snowy' and 'Las Vegas' means 'the meadows'.\e"
+	"%(s0)There is a old name\w4 for both \f[italic,1]god\f[italic,0] and \f[italic,1]monster\f[italic,0].\w6\w6 There isn't much of a difference\w6, really.\e"
+	"%(s0)The gorgons are sisters\w4, not by blood\w4, but by what they've\w2 become.\e"
+	"%(s0)\![set,balloonwait,4]Those beasts you wear\w7, in your eyelashes\w8\w3, under your skin\w8\w3%(lps6)\w7 You are their only home\w8, do you know that?\w5\w7 Are you stewarding it to their satisfaction?\e"
+	"%(s0)\![set,balloontimeout,10000]Dost thou wish me to play Mercutio?\w5\w5 Spill all the secrets of Queen Mab?\e"
+	"%(s0)sangrecita\e"
+	"%(a1)I'm\w7\w7     a boat.\e"
+	"%(s0)An old man built a tower to scour the heavens\w6, made from steel and the memories of bone.\e"
+	"%(s0)The end of the world is already here.\e"
+	"%(a0)Rock doves,\w4 your Galatea.\e"
+	"%(a0)'Vermin' is a word for any creature better at surviving than you.\e"
+	"%(s0)--Señor Perfecto?\w5\n--¡Es \f[italic,1]\_qdoctor\_q\f[italic,0]\w5 Perfecto!\e"
+	"%(a1)Who's on first; What's on second; and I don't know's on third.\e"
+	"%(s0)Summer is\w8\_l[85,2em] over and gone\w8\n\nSummer is\w8\n\n[half]\_l[4.5em] dying,\w7\n\n\_l[6em] dying.\e"
+	"%(a1)Why,\w4 if only we were all wiener dogs,\w4 all our problems would be solved!\e"
+	"\t%(s0)Name me love and violence.\e" //unbreakable t
+	"%(a0)Unbreakable tea.\e"
+	"%(a1)...tune in next episode...\e"
+	"%(a0)You are a carnivore.\w6 Why did you eat my waffles?\e"
+	"%(a0)Lord\w3, what fools these mortals be!\e"
+	"%(a0)Arsenic is unlike other toxins.\w5 You cannot build up an immunity\w8, adjust\w8, inure\w8, weather it.\w5\w5\w5 It lingers in your system\w7, building up and building up and building up\w6\w6 until you smother in it.\e"
+	"%(s0)Spoiler-free tip for playing \f[italic,1]Baba is You\f[italic,0]:\w6\w6 test every interaction of every rule until you know for sure.\w6 Your assumptions beget your failures.\e"
+	"%(a0)It looked better on me anyway.\e"
+	"%(s0)Well begun is half done.\e"
+	"%(a1)I want crime\w4, not flags.\e"
+	"%(s0)Nothing beside remains.\e"
+	"%(a0)Sloppy skeleton makeouts.\e"
+	"%(s0)How long does it take for the world to drown itself?\e"
+	"%(a0)Après moi\w4, le déluge.\e"
+	"%(a0)They chitter chatter chitter chatter on endlessly\w3, don't they?\e"
+	"%(a0)All ghosts are liars.\e"
+	"%(a0)I met Robert Johnson at a crossroads at %(spooptime).\e"
+	"%(a0)Mister Richter couldn't predict 'er kicking our asphalt!\e"
+	"%(s0)Sing to me\w3, my misery.\e"
+	"%(s0)Hapax legomenon\e"
+	"%(s0)Little fish\w7, little fish\w7, swimming in the water.\w6\w6\w6 Come back here, man,\w7 give me my daughter.\e"
+	"%(a0)A thief! A thief!\w4 A dirty sneak-thief!\e"
+	"%(s0)Smells like old\w3, rotten blood under damp floorboards.\e"
+	"\![set,balloonwait,1.3]%(s0)And all my life the radio\w6\w6\n\_l[1em] told me how it loved me so.\w6\w6\nAll for me\w5\w5,\n\_l[1em] a yearning song\w5\w5 -\n\_l[2em] a long\w6, last\w4 love where I\w8\n\_l[3em] belong.\e"
+	"%(s0)I could be anywhere.\e"
+	"%(s0)It writhes!\w4 It writhes!\w4 With mortal pangs!\e"
+	"%(a0)\f[italic,1]Heretic.\f[italic,0]"
+	"%(a0)Bald eagles cry like seagulls.\w6\w6 Red-tailed hawks are the ones that screech.\e"
+	"%(a0)\f[italic,1]kallisti, motherfucker.\f[italic,0]"
+	"%(a0)It runs just fine on a potato.\e"
+	"%(a1)I'm a garbage man\w4, in a garbage can.\e"
+	"%(a0)No one has good taste in music.\w5\w5 Anyone who says so is either lying or deluding themselves.\e"
+	"%(s0)Satyrs do not understand thermal gradients.\e"
+	"%(a0)Have you unionized your workplace yet?\e"
+	"%(s0)The storyteller Aesop claimed that a thing's nature is immutable.\w7\nHe told a fable whereupon the gods argued such a question and\w5 to settle it\w5, Jupiter transformed a cat into a human-bride.\w6\w6 At the wedding, the goddess Venus cast down a mouse\w3, upon which the woman fell to all fours and chased it.\w8\nDoes that tell you a thing's core nature is immutable?\w6 Or that all gods are liars?\e:chain=hera"
+	"%(a1)I am the dumbest of pigeons.\e"
+	"%(a0)Just one.\e"
+	"%(s0)It shudders and shakes.\w8\w8 It wants to come out.\e"
+	"%(a0)The moon is wrong.\e"
+	"%(a0)Well\w6, it is definitely saliva.\e"
+	"%(s0)Imagine staring at jewelry so long you meld through a wall.\e"
+}
+
+Pool_CalaverasCounty
+{
+	"%(s0)\![set,balloonwait,2]Those beasts you wear\w7, in your eyelashes\w8\w3, under your skin\w8\w3%(lps6)\w7\x You are their only home\w8, do you know that?\w5\w7\x[noclear] Are you stewarding it to their satisfaction?\e"
+	"%(s0)I never met the devil, but I did meet his grandmother at a crossroads.\e:chain=hisgrandmother"
+}
+
+Pool_username //just stuff that's funny
+//it was gonna be only if the username is set, but then i decided that calling the user 'my good bitch' cracked me up
+{
+	"%(a0)%(urname) is the kindest\w6, bravest\w6, warmest\w6, most wonderful human being I have ever known in my life.\e"
+	"%(a0)%(urname).\w8\w8 Honey.\w8\w8 Sweetie.\w8\w8 Baby.\e"
+	"%(a0)Whatever %(urname) wants\w6, %(urname) gets.\e"
+	"%(s0)%(urname) is so smart\w5, yet so self-destructive.\e"
+	"%(a0)starring %(urname)\e"
+
+}
+
+Pool_kerohere //if the kero is present
+{
+	"%(k0)It is an anomany."
+	"%(s0)Miss Lucy had a steamboat.\w6 The steamboat had a bell.\w6 Miss Lucy went to heaven and the steamboat went to%(k0)Hello operator\w7, please give me number 9.\w7 And if you disconnect me then I'll kick you from%(s0)\nBehind the 'frigerator\w6, there lay a piece of glass.\w7 Miss Lucy sat upon it and cut her little%(k0)\nAsk me no more questions\w6, I'll tell you no more lies.\w7 The boys are in the bathroom zipping down their%(s0)\nFlies are in the backyard\w6, the bees are in the park.\w7 Miss Lucy and her boyfriend are kissing in the \_s\nD - A - R - K dark dark dark.\_s\w6\w6\e"
+	"%(s0)Hello.\w6\w6\nWe are magical talking bear prostitutes.%(k0)Give us all your valuables and food\w6, and no one needs to get hurt.\e"
+	"%(s0)Brown bear\w5, brown bear\w7, what do you see?%(k0)\w6\w6ALL.\e"
+	"\_sSave us! Save us! Cry for help! Kill the messenger!\_s%(k0) Bring the fire back to the mountaintop!\e"
+	"%(s0)Melpomene Rex%(k0)Regina%(s0)\nMelpomene Regina\e:chain=Tragic"
+	"%(k0)Wait until I tell you about \f[italic,1]all five hundred million Friedrich Wilhelms\f[italic,0].%(s0)?\w6\w6%(k0)Prussia.\w6 Nothing but Friedrichs and Wilhelms and Friedrich Wilhelms as far as the eye can see.\e"
+	parallel Pool("Pool_spoops","ARRAYSIZE(ghostexlist)>0")
+	
+	"%(s0)Baa baa black sheep, have you any wool?\w7\w5\n\nA - B - C - D - E - F - G\w7\w5\n\nTwinkle, twinkle, little star%(k0)They all have the same melody!%(s0)\w5\n\nYes.\e"
+	"%(s0)lol%(k0)lol\e"
+}
+
+Pool_radio //if the shell is Radio
+{
+	"%(s0)Words like tethered hawks.\e"
+}
+
+Pool_windy //if the windspeed the ghost gets is > 2mph
+{
+	"%(s0)Can you hear it howling?\e"
+}
+
+Pool_midsun //sunny weather and midday
+{
+	"%(a0)Mad dogs and Englishmen...\e"
+}
+
+Pool_rain //rainy weather
+{
+	"%(a0)Never eat soggy waffes.\e"
+	"%(s0)A harp made from the ribcage of a swan (not a swan)\w5, strung with golden hair.\e"
+	"%(s0)I'll be true to my love if you'll be true to me.\e"
+}
+
+Pool_winter
+{
+	"%(s0)And the wolves will swallow the sun.\e"
+}
+
+Pool_spoops //if there are other ghosts about!
+{
+	parallel Pool("Pool_gaster","SHIORI3FW.IsGhostExist('Dr. W.D. Gaster')")
+	parallel Pool("Pool_rys","SHIORI3FW.IsGhostExist('S the Skeleton')")
+	"%(k0)\![set,balloonwait,0.5]What do you see?\w6 What do you see?\w6%(s0)\![set,balloonwait,3]%(raveyard).\e"
+}
+
+Pool_gaster
+{
+	"%(k0)Hey.\w8 Hey.\x\n\nDidja know you can smack that cigarette right out of his hand?\w5 He won't like it\w4, but it won't count as a punch.\e"
+}
+
+Pool_rys
+{
+	"%(s0)How do you think his hoodie stays so red?%(k0)It's dyed with the blood of his enemies.%(s0)\w5\n\f[italic,1]What\f[italic,0] enemies?\w6\w5 He's a bean!%(k0)\n%(lps6)Enemy beans.\e"
+	"%(k0)Hey.\xDidja know you can boop his snoot?\e"
+}
+
+hera
+{{CHAIN
+	if (SHIORI3FW.IsVisible[1] == 1)
+	{
+		"%(k0)There are some core\w5, immutable things though.%(s0)\nHow so?%(k0)\nTrans rights.%(s0)\nOh, well I thought that was obvious.\e:chain=end"
+	}
+	else
+	{
+		"%RandomTalk\e:chain=end"
+	}
+CHAIN}}
+
+
+hisgrandmother
+{{CHAIN
+	"%(s0)I was still on the dirt wheeling my bike along when the headlights came by.\w5 It was dark\w6, so dark.\w5 The headlights turned everything white and washed-out.\e"
+	"%(s0)It was a big one.\w5 An eighteen-wheeler hauling some unlabeled trailer behind it\w5, but she stopped regardless and opened the passenger door before I even threw out my thumb.\w7 She knew I wanted a ride.\e"
+	"%(s0)I didn't get a good look at her face - bad light. Harsh light.\w6 I know she wore a ratty red baseball cap, so worn it was almost maroon, but her face was in shadow.\w6\w3 She was hunched in a well-worn sweater, too, but that's all I can describe.\w5 I'm sorry.\e"
+	"%(s0)She just told me 'Looks like you want a ride', and I got in.\w5 She seemed to know what I was searching for, though I didn't think it was odd at the time.\w5 It was late, and things were%(lps4) eerie.\w5\w5 It's hard to explain.\w5 I just had this feeling.\w5 That I had slipped into a world where the rules no longer applied.\e"
+	"%(s0)I had to leave the bike, unfortunately.\w6 Maybe someone in need will find it.\w7\n\nThis truck driver - after several minutes of me staring at the bare highway out the windshield - told me to be careful, as her grandson was fond of wandering around these parts at this time of night, and that it was better I not run into him.\w6 I told her that's who I was looking for.\e"
+	"%(s0)Initially she only scoffed, but after some time, she told me that%(lps6)\e:chain=end"
+CHAIN}}
+
+
+Tragic
+{{CHAIN
+	"%(s0)She was originally the muse of song before she became the muse of tragedy.%(k0)Because of lamentations?%(s0)\w7\nPerhaps.\e:chain=end"
+CHAIN}}
+
+OnLastTalk //Repeats the last thing the ghost said
+{
+	"%(lastTalk)\e"
+}
+

@@ -1,0 +1,983 @@
+///////// 빒?긕?긚긣긡깛긵깒?긣
+///////// 빒럻쀱깏??긚렖룕
+///////// written by umeici.
+
+//-----$$$$$$\---$$$$$$$$\--$$$$$$$\---$$$$$$\--$$\---$$\---$$$$$$\----$$$$$$\------
+//----$$  __$$\--\__$$  __|-$$  __$$\--\_$$  _|-$$$\--$$ |-$$  __$$\--$$  __$$\-----
+//----$$ /--\__|----$$ |----$$ |--$$ |---$$ |---$$$$\-$$ |-$$ /--\__|-$$ /--\__|----
+//----\$$$$$$\------$$ |----$$$$$$$  |---$$ |---$$ $$\$$ |-$$ |$$$$\--\$$$$$$\------
+//-----\____$$\-----$$ |----$$  __$$ <---$$ |---$$ \$$$$ |-$$ |\_$$ |--\____$$\-----
+//----$$\---$$ |----$$ |----$$ |--$$ |---$$ |---$$ |\$$$ |-$$ |--$$ |-$$\---$$ |----
+//----\$$$$$$  |----$$ |----$$ |--$$ |-$$$$$$\--$$ |-\$$ |-\$$$$$$  |-\$$$$$$  |----
+//-----\______/-----\__|----\__|--\__|-\______|-\__|--\__|--\______/---\______/-----
+
+//this file was written by umeici, as noted above
+//this is for the right-click SSP menu
+//mostly for customizing the menu to your theme, but also key for Network Updates
+
+
+
+//Network Update URL. I recommend using Github Pages to set up a site and store their files! It's free and reliable. I've written up a guide on how to do this here https://zichqec.github.io/s-the-skeleton/github.html
+On_homeurl
+{
+	"https://khittyhawk.github.io/Ukagaka/Updates/worm_radio"
+}
+
+On_recommendrootbutton.caption //Change [Your Username] to your username, or change the whole caption to whatever you want. This is the top list of websites in the right click menu.: Recommendations
+{
+	if SHIORI3FW.ShellName == "Radio"
+	{
+		"More from Station Management"
+	}
+	else
+	{
+		"Spawn of Echidna"
+	}
+}
+
+On_sakura.recommendsites
+{
+	FormatLinks(recommendsites_sakura)
+}
+
+//These are the websites linked in the top option of the right click menu. Add your websites here! Follow the format carefully here, on the left is the name you want to display, on the right is the url you want it to link to, and between them should be a | with at least one space on either side. You can add as many spaces as you like, but there always has to be at least one. The links will be given the proper formatting by the FormatLinks function below.
+recommendsites_sakura : array
+{
+	"Worms (temporary)        | https://khittyhawk.github.io"
+}
+ 
+On_portalrootbutton.caption //Caption for the second list of websites: Portal Sites
+{
+	if SHIORI3FW.ShellName == "Radio"
+	{
+		"Other Stations"
+	}
+	else
+	{
+		"Reference Sites"
+		"Shrine to Janus"
+	}
+}
+
+//You can make these anything you like. I've set them to link to my template, Zarla's template, and anything else helpful for making ghosts.
+On_sakura.portalsites 
+{
+	FormatLinks(portalsites_sakura)
+}
+
+//Same deal as above with the formatting. //I'd appreciate it if you left the X. Template link in your ghost so that other people can find the source <3
+portalsites_sakura : array
+{
+	"Built on X. Template YAYA - v.1.0.7 | https://zichqec.github.io/s-the-skeleton/xtemplate.html"
+	"Zarla's Ghost Template Walkthrough  | https://zichqec.github.io/s-the-skeleton/github.html"
+	"How to set up updates with Github   | http://www.ashido.com/ukagaka/walkthrough.html"
+	"Ukagaka Dream Team Discord          | https://ukagakadreamteam.tumblr.com/discord"
+	"SSP (J)                             | http://ssp.shillest.net/"
+	"Ukadoc (J)                          | http://ssp.shillest.net/ukadoc/manual/list_shiori_event.html"
+	"YAYA Wiki (J)                       | http://emily.shillest.net/ayaya/index.php?"
+	"Crow + SSP Reference (J)            | http://crow.aqrs.jp/reference/all/index.html"
+	"Ghost Documentation (J)             | http://usada.sakura.vg/contents/specification.html"
+}
+ 
+On_kero.recommendbuttoncaption //Caption for the Kero's website list
+{
+	if SHIORI3FW.ShellName == "Radio"
+	{
+		"Code"
+	}
+	else
+	{
+		"Take the strings apart"
+	}
+}
+
+On_kero.recommendsites
+{
+	FormatLinks(recommendsites_kero)
+}
+
+recommendsites_kero : array //Put any websites you want here, I just included some stuff that was helpful to me when making my website.
+{
+	"Github Pages | https://pages.github.com/"
+	"w3 schools   | https://www.w3schools.com/"
+	"Coordin8     | https://jcmiller11.github.io/diceSim/coords.html"
+}
+
+//This is the function that formats the links above! This is based on a function in Konno Yayame that serves a similar purpose. You can see that one here: http://emily.shillest.net/ayaya/index.php?Tips/%E3%81%8A%E6%B0%97%E3%81%AB%E5%85%A5%E3%82%8A%E3%82%92%E6%9B%B8%E3%81%8D%E3%82%84%E3%81%99%E3%81%8F%E3%81%99%E3%82%8B
+//Mine is a bit simpler, but it requires you to leave a space before and after the |. So long as you do that, it'll add the rest of the formatting for you! CUTSPACE is a built in function that gets rid of whitespace characters on the left and right of text.
+FormatLinks
+{
+	_output = ""
+	foreach _argv; _element
+	{
+		_name = CUTSPACE(_element[0,' | '])
+		_link = CUTSPACE(_element[1,' | '])
+		_output += _name + "%ASC(1)" + _link + "%ASC(2)"
+	}
+	_output
+}
+
+On_updatebutton.caption //Caption for the update button: Network Update
+{
+	if SHIORI3FW.ShellName != "Radio"
+	{
+		"Howl for the Aid of Zeus"
+	}
+	else
+	{
+		//"Network Update"
+	}
+}
+
+On_vanishbutton.caption //Caption for the uninstall button: Uninstall
+{
+	if SHIORI3FW.ShellName != "Radio"
+	{
+		"Banish"
+	}
+}
+
+On_headlinesenserootbutton.caption //Caption for the RSS/Headlines button: RSS/Headlines
+{
+	if SHIORI3FW.ShellName != "Radio"
+	{
+		"Answer Hermes's Summons"
+	}
+	else
+	{
+		"Newsfeed"
+	}
+}
+
+On_pluginrootbutton.caption //Plugins
+{
+	if SHIORI3FW.ShellName != "Radio"
+	{
+		"Lego pieces"
+	}
+}
+
+On_biffbutton.caption //Check mail
+{
+	if SHIORI3FW.ShellName == "Radio"
+	{
+		"You've Got Mail!"
+	}
+	else
+	{
+		"Vegas Courier"
+	}
+}
+
+//Shell Scale
+On_shellscalerootbutton.caption //Shell Scaling
+{
+	if SHIORI3FW.ShellName != "Radio"
+	{
+		"Relativity of Virtual Images"
+	}
+
+}
+
+On_balloonscalerootbutton.caption //Balloon Scaling (B)
+{
+	if SHIORI3FW.ShellName != "Radio"
+	{
+		"Pianissimo or Fortissimo"
+	}
+}
+
+On_shellscaleotherbutton.caption //Other Percentage
+{
+	if SHIORI3FW.ShellName != "Radio"
+	{
+		"W for Wombo"
+	}
+}
+
+On_balloonscaleotherbutton.caption
+{
+	if SHIORI3FW.ShellName != "Radio"
+	{
+		"Helium concentration"
+	}
+}
+
+//Utilities
+On_utilityrootbutton.caption //Utilities (E)
+{
+	if SHIORI3FW.ShellName == "Radio"
+	{
+		"Service Radio"
+	}
+	else
+	{
+		"Off to the Races"
+	}
+}
+
+
+On_calendarbutton.caption //The default right click menu has this typoed as 'Calender': Calendar
+{
+	if SHIORI3FW.ShellName == "Radio"
+	{
+		"Broadcast Schedule"
+	}
+	else
+	{
+		"The Astrologers Cannot Save You"
+	}
+}
+
+On_messengerbutton.caption //SSP Messenger
+{
+	if SHIORI3FW.ShellName != "Radio"
+	{
+		"Hermes?"
+	}
+}
+
+On_sntpbutton.caption //NTP Time Sync
+{
+	if SHIORI3FW.ShellName != "Radio"
+	{
+		"And So Are Pants"
+	}
+}
+
+On_ghostexplorerbutton.caption //(Ghost) Explorer
+{
+	if SHIORI3FW.ShellName != "Radio"
+	{
+		"Elysium"
+		"Tartarus"
+		"Asphodel"
+	}
+}
+
+On_updateplatformbutton.caption //Check SSP Updates
+{
+	if SHIORI3FW.ShellName != "Radio"
+	{
+		"Pray for a Boon"
+	}
+}
+
+On_texttospeechbutton.caption //Voice Synthesis
+{
+	if SHIORI3FW.ShellName != "Radio"
+	{
+		"Use Thine Ears"
+	}
+}
+
+On_addressbarbutton.caption //Address Bar
+{
+	if SHIORI3FW.ShellName != "Radio"
+	{
+		"Jenny? Is that you"
+	}
+}
+
+On_openfolderbutton.caption //Open Folder (E)
+{
+	if SHIORI3FW.ShellName != "Radio"
+	{
+		"Summon thee"
+	}
+}
+
+On_openfilebutton.caption //Open File (I)
+{
+	if SHIORI3FW.ShellName != "Radio"
+	{
+		"Just one"
+	}
+}
+
+On_scriptlogbutton.caption //Script Log
+{
+	if SHIORI3FW.ShellName != "Radio"
+	{
+		"At Clio's Feet"
+	}
+}
+
+On_duibutton.caption //Development Interface
+{
+	if SHIORI3FW.ShellName != "Radio"
+	{
+		"Vivisect"
+	}
+}
+
+On_purgeghostcachebutton.caption //Purge Ghost Cache
+{
+	if SHIORI3FW.ShellName != "Radio"
+	{
+		"And the Underground Will Go Free"
+	}
+}
+
+On_updatefmobutton.caption //FMO Update
+{
+	if SHIORI3FW.ShellName != "Radio"
+	{
+		"Flameo"
+	}
+}
+
+On_reloadinfobutton.caption //Reload Extension Folders
+{
+	if SHIORI3FW.ShellName != "Radio"
+	{
+		"Unwind What Is Known"
+	}
+}
+
+On_switchreloadbutton.caption //Reload Ghost
+{
+	if SHIORI3FW.ShellName != "Radio"
+	{
+		"Be Born Anew"
+	}
+}
+
+On_leavepassivebutton.caption //Reset Passive Mode
+{
+	if SHIORI3FW.ShellName != "Radio"
+	{
+		"Ten of Swords (Inverted)"
+	}
+}
+
+On_switchreloadtempghostbutton.caption //Keep Temporary Ghost
+{
+	if SHIORI3FW.ShellName != "Radio"
+	{
+		"A Kernel"
+	}
+}
+
+On_switchmovetodefaultpositionbutton.caption //Reset Shell Position
+{
+	if SHIORI3FW.ShellName != "Radio"
+	{
+		"Welcome Home"
+	}
+}
+
+On_resetballoonpositionbutton.caption //Reset Balloon Position
+{
+	if SHIORI3FW.ShellName != "Radio"
+	{
+		"Words Like Tethered Hawks"
+	}
+}
+
+On_closeballoonbutton.caption //Hide All Balloons
+{
+	if SHIORI3FW.ShellName != "Radio"
+	{
+		"Cut Out Thy Tongue"
+	}
+}
+
+
+//Options
+On_configurationrootbutton.caption //Options
+{
+	if SHIORI3FW.ShellName != "Radio"
+	{
+		"Remake Me"
+	}
+}
+
+On_configurationbutton.caption //Preferences...
+{
+	if SHIORI3FW.ShellName != "Radio"
+	{
+		"Kill what I am and have been"
+	}
+}
+
+On_switchproxybutton.caption //Enable Proxy
+{
+	if SHIORI3FW.ShellName != "Radio"
+	{
+		"A New Home...?"
+	}
+}
+
+On_charsetbutton.caption //Set Default Charset
+{
+	if SHIORI3FW.ShellName != "Radio"
+	{
+		"Glyphs"
+	}
+}
+
+On_switchtalkghostbutton.caption //Raise AI Talk From SHIORI
+{
+	if SHIORI3FW.ShellName != "Radio"
+	{
+		"Commune with the Dead"
+	}
+}
+
+
+On_switchcompatiblemodebutton.caption //Old Specification Support
+{
+	if SHIORI3FW.ShellName != "Radio"
+	{
+		"Am I the Real Ship of Theseus"
+	}
+}
+
+
+On_ghostrootbutton.caption //Caption for the change ghost button: Change Ghost
+{
+	if SHIORI3FW.ShellName == "Radio"
+	{
+		"Switch Ghost"
+	}
+	else
+	{
+		"A Life for a Life"
+	}
+}
+
+On_callghostrootbutton.caption //Caption for the call ghost button: Call Ghost (Z)
+{
+	if SHIORI3FW.ShellName == "Radio"
+	{
+		"Summon Ghost"
+	}
+	else
+	{
+		"Play Orpheus"
+	}
+}
+
+
+On_shellrootbutton.caption //Caption for the change shell button: Shell
+{
+	if SHIORI3FW.ShellName != "Radio"
+	{
+		"Abalone"
+	}
+}
+
+On_dressuprootbutton.caption //Caption for the dressup button: Clothes/Dressup
+{
+	if SHIORI3FW.ShellName != "Radio"
+	{
+		"Arm Thyself"
+	}
+}
+
+On_balloonrootbutton.caption //Balloon
+{
+	if SHIORI3FW.ShellName != "Radio"
+	{
+		"Font Synesthesia (Current)"
+	}
+}
+
+
+//History
+On_historyrootbutton.caption //History (Y)
+{
+	if SHIORI3FW.ShellName != "Radio"
+	{
+		"The Weave and Weft"
+	}
+}
+
+On_ghosthistorybutton.caption //Change Ghost
+{
+	if SHIORI3FW.ShellName != "Radio"
+	{
+		"Eurydice"
+	}
+}
+
+On_callghosthistorybutton.caption //Call Ghost (Z)
+{
+	if SHIORI3FW.ShellName != "Radio"
+	{
+		"Sweet Proserpina"
+	}
+}
+
+On_balloonhistorybutton.caption //Balloon
+{
+	if SHIORI3FW.ShellName != "Radio"
+	{
+		"Font Synesthesia (Past)"
+	}
+}
+
+On_headlinesensehistorybutton.caption //Headline
+{
+	if SHIORI3FW.ShellName != "Radio"
+	{
+		"A Letter Arrived Too Late"
+	}
+}
+
+On_pluginhistorybutton.caption //Plugin
+{
+	if SHIORI3FW.ShellName != "Radio"
+	{
+		"Caltrops"
+	}
+}
+
+
+//Information
+On_inforootbutton.caption //Information
+{
+	if SHIORI3FW.ShellName != "Radio"
+	{
+		"More on Heaven and Earth"
+	}
+}
+
+On_firststaffbutton.caption //About SSP...
+{
+	if SHIORI3FW.ShellName != "Radio"
+	{
+		"Am I Still the Ship of Theseus?"
+	}
+}
+
+On_readmebutton.caption //Caption for the Readme button: About This Ghost...
+{
+	if SHIORI3FW.ShellName != "Radio"
+	{
+		"Edict"
+	}
+	else
+	{
+		"Readme"
+	}
+}
+
+On_termsbutton.caption //Terms of this Ghost...
+{
+	if SHIORI3FW.ShellName != "Radio"
+	{
+		"Sign the Pact!"
+	}
+	else
+	{
+		"Terms of Use"
+	}
+}
+
+On_helpbutton.caption //Help
+{
+	if SHIORI3FW.ShellName != "Radio"
+	{
+		"Beg for Aid"
+	}
+	else
+	{
+		"Halp"
+	}
+}
+
+On_aistatebutton.caption //AI Graph
+{
+	if SHIORI3FW.ShellName != "Radio"
+	{
+		"The Patterns of My Body"
+	}
+}
+
+On_rateofusebutton.caption //Ghost Usage Statistics (D)
+{
+	if SHIORI3FW.ShellName != "Radio"
+	{
+		"Population"
+		"Demographics"
+	}
+}
+
+On_systeminfobutton.caption //Output System Information
+{
+	if SHIORI3FW.ShellName != "Radio"
+	{
+		"Tell Me Who I Am"
+	}
+}
+
+
+On_hidebutton.caption //Caption for the minimize/iconify button: Iconify/Minimize
+{
+	if SHIORI3FW.ShellName != "Radio"
+	{
+		"Shun"
+	}
+	else
+	{
+		"Minimize"
+	}
+}
+
+On_closebutton.caption //Close (W)
+{
+	if SHIORI3FW.ShellName != "Radio"
+	{
+		"Flee"
+	}
+	else
+	{
+		"Close Ghost"
+	}
+}
+
+On_quitbutton.caption //Caption for the quit button: Quit (X)
+{
+	if SHIORI3FW.ShellName != "Radio"
+	{
+		"The name of the end of all."
+	}
+	else
+	{
+		"Close All"
+	}
+}
+
+//Missing captions:
+//Language
+//Additional Settings (Same as Ghost Preferences)
+//Speech Recognition (I)
+//Ghost Preferences
+//[Compatibility]
+
+
+//where are these?
+
+On_alignrootbutton.caption
+{
+	"24601"
+}
+
+On_alwaysstayontopbutton.caption
+{
+	"Where I Can See All"
+}
+
+On_alwaystrayiconvisiblebutton.caption
+{
+	"Can you hear me?"
+}
+
+On_biffallbutton.caption
+{
+	"How Many Messages Now?"
+}
+On_activaterootbutton.caption
+{
+	"Who am I?"
+}
+
+On_definedsurfaceonlybutton.caption
+{
+	"A Map of Her Body"
+}
+
+On_enableballoonmovebutton.caption
+{
+	"Architects of Babel"
+}
+
+On_resettodefaultbutton.caption
+{
+	"Fresh-faced Babe"
+}
+
+On_switchactivatewhentalkbutton.caption
+{
+	"Vox!"
+}
+
+On_switchactivatewhentalkexceptupdatebutton.caption
+{
+	"O %(username)!"
+}
+
+On_switchdeactivatebutton.caption
+{
+	"Nemo My Name Forevermore"
+}
+
+On_switchdontactivatebutton.caption
+{
+	"My Name is No-One"
+}
+
+On_switchdontforcealignbutton.caption
+{
+	"Pass the River Lethe"
+}
+
+On_switchforcealignfreebutton.caption
+{
+   "Always the name of free movement."
+}
+
+On_switchforcealignlimitbutton.caption
+{
+   "Always the name of the restriction."
+}
+
+On_switchignoreserikomovebutton.caption
+{
+	"A Pair of Lead Shoes"
+}
+
+On_switchquietbutton.caption
+{
+	"Gag Him"
+}
+
+On_dictationbutton.caption
+{
+	"Use Thy Mouth Words"
+}
+
+
+
+
+
+
+//Material Needs?
+On_callsstpsendboxbutton.caption
+{
+	"Oracle"
+}
+
+On_collisionvisiblebutton.caption
+{
+	"Find me"
+}
+
+On_debugballoonbutton.caption
+{
+	"Covered in Crawling Vermin"
+}
+
+On_ghostinstallbutton.caption
+{
+	"Plea to Hecate"
+}
+
+On_rateofuseballoonbutton.caption
+{
+	"Chatterbox..."
+}
+
+On_rateofuserootbutton.caption
+{
+	"Crime"
+}
+
+On_rateofusetotalbutton.caption
+{
+	"Deep Pools"
+}
+
+On_regionenabledbutton.caption
+{
+	"[[VPN]]"
+}
+
+On_switchautobiffbutton.caption
+{
+	"The Party Can Always Find YOU!"
+}
+
+On_switchautoheadlinesensebutton.caption
+{
+	"Cry, courier"
+}
+
+On_switchblacklistingbutton.caption
+{
+	"Hollywood Undead"
+}
+
+On_switchconsolealwaysvisiblebutton.caption
+{
+	"The True Name?"
+}
+
+On_switchconsolevisiblebutton.caption
+{
+	"Radic..."
+}
+
+On_switchduivisiblebutton.caption
+{
+	"Material Needs"
+}
+
+On_switchlocalsstpbutton.caption
+{
+	"A Parallel Home"
+}
+
+On_switchremotesstpbutton.caption
+{
+	"Distant lover"
+}
+
+On_switchrootbutton.caption
+{
+	"Levers"
+}
+
+
+
+
+/*
+?????? will need to fiddle more
+On_getaistate
+{
+	//"1250,1500,45,65,19500,54[b1]silverblood,green eyes,howling wind,howls,shimmer,axis[b1]100,50,40,0,0,1[b1]1350,1550,130,96,20000,800[b1]"
+
+}
+*/
+
+//----------toggle accessibility of ssp menu(s)----------
+
+On_sakura.popupmenu.visible
+{
+ 	if brokenlink != "Off"
+ 	{
+		"1"
+	}
+	else
+	{
+		"0"
+	}
+}
+
+
+On_kero.popupmenu.visible
+{
+ 	if brokenlink != "Off"
+ 	{
+		"1"
+	}
+	else
+	{
+		"0"
+	}
+}
+
+OnShellChanging
+// (＾＾)ｂ Inbuilt!
+{
+	"Going from %(reference1) to %(reference0)!\w6\w6"
+	LOGGING("%reference0 and %(reference1)=====")
+}
+
+OnShellChanged
+// (＾＾)ｂ Inbuilt!
+{
+	"%(s0)"
+	--
+	if reference0 == "Ship"
+	{
+		"I'm\w7\w7     a boat.\e"
+	}
+	elseif reference0 == "Radio"
+	{
+		"Is there anybody alive out there?\e"
+	}
+	LOGGING("%reference0")
+}
+
+
+OnSpeakerMenu
+{
+	"%(s0)\b2\_q\f[align,center]Change the speaker?\n\n/
+	\q[Art Deco,OnSpeaker,0]\n/
+	\q[Asclepioid,OnSpeaker,1]\n/
+	\q[Arabesque,OnSpeaker,2]\n/
+	\q[Fat Deco,OnSpeaker,3]\n\n/
+	\q[Done,Cancel]\e"
+	
+}
+
+OnSpeaker
+{
+	_value = reference0
+	speakeris = TOINT(_value)
+	--
+	OnSpeakerMenu
+}
+
+OnSurfaceRestore
+// (＾＾)ｂ Inbuilt!
+{
+	"\0\s[%(reference0)]\1\s[%(reference1)]"
+}
+
+//---- 소멸 지시 버튼 표시 교체 -------------------------------------------------------
+On_vanishbutton.visible
+ {
+ 	if deleteshitai == "On"
+ 	{
+		"1"
+	}
+	else
+	{
+		"0"
+	}
+}
+
+//---- SHIORI 関連情報 ------------------------------------------------------------------
+On_version
+{
+	GETSETTING(AYAINFO_VERSION)
+}
+
+On_craftman
+{
+	"umeici"
+}
+
+On_craftmanw
+{
+	"梅市"
+}
+
+On_name
+{
+	"AYA"
+}
+
+//---- Owned SSTP 用 uniqueid 取得 ------------------------------------------------------
+On_uniqueid
+{
+	uniqueid = reference0
+}
+
+//---- hwnd 取得 ------------------------------------------------------------------------
+On_hwnd
+{
+	sakurahwnd    = reference0[0]
+	kerohwnd      = reference0[1]
+	sakurablnhwnd = reference1[0]
+	keroblnhwnd   = reference1[1]
+}
+
+On_username
+{
+	username
+}

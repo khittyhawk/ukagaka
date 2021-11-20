@@ -1,0 +1,54 @@
+OnSalads
+//a function that runs the input through a caesar cipher!
+//it takes a number for the substitution location (i.e., '13' would be the letter in the alphabet 13 letters away from from the initial one) and whatever text you want to encode.
+//this should be able to handle capitals, lowercase, numbers, whitespace, apostrophes, commas, and other punctuation, BUT CANNOT parse double quotes (") without breaking. Be warned.
+{
+	_init = reference //take the arguments as an array. This way, we can handle strings with commas in them
+	_initlen = ARRAYSIZE(_init)
+	_cipher = reference[0] //the substitution place //because our input is an array, we need reference[0] not reference0
+	_input = TOSTR(reference[1,_initlen]) //the string being input //there may be an inbuilt way to get all of an array save for the first value, but i couldn't find it, so that's why we needed to grab the arraysize
+	
+	LOGGING("reference 0 is %_cipher, reference the rest is %_input====") //I'll leave this logging line in for anyone who wants to test for themselves.
+	
+	_lower = ('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z')
+	_upper = ('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z')
+	//rather than keep a list of locations of uppercase letters, i figure just throw in another array and for loop ¯\_(ツ)_/¯
+	
+	//we need to set local variables beforre the for loop or else we won't be able to access them
+	_val = "" //will hold each character of the input string
+	_pos = "" //will hold where the character in question is located in the string
+	_len = STRLEN(_input) //length of the string, so the loop knows when to stop
+
+	_output = IARRAY //this is where we will put everything we want to return
+	
+	for _i = 0; _i < _len; _i++ //cycle through input string
+	{
+		_val = SUBSTR(_input,_i,1) //set a variable to each bit of the input string //the substring function takes the input, the starting position, and how many characters
+		_pos = ASEARCH(TOLOWER(_val),_lower) //find the position of the letter in the arrays; we just pick lower cause we feel like it
+		//NOTE: make sure you don't lowercase _val entirely, otherwise you'll lose the case of the letter!
+		
+		
+		//how is modulo formed
+		//basically the modulo (%) operation takes the remainder, which works out to be how many places from the start of the array/alphabet the substitution works out to
+		_rot = ((_pos + _cipher) % ARRAYSIZE(_lower))
+		
+		if ASEARCH(_val,_lower) != -1 //if the letter exists in the lowercase string (and is thus lowercase)
+		{
+			_output += _lower[_rot]
+		}
+		elseif ASEARCH(_val,_upper) != -1 //same but with uppercase
+		{
+			_output += _upper[_rot]
+		}
+		else //if it's a number or space or something
+		{
+			_output += _val
+		}
+		
+	_output = TOSTR(_output) //just want to make sure it outputs as a string since we set _output to an array earlier, and i think we append it as though it's an array
+	}
+	_output //here's where (and what) we return
+	LOGGING("%_output is what we've got=====")
+}
+//if you want to add more arguments to this function, please add them *before* the string you want to translate. this function can parse commas because it takes all the arguments as an array and everything after the argument that sets the cipher distance is treated as the string. If you add more arguments, make sure you change the array position _input starts with as well
+//to call this function, use: "\![raise,OnSalads,substitution position,string you want translated]"

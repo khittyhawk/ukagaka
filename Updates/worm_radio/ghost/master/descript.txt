@@ -1,0 +1,24 @@
+charset,UTF-8
+
+name,Radio Nowhere
+type,ghost
+
+sakura.name,Radio Sakura
+kero.name,Radio Kero
+
+craftman,Wormspawn
+craftmanw,Wormspawn
+craftmanurl,https://khittyhawk.github.io/Ukagaka/Updates/worm_radio
+
+sstp.allowunspecifiedsend,0
+shiori,yaya.dll
+
+
+//get rid of that stupid shell master error
+seriko.defaultsurfacedirectoryname,Radio
+
+//http://www.convertico.com/ is handy for making .icos
+icon,rtower.ico
+//icon.minimize,filename.ico
+balloon,broadcast
+recommended.balloon,broadcast //Recommended balloon name. If you try to switch to anything else, you will get a strong warning.

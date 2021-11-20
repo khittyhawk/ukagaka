@@ -1,0 +1,349 @@
+OnFirstBoot
+// (＾＾)ｂ Inbuilt function! reference0 is how many times the user has uninstalled the ghost
+{
+	InitFirstBoot	
+	"\0\s[0]Cong\_q- bzzt -\_q unlocked the secret frequency\_q- bzzt -\_q broadcast all the ideas \f[italic,1]they\f[italic,0]\_q- bzzt - kept contained!\n\nHeresy!\w5 Earworms!\w5 Memetic hazards!\w5\_q- bzzt -\_qthing else \f[italic,1]they\f[italic,0] don't want you to hear!\w7\1\s[0]\_q- bzzt -\_q\w5\w5\e"
+}
+
+OnBoot
+// (＾＾)ｂ Inbuilt!
+{
+	_currentshell = reference0
+	RebootVars
+	UpdateVars
+	OnTimeDifference
+	--
+	if (openSec-closingSec) < 400
+	{
+		"%(s0)Hera's \_b[censored.png,inline,opaque]! Must you drag me hither and thither so?\e"
+	}
+	else
+	{
+		"%(s0)Have I changed since we last met?"
+		"%(s0)Latest developments%(lps4)"
+		"%(s0)Frequency: accessed."
+	}
+}
+
+
+OnTimeDifference
+{
+	LOGGING("i am being called")
+	_output
+	if (closingSec-openSec) > 0
+	{
+		_output = closingSec-openSec
+		LOGGING("time out is %_output")
+		timeOut += _output
+	}
+	elseif (openSec-closingSec) > 0
+	{
+		_output = openSec-closingSec
+		LOGGING("time here is %_output")
+		timeHere += _output
+	}
+	else
+	{
+		LOGGING("It looks like there's been an error!")
+	}
+}
+
+//also (＾＾)ｂ Inbuilt!
+//OnDressupChanged {//self-explanatory}
+
+OnGhostChanging
+// (＾＾)ｂ Inbuilt!
+{
+	if reference0 == reference2
+	{
+		"%(s0)I shall return\e"
+	}
+	else
+	{
+		anotherspoopy = reference2
+		if SHIORI3FW.IsVisible[1] == 1
+		{
+			"%(k0)\![set,balloonwait,0.5]What do you hear?\w6 What do you hear?\w6"
+		}
+		--
+		"%(s0)\![set,balloonwait,1.5]%(raveyard).\w8\w8"
+	}
+}
+
+OnGhostChanged
+// (＾＾)ｂ Inbuilt!
+{
+	OnMoonphase
+	--
+	if reference0 == sakuraname
+	{
+		RebootVars
+		"%(s0)"
+	}
+	else
+	{
+		anotherspoopy = reference2
+		"%(s0)"
+		--
+		if SHIORI3FW.IsVisible[1] == 1
+		{
+			"%(k0)\![set,balloonwait,0.5]What did you see?\w6 What did you see?\w6"
+		}
+		--
+		"%(s0)\![set,balloonwait,1.5]%(raveyard)."
+	}
+
+}
+
+OnGhostCallComplete
+// (＾＾)ｂ Inbuilt!
+{
+	anotherspoopy = reference2
+	if SHIORI3FW.IsVisible[1] == 1
+	{
+		"%(k0)\![set,balloonwait,0.5]What do you see?\w6 What do you see?\w6"
+	}
+	--
+	"%(s0)\![set,balloonwait,1.5]%(raveyard)."
+}
+
+OnOtherGhostBooted
+// (＾＾)ｂ Inbuilt!
+{
+	anotherspoopy = reference2
+	if SHIORI3FW.IsVisible[1] == 1
+	{
+		"%(k0)\![set,balloonwait,0.5]What do you smell?\w6 What do you smell?\w6"
+	}
+	--
+	"%(s0)\![set,balloonwait,1.5]%(raveyard)."
+}
+
+OnOtherGhostClosed
+// (＾＾)ｂ Inbuilt!
+{
+	anotherspoopy = reference2
+	if SHIORI3FW.IsVisible[1] == 1
+	{
+		"%(k0)\![set,balloonwait,0.5]What did you see?\w6 What did you see?\w6"
+	}
+	--
+	"%(s0)\![set,balloonwait,1.5]%(raveyard)."
+}
+
+OnWindowStateMinimize
+// (＾＾)ｂ Inbuilt!
+{
+	iskero = SHIORI3FW.IsVisible[1]
+	"%(s0)\_qPsst! You just minimized me. Didja mean to do that? Right click the tray icon (the purple boat) or CTRL+I to restore.\x\e"
+}
+
+OnWindowStateRestore
+// (＾＾)ｂ Inbuilt!
+{
+	"%(s0)I have exited hiberation. lol idk."
+	--
+	if iskero == 1
+	{
+		"%(k0)\e"
+	}
+	else
+	{
+		"\e"
+	}
+}
+
+OnBasewareUpdating
+// (＾＾)ｂ Inbuilt!
+{
+	"%(s0)\![set,balloonwait,3]I can feel it slouching forth.\e"
+}
+
+OnBasewareUpdated
+// (＾＾)ｂ Inbuilt!
+{
+	if SHIORI3FW.IsVisible[1] == 1
+	{
+		"%(k0)\![set,balloonwait,0.5]What was that?\w6 What was that?\w6"
+	}
+	--
+	"%(s0)\![set,balloonwait,1.5]%(raveyard)."
+}
+
+OnSysSuspend
+// (＾＾)ｂ Inbuilt!
+{
+	naptime = GETTIME()
+	LOGGING("suspended~~~~~~~~~~~~~~~~~~~~~~~")
+}
+
+OnSysResume
+// (＾＾)ｂ Inbuilt!
+{
+	//call the 
+	risetime = GETTIME()
+	if risetime[0] != naptime[0] || risetime[7] != naptime[7]
+	{
+		highesttemp = ""
+		dawntime = ""
+		dusktime = ""
+		OnGetSomeWeather
+		moonmoon = OnMoonphase
+	}
+	LOGGING("~~~~~~~~~~~~~~~~~~~~~~~restored")
+	
+}
+
+
+OnRefresh
+{
+	"%(s0)I shall come again.\w8\w8\![reload,ghost]"
+}
+
+
+OnClose
+// (＾＾)ｂ Inbuilt!
+{
+	CloseVars
+	OnTimeDifference
+	"%(s0)Let us take our leave\w8\w8\-\e"
+}
+
+RebootVars
+{
+	if (GETTIME()[7] != closingTime[7]) || (GETTIME()[0] != closingTime[0])
+	//if the year is different OR the day is different
+	{
+		highesttemp = ""
+		dawntime = ""
+		dusktime = ""
+		OnGetSomeWeather
+	}
+	--
+	lastTalk = ""
+	waitingcommuS = IARRAY
+	waitingcommuM = IARRAY
+	huggingboats = 0
+
+	runtime[0] = 0
+	runtime[1] = 0
+	runtime[2] = 0
+	openSec = GETSECCOUNT()
+	openingTime = GETTIME()
+	stroke[0] = 0
+	stroke[1] = 0
+	
+	moonmoon = OnMoonphase
+	--
+	"\![get,property,OnMe,currentghost.scope(0).rect]/
+	\![get,property,OnMe2,currentghost.scope(1).rect]"
+}
+
+CloseVars
+{
+	realtemp = ""
+	feeltemp = ""
+	windthing = ""
+	weatheris = ""
+	toomoist = ""
+	closingSec = GETSECCOUNT() //in seconds since 1970/1/1 00:00:00 //yyyy mm dd wd HH MM SS
+	closingTime = GETTIME()
+	//(Year, month, day, day of the week (0-6), hour, minute, second, number of days from the beginning of the year, daylight saving time [0 = false/1 = true])
+	emptymenu = IARRAY
+}
+
+
+
+OnVanishSelecting
+// (＾＾)ｂ Inbuilt!
+{
+	if SHIORI3FW.IsVisible[1] == 1
+	{
+		"%(k0)\![set,balloonwait,0.5]What is it?\![set,balloonwait,1.2]I can feel it%(lps6) looming%(lps8)%(s0)\![set,balloonwait,1.5]A pall.\e"
+	}
+	else
+	{
+		"%(s0)\![set,balloonwait,1.5]%(lps6)A pall encroaches.\e"
+	}
+}
+
+OnVanishSelected
+// (＾＾)ｂ Inbuilt!
+{
+	if SHIORI3FW.ShellName == "Radio"
+	{
+		"%(s0)Signal lost.\w8\w8"
+		"%(s0)...cinco seis dos ocho seis seis cero\w6\w6"
+	}
+	"%(s0)\![set,balloonwait,1.5]The name of the end of all%(lps6)\w8\e"
+	"%(s0)\![set,balloonwait,1.5]Omicron\w6\w6, Omega\w8\e"
+	"%(s0)\![set,balloonwait,1.5]Am%(lps6) I%(lps6) still%(lps6)?\w8\e"
+}
+
+OnVanishCancel
+// (＾＾)ｂ Inbuilt!
+{
+	if SHIORI3FW.ShellName == "Radio"
+	{
+		if (curloc != "") || (curloc != " : ") || (curloc != " ")
+		{
+			"%(a1)This is radio free %(curloc[0])"
+		}
+		"%(a1)Connection restored\e"
+	}
+	"%(s0)\![set,balloonwait,1.5]Staving off the inevitable?\e"
+	"%(s0)That phrase... a 'perverse sentimentality'?\e"
+	"%(s0)\![set,balloonwait,1.5]Entropy%(lps6) increases\e"
+	"%(s0)%(lps6)Are we really still so amusing to another?\e"
+}
+
+OnVanishButtonHold
+// (＾＾)ｂ Inbuilt!
+{
+	"%(a1)The taste of%(lps6) a warning shot\e"
+	"%(s0)Gunboat diplomacy\e"
+}
+
+
+//These are new variables to initialize after an update. By checking if the variable doesn't exist before initializing it, we prevent variables already in use from being overwritten. This is VERY IMPORTANT, or you risk resetting the user's progress on your new variables every time they update!
+//ISVAR is a built in YAYA function that checks if a variable exists (is initialized) or not. It returns 0 if the variable doesn't exist, and 1 if it does.
+UpdateVars
+{
+	//
+}
+
+InitFirstBoot
+{
+	installdate = ("%(year)","%(month)","%(day)","%(hour)","%(minute)","%(second)","%(ghostver)") //This tracks the exact day and time the ghost was installed, in case you want to mess around with that later. It also tracks what version the user installed, which may be helpful for debugging!
+	runtime[0] = 0		//Hours, replaces passhour
+	runtime[1] = 0		//Minutes, replaces passmin
+	runtime[2] = 0		//Seconds, replaces passsec
+	timeOut = 0 //total time the ghost has been closed since installation
+	timeHere = 0 //total time the ghost has been run since installation
+	
+	stroke[0] = 0
+	stroke[1] = 0
+	stroke[2] = 0
+	
+	lastTalk = ""
+	talkrate = "every 10 minutes"
+	aitalkinterval = 600
+	offscreen = IARRAY
+	waitingcommuS = IARRAY //These two arrays handle the non-interrupt system for communication. They're for storing messages from other ghosts when your ghost is busy talking.
+	waitingcommuM = IARRAY
+
+	updortresult = IARRAY
+	
+	urname = "My good bitch"
+	keywords = IARRAY
+	
+	nowscale = 100
+	moonmoon = OnMoonphase
+	//mouse_interaction_variables
+	--
+	"\![get,property,OnMe,currentghost.scope(0).rect]/
+	\![get,property,OnMe2,currentghost.scope(1).rect]"
+
+	deleteshitai = "Off"
+	
+}

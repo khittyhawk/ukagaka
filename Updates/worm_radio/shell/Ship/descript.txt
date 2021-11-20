@@ -1,0 +1,116 @@
+//Shell descript
+//make a custom menu for ship of theseus
+
+//Free or Bound
+//Free = ghost can be moved around the desktop by the user
+//Top/Bottom = the ghost will be locked to the top or bottom of the screen (ex: the hypothetical amphioxus coming out of the seafloor)
+seriko.alignmenttodesktop,free
+
+
+//Use_self_alpha
+//otherwise you'll need to use pna files for the shell, which are apparently a hassle?
+seriko.use_self_alpha,1
+
+
+//General Information
+//replace Default and none with the name of your shell and your website for the ghost, respectively
+
+charset,UTF-8
+type,shell
+name,Ship
+craftman,Worm
+craftmanurl,none
+
+
+
+
+//Balloon Coordinates
+//where the balloon starts in relation to sakura and kero. Copy the (x,y) coordinates below
+//Alignment = left, right, or none
+//none means the balloon will flip in relation to the ghost, whereas _left_ and _right_ are fixed orientations in relation to your ghost
+
+sakura.balloon.offsetx,0
+sakura.balloon.offsety,0
+kero.balloon.offsetx,0
+kero.balloon.offsety,0
+sakura.balloon.alignment,none
+kero.balloon.alignment,none
+
+
+
+//Shiori Icon
+//ribbon icon, i think
+
+shiori.logo.filename,resources/niseshiori.png
+shiori.logo.x,16
+shiori.logo.y,256
+
+
+
+
+//.......####.....####..######.......###....##.######.##...##.##...##....
+//.....##....#..##....#.##...##......####.####.##.....###..##.##...##....
+//.......##.......##....#####........##..#..##.####...####.##.##...##....
+//....#...###..#...###..##...........##.....##.##.....##.####.##...##....
+//.....####.....####....##...........##.....##.######.##..###..#####.....
+
+
+menu.font.name,Lotte Paperfang
+menu.font.height,11
+//Menu Font Color
+//For the right-click SSP menu; Uses rgb values
+//Text color for options that you're not hovering over
+menu.background.font.color.r,122
+menu.background.font.color.g,73
+menu.background.font.color.b,86
+
+
+//Menu Highlighted Text Color
+//Text color for options that you're hovering over
+//second verse, same as the first
+
+menu.foreground.font.color.r,131
+menu.foreground.font.color.g,125
+menu.foreground.font.color.b,72
+
+
+
+//Menu Greyed Out Font Color
+//Text color for options that are disabled/grayed out
+//non-selectable options
+
+menu.disable.font.color.r,155
+menu.disable.font.color.g,155
+menu.disable.font.color.b,155
+
+
+
+//Menu Separate Color
+//Color of the separator bars
+//for the borderlines
+
+menu.separator.font.color.r,200
+menu.separator.font.color.g,200
+menu.separator.font.color.b,200
+
+
+
+
+//Menu Background Image Alignment
+//if you want images in the menu, this controls alignment
+//alignment = lefttop,righttop,centertop
+//sidebar alignment = top,bottom
+
+menu.background.alignment,righttop + repeat-x + repeat-y
+menu.foreground.alignment,righttop + repeat-x + repeat-y
+menu.sidebar.alignment,bottom
+
+
+
+//Menu Background Image Location
+//it's location in your files
+//replace _menu_$$$$.png_ with your filename
+
+menu.background.bitmap.filename,menu_background.png
+menu.foreground.bitmap.filename,menu_foreground.png
+menu.sidebar.bitmap.filename,menu_sidebar.png

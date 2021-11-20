@@ -1,0 +1,160 @@
+OnSecondChange
+// (＾＾)ｂ Inbuilt!
+{
+
+	if reference2 == 1
+	{
+		//if overlapping
+		if huggingboats != 1
+		{
+			overlaptalk
+			huggingboats = 1
+		}
+	}
+	else
+	{
+		huggingboats = 0
+	}
+	--
+	if runtime[2] >= 59
+	{
+		runtime[2] = 0
+		runtime[1]++
+		if runtime[1] >= 59
+		{
+			runtime[1] = 0
+			runtime[0]++
+			totalhours++
+		}
+	}
+	else
+	{
+		runtime[2]++
+	}
+}
+
+OnMinuteChange
+// (＾＾)ｂ Inbuilt!
+{
+	//time since midnight
+	cursec = (hour*60*60) + (minute*60)
+	_isdawn = cursec - dawnsec
+	_isdusk = cursec - dusksec
+	--
+	if remindme == "Allowed"
+	{
+		if (_isdawn > -1800) && (_isdawn < 1800)
+		{
+			//dawn alerts
+		}
+		--
+		if (_isdusk > -1800) && (_isdusk < 1800)
+		{
+			//dusk alerts
+		}
+	}
+	--
+	if minute == 0
+	{
+		if hour == 0
+		{
+			highesttemp = ""
+			dawntime = ""
+			dusktime = ""
+		}
+		--
+		Select.hourtell
+	}
+}
+
+Select.hourtell
+{
+	if optweather != "Off"
+	{
+		"\b2%(tmo)"
+	}
+	--
+	if remindhr == "On"
+	{
+		"It is the hour %hour\n\n"
+	}
+	--
+	OnGetSomeWeather
+}
+
+
+OnMoonphase
+{
+	_interval = 29.53058770576
+	_dayssince = ""
+	//for all you dorks who muck about hooking time
+	if GETTIME()[0] < 2000
+	{
+		_dayssince = ((GETSECCOUNT()-604800)/(86400))
+		//january 7th was the new moon //604800 seconds since UTC 0? or 7 days since
+		//86400 is the number of seconds in a day
+	}
+	elseif GETTIME()[0] < 2020
+	{
+		_dayssince = ((GETSECCOUNT()-947116800)/(86400))
+		//10962 btw UTC 0 and 010100 //in seconds would be ~947116800 from UTC0 to 010100
+	}
+	else
+	{
+		//if you're a normal person
+		//122619 was a new moon, 18256 days from UTC 0 to then
+		//18946-690 = 18256
+		_secs = (18256*86400) //1577318400
+		_dayssince = ((GETSECCOUNT()-1577318400)/(86400))
+		
+	}
+    
+	
+    _moonmath = ((_dayssince)/(_interval))
+	//how many days have passed divided by the complete moon cycle gets how many moon cycles have passed
+    _moonmainder = ((_moonmath - TOINT(_moonmath))*_interval)
+	//the remainder should store how much of a cycle is left over
+	
+	_fullness = (_interval/2)
+	
+	_illumination = ((_moonmainder/_fullness)+0.07)
+	_lumperc = TOINT(ROUND(_illumination*100))
+	LOGGING("%_illumination================")
+	LOGGING("%_dayssince and the intervals passed is %_moonmath and the rest of this cycle is %_moonmainder")
+	case _illumination
+	{
+		when 0.3-0.45
+		{
+			moonmoon = "waxing crescent"
+		}
+		when 0.45-0.55
+		{
+			moonmoon = "half moon"
+		}
+		when 0.55-0.8
+		{
+			moonmoon = "waxing gibbous"
+		}
+		when 0.8-1.3
+		{
+			moonmoon = "full moon"
+		}
+		when 1.3-1.45
+		{
+			moonmoon = "waning gibbous"
+		}
+		when 1.45-1.55
+		{
+			moonmoon = "half moon"
+		}
+		when 1.55-1.8
+		{
+			moonmoon = "waning crescent"
+		}
+		others
+		{
+			moonmath = "new moon"
+		}
+	}
+	moonmoon ,= _lumperc
+}

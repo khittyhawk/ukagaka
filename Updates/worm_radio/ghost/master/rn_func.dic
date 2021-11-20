@@ -1,0 +1,768 @@
+//functions
+
+
+OnFileDropping
+// (＾＾)ｂ Inbuilt!
+{
+	if reference1 == 0
+	{
+		sakuraresponse
+	}
+	elseif reference1 == 1
+	{
+		keroresponse
+	}
+}
+
+OnFileDropEx
+// (＾＾)ｂ Inbuilt!
+{
+	if reference1 == 0
+	{
+		sakuraresponse
+	}
+	elseif reference1 == 1
+	{
+		keroresponse
+	}
+}
+
+OnDirectoryDrop
+// (＾＾)ｂ Inbuilt!
+{
+	if reference1 == 0
+	{
+		sakuraresponse
+	}
+	elseif reference1 == 1
+	{
+		keroresponse
+	}
+}
+
+Select.sakuraresponse
+{
+	if SHIORI3FW.ShellName == 'Radio'
+	{
+		"%(s0)\i[6]"
+	}
+	elseif SHIORI3FW.ShellName == 'Ship'
+	{
+		"\0\s[13]"
+	}
+	else
+	{
+		"%(s0)"
+	}
+}
+
+Select.keroresponse
+{
+	"%(k0)%(lps6)It creaks%(lps6)"
+}
+
+OnUpdateDataCreating
+// (＾＾)ｂ Inbuilt!
+{
+	"Something\w6\w6 %(adj) and\w6\w6 %(ger).\e"
+}
+
+OnUpdateDataCreated
+// (＾＾)ｂ Inbuilt!
+{
+	"It is made whole.\e"
+	"Pharmikon.\e"
+}
+
+OnNarCreating
+// (＾＾)ｂ Inbuilt!
+{
+	ssp_downloads
+	_obj = reference0
+	_file = reference1
+	_id = reference2
+	"%(s0)\![set,balloonwait,1.3]I see %(_id)"
+	--
+	if ASEARCH(_id,dls) != -1
+	{
+		"\w5, one of ours"
+	}
+	--
+	".\w5 It shall bear the scion's name of %(_obj)\w6, and it shall be tethered in Hecate's strands by %(_file)"
+}
+
+OnNarCreated
+// (＾＾)ｂ Inbuilt!
+{
+	"%(s0)The act is seeded and wants to be borne.\e"
+}
+
+OnWallpaperChange
+// (＾＾)ｂ Inbuilt!
+{
+	"%(s0)The world has sundered. Do you see the scar?\e"
+}
+
+OnURLDropped
+// (＾＾)ｂ Inbuilt!
+{
+	"%(s0)A feed from another world%(lps6)\e"
+}
+
+OnFailFail
+{
+	ssp_downloads
+	_ntw = reference0
+	--
+	if ASEARCH(_ntw,ntw) == -1
+	{
+		" Scoremarks of knives bear the telltale runes: %(_ntw)."
+	}
+	elseif ASEARCH(_ntw,ntw) == 0
+	{
+		" It cries, and it cries, and its arms cast forth to reach us, but worlds we inhabit as too askew."
+	}
+	elseif ASEARCH(_ntw,ntw) == 1
+	{
+		" It is an impostor."
+	}
+	elseif ASEARCH(_ntw,ntw) == 2
+	{
+		" %(urname) has slain it."
+	}
+	elseif ASEARCH(_ntw,ntw) == 3
+	{
+		" Three numbers brand its pelt."
+	}
+	elseif ASEARCH(_ntw,ntw) == 4
+	{
+		" The beast it will feed has been slaked by anothere"
+	}
+	elseif ASEARCH(_ntw,ntw) == 5
+	{
+		" The knowledge is forbidden from insciption."
+	}
+	elseif ASEARCH(_ntw,ntw) == 6
+	{
+		" It tastes of poison.\e"
+	}
+	elseif ASEARCH(_ntw,ntw) == 7
+	{
+		" Into the maelstrom, but only to be drowned. No."
+	}
+	elseif ASEARCH(_ntw,ntw) == 8
+	{
+		" The doppelganger is arrested."
+	}
+	elseif ASEARCH(_ntw,ntw) == 9
+	{
+		" I read only lies and labyrinthine lacunae."
+	}
+}
+
+OnURLDropFailure
+// (＾＾)ｂ Inbuilt!
+{
+	_path = reference0
+	_ntw = reference1
+	"%(s0)The thread\w6, %(_path)\w6, has been severed."
+	--
+	OnFailFail(_ntw)
+	--
+	"\e"
+}
+
+OnInstallBegin
+// (＾＾)ｂ Inbuilt!
+{
+	ssp_downloads
+	if (SHIORI3FW.IsVisible[1] == 1)
+	{
+		"%(k0)Did you smell that?%(lps6) \![set,balloonwait,1.1]Did you \f[italic,1]feel\f[italic,0] that?"
+	}
+	--
+	"%(s0)A course has been set. A weight has been laden. Entropy is increased.\n\n%(urname) has accepted the pact.\e"
+	
+}
+
+OnInstallCompleteEx
+// (＾＾)ｂ Inbuilt!
+{
+	_id = reference0
+	_name = reference1
+	_loc = reference2
+	
+	"%(s0)\![set,balloonwait,1.2]It bears the inscription %(_id)"
+	--
+	if ASEARCH(_id,dls) != -1
+	{
+		" It is one of ours."
+	}
+	--
+	"\w8\w8 It broods in %(loc).\e"
+	
+}
+
+OnInstallFailure
+// (＾＾)ｂ Inbuilt!
+{
+	_fail = reference0
+	"%(s0)\![set,balloonwait,1.2]It is stillborn."
+	--
+	if ASEARCH(_fail,fails) == -1
+	{
+		" We shall become haruspex, and discern %(_fail) from its bowels.\e"
+	}
+	elseif ASEARCH(_fail,fails) == 0
+	{
+		" The spell to give it breath is become garbled. It is only lifeless stone.\e"
+	}
+	elseif ASEARCH(_fail,fails) == 1
+	{
+		" It smothered in its teratomas.\e"
+	}
+	elseif ASEARCH(_fail,fails) == 2
+	{
+		" The architecture of its creation has foundered.\e"
+	}
+	elseif ASEARCH(_fail,fails) == 3
+	{
+		" %(urname) has slain it.\e"
+	}
+	elseif ASEARCH(_fail,fails) == 4
+	{
+		" The womb has broken before the quickening.\e"
+	}
+	elseif ASEARCH(_fail,fails) == 5
+	{
+		" It is protected by moldering wards.\e"
+	}
+}
+
+OnInstallRefuse
+// (＾＾)ｂ Inbuilt!
+{
+	_name = reference0
+	_id = reference1
+	_what = reference2
+	"%(s0)\![set,balloonwait,1.2]I cannot touch it. It bears the sigil of another.%(lps8) %(_name)\w6\w6, %(adj) and %(ger)\w6\w6, can bear the weight of %(_what)\w6\w6, this %(_id).\e"
+}
+
+OnInstallReroute
+// (＾＾)ｂ Inbuilt!
+{
+	_name = reference0
+	_id = reference1
+	_what = reference2
+	"%(s0)\![set,balloonwait,1.2]I cannot touch it. It bears the sigil of another.%(lps8) %(_name)\w6\w6, %(adj) and %(ger)\w6\w6, can bear the weight of %(_what)\w6\w6, this %(_id).\e"
+}
+
+
+OnUpdateBegin
+// (＾＾)ｂ Inbuilt!
+{
+	ssp_downloads
+	"%(s0)All things are in flux. The atoms that made you are not the same as reside within you now.\n\n Will we be the same, once we have been changed? Is that even an intelligible question?\e"
+}
+
+OnUpdateReady
+// (＾＾)ｂ Inbuilt!
+{
+	_changes = reference0
+	if (SHIORI3FW.IsVisible[1] == 1)
+	{
+		"%(s0)%(_changes).%(k0)But how many changes is that\w5, truly?\w6%(s0)\n\nCan it even be known?\e"
+	}
+	else
+	{
+		"%(s0)%(_changes).\w5 But what is the true magnitude of such a number?\e"
+	}
+}
+
+OnUpdateComplete
+// (＾＾)ｂ Inbuilt!
+{
+	_win = reference0
+	if ASEARCH(_win,ntwyey) == -1
+	{
+		"%(s0)Some great deed has been achieved\w7, but the hero's name is forever lost."
+	}
+	elseif ASEARCH(_win,ntwyey) == 0
+	{
+		"%(s0)The princess has already been rescued from this castle.\e"
+	}
+	elseif ASEARCH(_win,ntwyey) == 1
+	{
+		_files = reference1
+		_who = reference3
+		"%(s0)The %(_who) has more pieces than it used to - %(ARRAYSIZE(_files)) more.\w7 Was it complete before?\w7 Things are either whole\w6, or they are not\w6, yes?\e"
+	}
+}
+
+OnUpdateFailure
+// (＾＾)ｂ Inbuilt!
+{
+	_ntw = reference0
+	_culprit = reference1
+	_who = reference3
+	OnFailFail(_ntw)
+	--
+	"%(s0)%(_culprit) was the first to fall.\e"
+}
+
+
+//_remaining should be the number of the file that's giving the error, in the order they're being downloaded. currentfile will be the file path.
+OnUpdate.OnMD5CompareFailure
+// (＾＾)ｂ Inbuilt!
+{
+	_currentfile = SPLITPATH(reference0)[2] + SPLITPATH(reference0)[3] //This gets the name and extension of the offending file
+	"%(s0)The '%(_currentfile)' foundered like a lame horse.\w8\w8\e"
+}
+
+OnSNTPBegin
+// (＾＾)ｂ Inbuilt!
+{
+	"%(a1)Time isn't real.\e"
+}
+
+OnSNTPCompare
+// (＾＾)ｂ Inbuilt!
+{
+	_diff = reference3
+
+	if _diff != 0
+	{
+		"%(a1)%(urname), your fake time is less real than this fake time. Sync 'em?\n\n\q[Like a ship,script:\6]    \q[Nah\, I'm good,script:%(a1)\C\n\nEnjoy being fake, doof.\e]"
+	}
+	else
+	{
+		"%(a1)%(urname), your timepieces are equally fake.\e"
+	}
+}
+
+
+OnSNTPCorrect
+// (＾＾)ｂ Inbuilt!
+{
+	_diff = reference3
+	
+	if _diff != 0
+	{
+		"%(a1)Aha, you're a witch, %(urname). How else could you have stymied my attempts to defake your fake time?\e"
+	}
+	else
+	{
+		"%(a1)%(urname), your timepieces are now equally fake.\e"
+	}
+}
+
+OnSNTPFailure
+// (＾＾)ｂ Inbuilt!
+{
+	"%(a1)Time is so fake your attempt to sync up your fake timekeeping pieces broke.\w6\w6 Haha.\e"
+}
+
+
+OnBIFFBegin
+// (＾＾)ｂ Inbuilt!
+{
+	"%(s0)More broadly cast%(lps6)\e"
+}
+
+OnBIFFComplete
+// (＾＾)ｂ Inbuilt!
+{
+	_s = ""
+	_num = "its"
+	if reference0 != 1
+	{
+		_s = "s"
+		_num = "their"
+	}
+	--
+	"%(s0) %reference0 thread%(_s) broadly cast and found %(_num) way into your snare.\w8 Shall I name them for you?\n\n\q[Yes,script:%(_namemails)]  \q[No,script:\e]"
+	
+	_namemails = reference7
+}
+
+OnBIFFFailure
+// (＾＾)ｂ Inbuilt!
+{
+	"%(s0)The scream of the universe's primal birth has interrupted Hecate's net. They vibrate in the form of %reference0. Perhaps your POP settings are incorrect?\e"
+}
+
+
+OnBatteryLow
+// (＾＾)ｂ Inbuilt!
+{
+	"%(s0)Dallying with nonexistence, are we?\e"
+}
+
+OnBatteryCritical
+// (＾＾)ｂ Inbuilt!
+{
+	"%(a1)Plug in your damn computer, %(urname).\e"
+}
+
+OnSetVar
+{
+	LOGGING("%reference0 and %reference1=====")
+	if reference1 == "_+"
+	{
+		EVAL("%(reference0)++")
+		LOGGING("%reference0 and %reference1=====")
+	}
+	elseif reference1 == "_-"
+	{
+		EVAL("%(reference0)--")
+		LOGGING("%reference0 and %reference1=====")
+	}
+	else
+	{
+		void EVAL("%(reference0)=%(reference1)")
+	}
+}
+//ISFUNC()
+//ISVAR()
+/*
+
+
+    0: Function does not exist
+    1: User function exists
+    2: System function exists
+*/
+
+OnKeyPress
+// (＾＾)ｂ Inbuilt!
+{
+	if reference0 == 'r'
+	{
+		OnLastTalk
+	}
+	elseif reference0 == 't'
+	{
+		OnAiTalk
+	}
+}
+
+On_installedshellname
+// (＾＾)ｂ Inbuilt! (kind've)
+{
+	abalone = reference
+	labalone = ARRAYSIZE(abalone)
+}
+
+On_otherghostname
+// (＾＾)ｂ Inbuilt! (kind've)
+{
+	ghostexlist = reference
+	ghostexcount = ARRAYSIZE(ghostexlist)
+}
+
+On_installedballoonname
+// (＾＾)ｂ Inbuilt! (kind've)
+{
+	balloonlist = reference
+	ballooncount = ARRAYSIZE(balloonlist)
+}
+
+
+OnNotifyFontInfo
+// (＾＾)ｂ Inbuilt!
+{
+	thesefonts = ARRAYSIZE(reference)
+	morefonts = ASORT(reference)
+
+}
+
+OnBalloonChange
+// (＾＾)ｂ Inbuilt!
+{
+	"\C\b2"
+	--
+}
+
+
+
+OnUpdateCheckResult
+// (＾＾)ｂ Inbuilt!
+{
+	updortresult[0] = (reference0[0],reference0[1],reference0[2])
+
+}
+
+OnUpdateCheckFailure
+// (＾＾)ｂ Inbuilt!
+{
+	updortresult = (updortresult,reference0,reference3,reference4)
+
+}
+
+OnVanished
+// (＾＾)ｂ Inbuilt!
+{
+	if SHIORI3FW.IsVisible[1] == 1
+	{
+		"%(k0)\![set,balloonwait,0.4]What was that?\w6 What was that?\w6 What was that?\w6"
+	}
+	--
+	"%(s0)\![set,balloonwait,1.5]%(billdoor).\e"
+}
+
+OnOtherGhostVanished
+// (＾＾)ｂ Inbuilt!
+{
+	if SHIORI3FW.IsVisible[1] == 1
+	{
+		"%(k0)\![set,balloonwait,0.4]What was that?\w6 What was that?\w6 What was that?\w6"
+	}
+	--
+	"%(s0)\![set,balloonwait,1.5]%(billdoor).\e"
+}
+
+
+OnTestW
+{
+	"\b2\_qHow long (in ms) to pause?\n\n/
+	\![*]\q[50 (w1),OnTestPause,1]\n/
+	\![*]\q[100 (w2),OnTestPause,2]\n/
+	\![*]\q[150 (w3),OnTestPause,3]\n/
+	\![*]\q[200 (w4),OnTestPause,4]\n/
+	\![*]\q[250 (w5),OnTestPause,5]\n/
+	\![*]\q[300 (w6),OnTestPause,6]\n/
+	\![*]\q[350 (w7),OnTestPause,7]\n/
+	\![*]\q[400 (w8),OnTestPause,8]\n/
+	\![*]\q[450 (w9),OnTestPause,9]\n/
+	\![*]\q[Custom amount?,OnTestPause,custom]\n\n/
+	\![*]\q[Main Menu,OnMenuRunPre]    \![*]\q[Cancel,Cancel]"
+
+}	
+
+OnTestPause
+{
+	_interval = reference0
+	_valuec = ""
+	_valuep = ""
+	if _interval == "custom"
+	{
+		"\![open,inputbox,OnTestPause,-1,--text=Enter an integer]"
+	}
+	elseif GETTYPE(_interval) != 1
+	{
+		"\![open,inputbox,OnTestPause,-1,--text=Enter an integer]"
+	}
+	elseif _interval < 10
+	{
+		_valuec = INSERT(",\w",3,TOSTR(_interval))
+		_valuep = INSERT(".\w",3,TOSTR(_interval))
+		
+		_talk = Select.wordswordswords
+
+		_talk = REPLACE(_talk,'.',_valuep)
+		_talk = REPLACE(_talk,',',_valuec)
+		--
+		"%(_talk)\n\n"
+	}
+	else
+	{
+		_valuec = INSERT(",\_w[]",5,TOSTR(_interval))
+		_valuep = INSERT(".\_w[]",5,TOSTR(_interval))
+		
+		_talk = Select.wordswordswords
+
+		_talk = REPLACE(_talk,'.',_valuep)
+		_talk = REPLACE(_talk,',',_valuec)
+		--
+		"%(_talk)\n\n"
+	}
+	--
+	OnTestW
+}
+
+
+//:'##:::::'##:'########::::'###::::'########:'##::::'##:'########:'########::
+//: ##:'##: ##: ##.....::::'## ##:::... ##..:: ##:::: ##: ##.....:: ##.... ##:
+//: ##: ##: ##: ##::::::::'##:. ##::::: ##:::: ##:::: ##: ##::::::: ##:::: ##:
+//: ##: ##: ##: ######:::'##:::. ##:::: ##:::: #########: ######::: ########::
+//: ##: ##: ##: ##...:::: #########:::: ##:::: ##.... ##: ##...:::: ##.. ##:::
+//: ##: ##: ##: ##::::::: ##.... ##:::: ##:::: ##:::: ##: ##::::::: ##::. ##::
+//:. ###. ###:: ########: ##:::: ##:::: ##:::: ##:::: ##: ########: ##:::. ##:
+//::...::...:::........::..:::::..:::::..:::::..:::::..::........::..:::::..::
+
+
+
+
+OnLoc
+{
+	"\C\n\n%(s0)To activate this feature, please go to \_a[https://www.wunderground.com/]Weather Underground\_a, search your location, and input the URL:\n/
+	\nNote: this feature will not work if another website is entered./
+	\![open,inputbox,OnWeathering,-1]"
+}
+
+
+OnWeathering
+{
+	weatherurl = reference0
+	curloc = (Capitalize(weatherurl[6,'/']),TOUPPER(weatherurl[5,'/']))
+	optweather = "On"
+	--
+	OnRegWeather
+}
+
+OnRegWeather
+{
+	regex = IARRAY
+	_file = "var\\testregex.txt"
+	_buff = ""
+	FCHARSET(1)
+	_i = 0
+    if FOPEN(_file,'r')
+	{  
+        for _buff = FREAD(_file); _buff != -1; _buff = FREAD(_file)
+		{        
+            regex[_i] = _buff
+            _i++        
+        }    
+    }
+	--
+	"\![execute,http-get,%(weatherurl),--async=OnWeatherVars,--file=weather2.html,--timeout=200]"
+}
+
+OnGetSomeWeather
+{
+	if optweather == "On"
+	{
+		"\![execute,http-get,%(weatherurl),--async=OnWeatherVars,--file=weather2.html,--timeout=200]"
+	}
+}
+
+OnWeatherVars
+{
+	_file2 = "var\\weather2.html"
+	_buff2 = ""
+
+	_Lat = regex[0]
+	_Long = regex[0]
+	_hi = regex[1]
+	_low = regex[2]
+	_curtemp = regex[3] //should always be F, but just in case
+	_feelslike = regex[4]
+	_windspeed = regex[5]
+	_condition = regex[6]
+	_humidity = regex[7]
+	_dawn = regex[8]
+	_dusk = regex[8]
+	
+	FCHARSET(1)
+	
+	curlat = ("Unk","Unk")
+	curlong = ("Unk","Unk")
+	hightemp = ("Unk")
+	lowtemp = ("Unk")
+	realtemp = ("Unk","Unk")
+	feeltemp = "Unk"
+	windthing = "Unk"
+	weatheris = "Unk"
+	toomoist = "Unk"
+	dawntime = "Unk"
+	dusktime = "Unk"
+	
+	
+	
+	if FOPEN(_file2,'r')
+	{
+	    for _buff2 = FREAD(_file2); _buff2 != -1; _buff2 = FREAD(_file2)
+		{
+			//latitude
+            if RE_SEARCH (_buff2, _Lat); {curlat[0] = RE_GETSTR[1]; curlat[1] = RE_GETSTR[2]}
+			
+			//longitude
+			if RE_SEARCH (_buff2, _Long); {curlong[0] = RE_GETSTR[3]; curlong[1] = RE_GETSTR[4]}
+			//highs
+			if RE_SEARCH (_buff2, _hi); {hightemp = RE_GETSTR[1]}
+
+			//lows
+			if RE_SEARCH (_buff2, _low); {lowtemp = RE_GETSTR[1]}
+			
+			//temperature
+			if RE_SEARCH (_buff2, _curtemp); {realtemp[0] = RE_GETSTR[1]; realtemp[1] = RE_GETSTR[2]}
+			
+			//feels like
+			if RE_SEARCH (_buff2, _feelslike); {feeltemp = RE_GETSTR[1]}
+			
+			//windspeed
+			if RE_SEARCH (_buff2, _windspeed); {windthing = RE_GETSTR[1]}
+			
+			//condition
+			if RE_SEARCH (_buff2, _condition); {weatheris = RE_GETSTR[1]}
+			
+			//humidity
+			if RE_SEARCH (_buff2, _humidity); {toomoist = RE_GETSTR[1]}
+			
+			//dawntime
+			if RE_SEARCH (_buff2, _dawn); {dawntime = RE_GETSTR[1]}
+			//dusktime
+			if RE_SEARCH (_buff2, _dusk); {dusktime = RE_GETSTR[2]}
+
+		}
+	--
+	weatheris = REPLACE(weatheris, " in", " soon")
+	--
+	if remindhr == "On"
+	{
+		OnWeatherMe
+	}
+	--
+	dawnsec = ((dawntime[0,':']*60*60)+(dawntime[1,':']*60))
+	dusksec = (((TOINT(dusktime[0,':'])+12)*60*60)+(dusktime[1,':']*60))
+	}
+	--
+	FCLOSE(_file2)
+}
+
+OnWeatherMe
+{
+	if (realtemp[0] == "") || (feeltemp == "") || (windthing == "") || (weatheris == "") || (toomoist == "") || (dawntime == "") || (dusktime == "")
+	{
+		OnGetSomeWeather
+	}
+	elseif (realtemp[0] == "Unk") || (feeltemp == "Unk") || (windthing == "Unk") || (weatheris == "Unk") || (toomoist == "Unk") || (dawntime == "Unk") || (dusktime == "Unk")
+	{
+		//OnGetSomeWeather
+		//would you like to check the weather?
+		"%(a0)There is no weather today.\n\n/
+		\q[Try again?,OnGetSomeWeather]   \q[Try another site?,OnLoc]   \q[No weather,noweather]"
+	}
+	else
+	{
+		"%(s0)\b2\tCurrently %realtemp[0]°%realtemp[1], feels like %feeltemp°%realtemp[1]\n"
+		--
+		if (ISINTSTR(hightemp) == 1)
+		{
+			highesttemp = TOINT(hightemp)
+		}
+		--
+		if GETTYPE(highesttemp) != 1
+		{
+			"T"
+		}
+		else
+		{
+			"Today's high is %highesttemp and t"
+		}
+		--
+		"onight's low is %lowtemp\nWindspeed is %windthing mph\n%weatheris\n%toomoist% humidity\nSunrise: %dawntime AM and sunset: %dusktime PM\e"
+	}
+}
+
+Select.noweather
+{
+	optweather = "Off"
+	"\![raise,Cancel]"
+}
+
+//time evaluations
+
+//currentime since midnight
+//onminute change to check dawn and dusk
+//half hour before + after each
