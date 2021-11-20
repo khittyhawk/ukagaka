@@ -426,14 +426,15 @@ Select.functionslol
 Select.updort
 //this is for updorting the ghost
 {
-	if updortresult == "empty"
+	"\![updatebymyself,checkonly]"
+	--
+	if updortresult[0] == "success"
 	{
-		"It howls: \![updatebymyself,checkonly] \nIt is: %(updortresult) \![Raise,updort]"
+		"It howls-! \nI call %(updortresult[1]) \![updatebymyself]"
 	}
 	else
 	{
-		"It howls: %(updortresult)"
-		updortresult = "empty"
+		"It howls its failure, %(updortresult[1])"
 	}
 }
 
