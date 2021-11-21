@@ -51,7 +51,7 @@ Select.settingmenu
 	if remindhr == ""; {remindhr = "On"}
 	if washurmouth == ""; {washurmouth = "Fuck yes"}
 	
-	"\b2\_q\n\n\f[align,center]Settings\n\n\f[align,left]/
+	"\b2\_q\f[align,center]Settings\n\n\f[align,left]/
 	\![*]\q[Change username?,gonamae]:\n\_l[2em]Now: %(urname)\n/
 	\![*]\q[Change talk rate?,toggletalk]:\n\_l[2em]Now: %(talkrate)\n/
 	\![*]\q[Enable long-winded rambles?,storytime]:\n\_l[2em]%(jumpingfrog)\n/	
@@ -96,8 +96,7 @@ Select.settingmenu
 		"\n"
 	}
 	--
-	"\![*]\q[Allow Reminders,remindset]: %(remindme)\n/
-	\![*]\q[Keep things worksafe?,fffff]:\nCurrently: %(washurmouth)"
+	"\![*]\q[Keep things worksafe?,fffff]:\nCurrently: %(washurmouth)"
 	--
 	"\n\n\![*]\q[Main Menu,OnMenuRunPre]     \![*]\q[Cancel,Cancel]"
 	
@@ -119,7 +118,7 @@ Select.shookero
 	--
 	"\0"
 	--
-	Select.settingmenu
+	OnMenuRunPre
 }
 
 Select.gonamae
@@ -372,15 +371,16 @@ OnWhitherWeather
 	--
 	if curloc == "" || curloc == " : " || curloc == " "
 	{
-		curloc = "\q[Enter your location,OnLoc]"
+		"\![*]\q[Enter your location,OnLoc]"
 	}
 	else
 	{
 		"Current Location: %(curloc[0]) %(curloc[1])\n/
-		\_l[2em]\q[(Not your location?),OnLoc]\n\n"
+		\_l[2em]\q[(Not your location?),OnLoc]\n\n/
+		\![*]\q[Looks good!,yesweather]"
 	}
 	--
-	"\![*]\q[Looks good!,yesweather]   \![*]\q[Nevermind,settingmenu]\e"
+	"   \![*]\q[Nevermind,settingmenu]\e"
 	
 }
 
@@ -392,7 +392,6 @@ Select.yesweather
 
 Select.fffff
 {
-	LOGGING("feck==================")
 	if washurmouth != "Fuck yes"
 	{
 		washurmouth = "Fuck yes"
@@ -416,10 +415,20 @@ Select.functionslol
 	\![*]\q[Balloon Test,OnBalloonTest]\n/
 	\![*]\q[Test Wait Times,OnTestW]\n/
 	\![*]\q[Check Your Clock,OnSNTPCompare]\n/
-	\![*]\q[Check Your Email,script:\![biff\]]\n/
-	\![*]\q[Load the weather,OnGetSomeWeather]\n\n/
+	\![*]\q[Check Your Email,script:\![biff\]]\n"
+	--
+	if optweather == "On"
+	{
+		"\![*]\q[Load the weather,OnGetSomeWeather,manual]\n"
+	}
+	--
+	if SHIORI3FW.IsVisible[1] == 1
+	{
+		"\![*]\q[Say something?,talko]\n"
+	}
+	--
 	
-	\![*]\q[Main Menu,OnMenuRunPre]     \![*]\q[Cancel,Cancel]"
+	"\n\![*]\q[Main Menu,OnMenuRunPre]     \![*]\q[Cancel,Cancel]"
 }
 
 
@@ -430,12 +439,20 @@ Select.updort
 	--
 	if updortresult[0] == "success"
 	{
-		"It howls-! \nI call %(updortresult[1]) \![updatebymyself]"
+		"It howls-!\w5\nI call %(updortresult[1]) \![updatebymyself]"
 	}
 	else
 	{
 		"It howls its failure, %(updortresult[1])"
 	}
+}
+
+
+Select.talko
+{
+	"\![open,inputbox,OnQuest,-1]"
+	--
+	Select.functionslol
 }
 
 

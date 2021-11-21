@@ -1,0 +1,8 @@
+Update 11-20-21
+
+-Fixed a lone quotation mark that caused SSP to crash
+-Made it so the ghost can actually interpret the weather now
+-Updated the updates url
+-Added more randomtalk and a feature that allows you to ask the ghost about certain dialogues
+-Changed the balloon "Broadcast"'s font to be something that actually has apostrophes and is likely available on your computer
+-Various bugfixes

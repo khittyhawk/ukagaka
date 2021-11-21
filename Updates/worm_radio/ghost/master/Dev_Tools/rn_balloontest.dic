@@ -28,10 +28,11 @@ OnNotifyFontInfo
 OnBalloonTest
 {
 	"\b2\_q" //use big balloon and stop the text from scrolling
+	if fontsparty == ""; {fontsparty = IARRAY}
 	--
 	if ARRAYSIZE(fontsparty) >= 1 //if the user has anything in their favorite fonts array, display em!
 	{
-		"Your favorited fonts are"
+		"Your favorited fonts are "
 		--
 		Select.favfonts
 	}
@@ -92,7 +93,7 @@ OnBalloonTest
 placeholder_text
 {
 	//you can replace this placeholder text with something else if you want! That said, i have two pangrams - one lowercase, one uppercase - and a bunch of lorem ipsum that should give you the gist of what the text will look like. the autoscroll,disable thing prevents the balloon from automatically scrolling to the bottom (especially if the user makes the font big for whatever reason) and we have the font name, size, and color changed to the user's assigned configurations, then return it to the balloon's defaults afterwards!
-	"\n\n\![set,autoscroll,disable]\f[shadowcolor,none]\f[name,%ft_name]\f[size,%ft_size]\f[color,%ft_color]the quick brown fox jumped over the lazy dogs. SPHINX OF BLACK QUARTZ JUDGE MY VOW.\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n0123456789 %(customstring)\n\f[name,default]\f[color,default]\f[size,default]"
+	"\n\n\![set,autoscroll,disable]\f[shadowcolor,none]\f[name,%ft_name]\f[size,%ft_size]\f[color,%ft_color]the quick brown fox jumped over the lazy dogs. SPHINX OF BLACK QUARTZ JUDGE MY VOW.\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n0123456789 + ' $ ! ( ) ? ; : %(customstring)\n\f[name,default]\f[color,default]\f[size,default]"
 }
 
 Select.fancycancel

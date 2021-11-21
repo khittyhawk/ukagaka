@@ -1,8 +1,13 @@
+ghostver
+{
+	"Version 0.1.1 alpha"
+}
+
 OnFirstBoot
 // (＾＾)ｂ Inbuilt function! reference0 is how many times the user has uninstalled the ghost
 {
 	InitFirstBoot	
-	"\0\s[0]Cong\_q- bzzt -\_q unlocked the secret frequency\_q- bzzt -\_q broadcast all the ideas \f[italic,1]they\f[italic,0]\_q- bzzt - kept contained!\n\nHeresy!\w5 Earworms!\w5 Memetic hazards!\w5\_q- bzzt -\_qthing else \f[italic,1]they\f[italic,0] don't want you to hear!\w7\1\s[0]\_q- bzzt -\_q\w5\w5\e"
+	"\0\s[0]Cong\_q- bzzt -\_q unlocked the secret frequency\_q- bzzt -\_q broadcast all the ideas %(i)they%(i0)\_q- bzzt - kept contained!\n\nHeresy!\w5 Earworms!\w5 Memetic hazards!\w5\_q- bzzt -\_qthing else %(i)they%(i0) don't want you to hear!\w7\1\s[10]\_q- bzzt -\_q\w5\w5\e"
 }
 
 OnBoot
@@ -12,10 +17,15 @@ OnBoot
 	RebootVars
 	UpdateVars
 	OnTimeDifference
+	
 	--
 	if (openSec-closingSec) < 400
 	{
-		"%(s0)Hera's \_b[censored.png,inline,opaque]! Must you drag me hither and thither so?\e"
+		_cens = ""
+		if _currentshell == "Ship"; {_cens = ""}
+		if _currentshell == "Radio"; {_cens = "0"}
+		LOGGING("%(_currentshell) %(_cens) =================")
+		"%(s0)Hera's \_b[censored%(_cens).png,inline,opaque]! Must you drag me hither and thither so?\e"
 	}
 	else
 	{
@@ -135,7 +145,7 @@ OnWindowStateMinimize
 // (＾＾)ｂ Inbuilt!
 {
 	iskero = SHIORI3FW.IsVisible[1]
-	"%(s0)\_qPsst! You just minimized me. Didja mean to do that? Right click the tray icon (the purple boat) or CTRL+I to restore.\x\e"
+	"%(s0)\_qPsst! You just minimized me. Didja mean to do that? Right click the tray icon (the crackling radio tower) or CTRL+I to restore.\x\e"
 }
 
 OnWindowStateRestore
@@ -182,7 +192,7 @@ OnSysResume
 {
 	//call the 
 	risetime = GETTIME()
-	if risetime[0] != naptime[0] || risetime[7] != naptime[7]
+	if (optweather == "On") && (risetime[0] != naptime[0] || risetime[7] != naptime[7])
 	{
 		highesttemp = ""
 		dawntime = ""
@@ -211,7 +221,8 @@ OnClose
 
 RebootVars
 {
-	if (GETTIME()[7] != closingTime[7]) || (GETTIME()[0] != closingTime[0])
+	_nowtime = GETTIME()
+	if (optweather == "On") && ((_nowtime[7] != closingTime[7]) || (_nowtime[0] != closingTime[0]))
 	//if the year is different OR the day is different
 	{
 		highesttemp = ""
@@ -233,7 +244,7 @@ RebootVars
 	stroke[0] = 0
 	stroke[1] = 0
 	
-	moonmoon = OnMoonphase
+	OnMoonphase
 	--
 	"\![get,property,OnMe,currentghost.scope(0).rect]/
 	\![get,property,OnMe2,currentghost.scope(1).rect]"
@@ -309,7 +320,17 @@ OnVanishButtonHold
 //ISVAR is a built in YAYA function that checks if a variable exists (is initialized) or not. It returns 0 if the variable doesn't exist, and 1 if it does.
 UpdateVars
 {
-	//
+	if stopfunction == ""; {stopfunction = 1}
+	if urname == ""; {urname = "My good bitch"}
+	if aitalkinterval == ""
+	{
+		aitalkinterval = 600
+		talkrate = "every 10 minutes"
+	}
+	if deleteshitai == ""; {deleteshitai = "Off"}
+	if installdate == ""; {installdate = ("%(year)","%(month)","%(day)","%(hour)","%(minute)","%(second)","%(ghostver)")}
+	if timeOut == ""; {timeOut = 0}
+	if timeHere == ""; {timeHere = 0}
 }
 
 InitFirstBoot
@@ -331,14 +352,12 @@ InitFirstBoot
 	offscreen = IARRAY
 	waitingcommuS = IARRAY //These two arrays handle the non-interrupt system for communication. They're for storing messages from other ghosts when your ghost is busy talking.
 	waitingcommuM = IARRAY
-
-	updortresult = IARRAY
 	
 	urname = "My good bitch"
-	keywords = IARRAY
+	stopfunction = 1
 	
 	nowscale = 100
-	moonmoon = OnMoonphase
+	OnMoonphase
 	//mouse_interaction_variables
 	--
 	"\![get,property,OnMe,currentghost.scope(0).rect]/

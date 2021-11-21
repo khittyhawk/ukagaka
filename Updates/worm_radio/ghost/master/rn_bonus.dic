@@ -1,0 +1,212 @@
+OnQuest
+{
+
+	_input = TOLOWER(reference0)
+
+	if "wtnv" _in_ _input || "night vale" _in_ _input || "nightvale" _in_ _input|| "erinptah" _in_ _input || "erin ptah" _in_ _input || "theologian" _in_ _input || "his dark materials" _in_ _input
+	{
+		"%(s0)Hey\w3, it's that fanfic by ErinPtah!\w6 You're either lucky with the keywords\w3, or you decided to see what we might say about another spooky radio station.\n\nAnyway\w3, it's a good fanfic and I will likely have more to say on it later.%(saymore)\e"
+	}
+	elseif "twa sisters" _in_ _input || "wind and rain" _in_ _input || "cruel sister" _in_ _input
+	{
+		"%(k0)Isn't it kind've bonkers that a folk song about a girl murdering her sister over a boy has the refrain 'I'll be true to my love if you'll be true to me'?%(s0)\w5Well\w4, that depends on which version you use.\w3 Folk songs beget variants\w3, tear back and re-weave and build up mutations from misremembered or intentionally-modified lyrics.%(k0)\n\nYeah\w4, but a ton of versions have some refrain about being true to one's lover.\w5 Do you think that it's a threat?\w3 As in\w3, 'that's a nice true love we got going on here\w3; it would be a shame if something \![set,balloonwait,1.2]happened to it'\![set,balloonwait,1].%(s0)\n\nCould be%(lps4) could be.%(saymore)\x%(s0)If you are interested\w4, there is a very\w3, %(i)very%(i0) dark modern take by Jon Brooks.%(k0)Like\w3, serial killer dark.%(saymore)\e"
+	}
+	elseif "macbeth" _in_ _input
+	{
+		"%(s0)There's this idea that most of 'Macbeth' has been lost to history.%(k0)Which makes sense\w3, because that play is %(i)short%(i0).\w5 It's like the meme 'That escalated quickly' made manifest.%(s0)\n\nIn one scene, Macbeth confonts an apparition of a ghostly child, who calls 'Macbeth! Macbeth! Macbeth!'\w5, to which his reply is 'Had I three ears I'd hear ye!'%(k0)\n\nIt's probably meant to be a desperate plea of sorts\w5, but let's be real-\w6 it is %(i)abolutely hilarious%(i0) to think of Macbeth as an exasperated dad going 'I heard you the first time!'%(saymore)"
+	}
+	elseif "romeo" _in_ _input || "mercutio" _in_ _input
+	{
+		"%(s0)In 'Romeo and Juliet', Mercutio goes on this rambling tangent about Mab\w3, the queen of the fairies\w3, bringing dreams after Romeo talks about how much he's crushing on Juliet.%(k0)I mean\w5, I think so.\w4 It's been a while since I read it.%(s0)\n\nOr watched it.%(k0)\n\nYeah\w3, whatever.%(s0)\n\nPerhaps I will have more to say about this later.%(saymore)\e"
+	}
+	elseif "shakespeare" _in_ _input
+	{
+		if washurmouth == "Fuck no"
+		{
+			"%(k0)A lion hath deflowered my love!%(s0)Ugh.%(k0)\cC'mon.\w4 Do you not know how much of Shakespeare is dirty jokes?%(s0)\n\nI'll screw my courage to %(i)your%(i0) sticking place if you don't cut it out.%(k0)\n\nSee?\w5 That's what I mean!"
+		}
+		"%(s0)I remember reading something about how\w4, if Shakespeare were alive today\w4, he'd be releasing blockbusters.%(k0)I mean\w4, he did once burn down the Globe Theatre because of a special effects mishap.%(s0)\n\nIt also said the modern day equivalent might be Tarantino\w4, because of the sex, violence, and characters going off on rambling tangents that mostly exist to show off the skill of the wordsmith.%(k0)\n\nTumblr user Prokopetz\w5, right?%(s0)\n\nYes\w3, him.\n\nThere's even a Shakespearean rendition of %(i)Pulp Fiction%(i0).\w4 This group even staged and recorded the scene of Samuel L. Jackson and John Travolta first retrieving the suitcase.\w5 It features this great line: 'To the devil with thee and a pox upon thy line!'%(k0)\n\nA.K.A., 'Fuck you and fuck your kids'.%(s0)\n\nYes.\w6 I thought it was a line or oath that already existed\w5, but it appears to be made up for this purpose.%(k0)\n\nOoh\w4, impressive.%(s0)\n\nI know\w5, right?"
+		--
+		"%(saymore)\e"
+	}
+	elseif "in ruins" _in_ _input || "fol chen" _in_ _input || "folchen" _in_ _input
+	{
+		"%(s0)Damn 'In Ruins' by Fol Chen is a good song.\w5 Pity I don't know anything else about it.%(saymore)\e"
+	}
+	elseif "walking dead" _in_ _input
+	{
+		"%(s0)Even if you don't know the context\w4, the phrase is still amusing.\w5%(k0)I'd say it's even more memorable than how it's %(i)supposed%(i0) to read.\w5 'Don't open;\w4 dead inside' is kind've a mouthful.\w5 'Don't dead open inside' features two alliterative single stressed syllables followed by two double-syllable words that both start with vowels.\w6%(s0)\n\nI don't think that counts as real literary analysis.\w5%(k0)\n\nI mean\w4, if it works\w4, it works.%(saymore)\e"
+	}
+	elseif "kintsugi" _in_ _input
+	{
+		"%(s0)Kintsugi is the Japanese art of repairing broken pottery by filling in the cracks with gold-dusted lacquer.%(saymore)\e"
+	}
+	elseif "gamefowl" _in_ _input
+	{
+		"%(s0)Wild birds\w3, often ground-dwelling\w3, caught for sport.\w3 Partridges, turkeys, and quail are some common examples.%(saymore)\e"
+	}
+	elseif "baba is you" _in_ _input
+	{
+		"%(s0)Puzzle games.%(k0)Puzzle games.%(s0)\w7\cYou ever feel bursting with the desire to tell someone your sneaky-sneak solution to a problem\w5, but only velleity when it comes to signing up for an account?%(k0)\cYeah.\w5 And then you have to check all your spelling\w4 and account for reader expectations\w4 and a whole bunch of stuff that's just so much %(i)effort%(i0).%(s0)\n\n%(i)Baba is You%(i0) is a famously fiendishly-tough mindfuck of a puzzle game.\w6 Unfortuntely\w5, attempting to search for hints often unearths %(i)solutions%(i0) instead.\xThis advice\w6 - constantly testing\w6 - is the advice I've found most consistently reliable\w6.%(saymore)\e"
+		"%(s0)Sometimes you can set up the text 'BABA' and 'KEKE' in such a way that it seems to read 'BAKE BAKE' horizontally.\w6\w6 I just thought it was funny.%(saymore)\e"
+	}
+	elseif "puss in boots" _in_ _input || "perrault" _in_ _input || "for the wicked" _in_ _input
+	{
+		"%(s0)Perhaps you found this because you recognized the quote from the (sadly moribund) webcomic 'No Rest for the Wicked'\w6, and perhaps you merely recognized the fairy tale it referred to.\w6 Perhaps I will have more to say on this topic later.%(saymore)\e"
+		//it's dyed with the blood of cheeky little girls
+	}
+	elseif "angles" _in_ _input || "blake" _in_ _input
+	{
+		"%(s0)William Blake wrote a book of poems he titled 'Songs of Innocence and Experience'.%(k0)That includes 'Tyger, Tyger'\w4, right?%(s0) Yes.\w5 The innocent counterpart to that poem is 'The Lamb'.\w6\nThe angle of incidence is the angle at which light hits a surface.%(k0)\n\nAnd it has permanently been glued to the Blake title in your mind?%(s0)\n\nUnfortunately so.%(saymore)\e"
+	}
+	elseif "eiffel" _in_ _input
+	{
+		"%(s0)Ah\w4, you recognized the incantation.\w6 Yes\w3, Gustave Eiffel designed his tower to achieve such height by modeling it after the structure of bones: the latticework in spongy bone funnels the forces that act upon it into the compact bone at either end\w5, while the majority of the bone stays light yet sturdy.\w6 Because the Eiffel Tower does not also need to bear forces pressing from the ground upward\w4 (unlike animals, which need to walk)\w4, only the legs of the tower need to mimic compact bone.\w5 The rest of the tower can be mostly air.%(k0)People thought it was %(i)ug\w6ly%(i0)\w6 at the time.\w5 Especially artists.\w4%(s0)\n\nYes.\w6 Perhaps I will go more into this topic later.%(saymore)\e"
+	}
+	elseif "graniaud" _in_ _input || "guardian" _in_ _input || "cryptic" _in_ _input
+	{
+		"%(k0)So %(i)can%(i0) bees feel want?%(s0)Ugh\w4, I know that's a cryptic crossword clue\w3, and I remember it was a fairly easy one\w3, but I've forgotten what the solution is.%(saymore)\e"
+	}
+	elseif "rock dove" _in_ _input || "rock pigeon" _in_ _input || "galatea" _in_ _input
+	{
+		"%(s0)Pygmalion carved a statue from milk-white marble and named it 'Galatea'-%(k0)From the same root as 'galaxy' meaning 'milky'\w4, natch.\w4%(s0) Yes.\w3 - Pygmalion fell in love with his creation and prayed to Aphrodite to give her life.%(k0)\cIt's a dumb story.\w5 'Bluh bluh\w3, what if I manufactured the perfect partner?'\w4 Pygmalion would be ranting about 2-D girls being better than 3-D girls if he were alive today.%(s0)\n\nHave you never poured your soul into a work of art so heavily you wished it were real?\w3 Spent so long in a fictional world that it almost breaks your heart it will never exist beyond the bounds of its medium?%(k0)\n\nSee\w3, when you put it like that\w3, it sounds almost romantic.\w5 But it's still a %(i)thing%(i0)\w3, y'know?\w5 Pygmalion didn't fall in love with Galatea's personality\w3, is what I'm saying.\w4 And\w4, like\w4. what going though Galatea's mind the whole time?\w4 Did Aphrodite make her a person\w3, or is she effectively a nonsentient sex toy that was programmed to give the perfect responses to Pygmalion?\w4 If that's his deal\w3, sure\w3, whatever.\w4 Kinktomato and all that.\w4 But that's not %(i)romantic%(i0).\w4 Not two people learning to love each other\w4, faults and all.%(saymore)\e"
+		"%(k0)Humans made the pigeon.\w6 That's not a joke.%(s0)They selectively bred it for domesticity.%(k0)\n\nYes.\w3 All those traits you find annoying\w4 - those are artifacts of pigeons being in love with you.%(s0)\n\nHence\w3, why pigeons aren't 'wild'\w4, but 'feral'.\w5 You made them to need you.%(k0)\n\nSame with most other domesticated organisms\w3 - dogs, cats, broccoli%(lps4)%(s0)\n\nAnd then\w4, when you didn't need them any more\w4, you turned them out and called them pests.\w8 Poisoning them\w5, denigrating them\w5, building your disgust for them into the very architecture\w3 - cruel spikes to ward off the unwanted.%(k0)\n\nThey love you.%(s0)\n\nThey need you.%(k0)\n\nYou made them love you.%(s0)\n\nYou are Pygmalion\w4, grown bored of your perfect lover and cast your Galatea back to the quarry\w5, expecting her to turn back to broken stone%(lps6) If you make something\w4, are you not responsible for it?%(k0)\n\nMore than that\w3, what do you think will happen to dogs when humans eventually decide they're obsolete?%(saymore)\e"
+	}
+	elseif "brave little toaster" _in_ _input
+	{
+		"%(s0)I have zero idea why the radio in %(i)The Brave Little Toaster%(i0) says the line 'if we were all weiner dogs, all our problems would be solved'.\w6 There is no more context given in the film and all the other characters even stare at him like he just said something utterly bonkers.%(k0)Which he did.%(s0) Well\w3, obviously.\w6\nAnyway\w3, all I can think of is that's it's a reference to the Oscar Mayer jingle\w5, but I don't even know how %(i)that's%(i0) supposed to track.%(saymore)\e"
+	}
+	elseif "animaniacs" _in_ _input || "warner" _in_ _input
+	{
+		"%(s0)I haven't even seen the episode of the %(i)Animaniacs%(i0) the line comes from.\w4 I've only seen that song 'A Quake!' in a clip on youtube.\w4 I don't even know the cadence of how it is sung\w4, %(i)and yet%(i0).%(k0)It's a great line\w4, though.%(s0)\n\nA wonderful line!\w4 You have the repeating internal rhyme in 'mister', 'richter', and 'predict 'her'.\w4 And then\w3, of course\w3, the trademark Warner Siblings' innuendo of 'kicking our as(s)phalt'.%(saymore)\e"
+		"%(k0)Y'know what took me a stupid long time to figure out?%(s0)What?%(k0)\n\nThe Warner Siblings from the %(i)Animaniacs%(i0)\w4 - their design\w3 - the black body\w3, white gloves\w3, big eyes\w3 - it's supposed to evoke one of the early 20th century black-and-white Max Fleischer-esque cartoons.%(s0)\n\n%(lps4)Huh.%(k0)\n\nThey even say in the introduction that their supposed backstory is that they were cartoons from the '30s that were locked away and only resurfaced now!%(s0) %(lps8)%(i)Huh.%(i0)\w6 So putting antics of that era into cartoons of the (then-contemporary) '90s?%(k0)\n\nLooks like!%(saymore)\e"
+	}
+	elseif "kallisti" _in_ _input || "troy" _in_ _input || "iliad" _in_ _input || "discord" _in_ _input || "trojan" _in_ _input
+	{
+		"%(s0)'Kallisti'\w6 - 'to the Fairest'.\w6 What was inscribed on the golden apple that started the Trojan War.\w6 Perhaps I will have more to say on this topic later.%(saymore)\e"
+	}
+	elseif "robert johnson" _in_ _input || "blues" _in_ _input
+	{
+		"%(s0)Robert Johnson was thought to have sold his soul to the devil for his musical career.\w5 Perhaps I'll have more to say on this topic later.%(saymore)\e"
+	}
+	elseif "atompunk opera" _in_ _input || "new albion" _in_ _input || "shapera" _in_ _input
+	{
+		"%(s0)The song about the radio comes from %(i)The Atompunk Opera%(i0) by Paul Shapera.\w5 Perhaps I will have more to say on this topic later.%(saymore)\e"
+	}
+	elseif "aesop" _in_ _input || "satyr" _in_ _input
+	{
+		"%(s0)The fabulist Aesop once told a story about a man who befriended a satyr.\w3 In the winter\w3, the satyr observed the man blowing on his hands and asked why he did so.\w3 'To warm them,' said the man.\w5 Then\w2, the duo went inside to have a hot bowl of soup.\w3 The satyr observed the man blowing on his soup and asked him why he did so.\w3 'To cool it down,' said the man.\w5 The satyr then kicked the man out of his house\w3, saying 'a man who blows both hot and cold in the same breath cannot be friends with me.'\w4%(k0)Pfft\w3, what?%(s0)\cIt's supposed to warn against being two-faced.%(k0)\n\nIt seems to warn more against dismissing someone when the situation is more complex than you expect.%(s0)\n\nSeems so\w4, yes.%(saymore)\e"
+	}
+	elseif "oglaf" _in_ _input || "prostitute" _in_ _input
+	{
+		"%(k0)%(lps6)So%(lps4) question.%(s0)Shoot.%(k0) Is making an Oglaf reference in a sfw environment akin to wearing an ahegao hoodie in public?%(s0)\n\n\w8\w8%(lps8)God\w2, I hope not.\w8\w8\w8\n\n...Oglaf alternates between safe-for-work comics and complete nsfw though.\w4 If you cropped a picture of a nsfw scene and shared that\w2, that'd be equivalent to ahegao\w2, perhaps.\w5 Just because a work has nsfw scenes in it\w2 doesn't make whole work inappropriate.%(k0)\n\nEven the sfw comics are pretty raunchy\w3, though.\w3 The comic'll list an incredibly dirty entry as 'safe' because there are no visible dicks.\w4 I mean\w3, you wouldn't consider the phrase 'magical talking bear prostitutes' safe for work or minors because the reference to sex is implied\w3, not overt.\w5 The creators also do say that it was originally an attempt to draw porn\w3, but quickly devolved into a sex comedy.\w5 If anything\w3, the sfw ttrpg parody comics are a spandrel of that devolution.%(s0)\n\nMm\w3, I don't know...\w5 you wouldn't consider referencing %(i)The Terminator%(i0) in front of minors or at work inappropriate even though the film has gore, sex, and bad language in it\w3, and it's entertainment is deliberately meant to come from said gore, sex, and bad language.%(k0)\n\nI'm not sure if you remember being a kid.\w5 Sure\w3, some kids try their damndest to pry into adult content\w3, but plenty more get grossed out at references to sex and would prefer dirty talk be kept away from them.\w5%(s0)\n\nI guess the question becomes whether someone would feel squicked knowing that a sfw joke came from nsfw media.\w5%(saymore)\e"
+	}
+	elseif "lonely island" _in_ _input || "on a boat" _in_ _input
+	{
+		"%(s0)Shouting a series of one-syllable words is apparently enough to make something a memetic hazard.\w6%(k0)We thought it was funny if it were the radio that said so\w4, and if it bleeped out the 'on'.\w5 After all\w4, we're not on boats\w4, are we?\w6%(s0)\n\nWe don't know.\w6 For all we know\w4, %(urname) is on a cruise ship.\w6%(k0)\n\nUgh\w4, fine.\w6 Saying 'I'm on a boat' felt too much like a 'lolrandom meme tiem!!11!' reference.\w6 At least this way it's become at least %(i)something%(i0) of a transformative work.\w6%(s0)\n\nAnd random pointless censorship is funny.\w6%(k0)True that.\w6%(saymore)\e"
+	}
+	elseif "mary poppins" _in_ _input
+	{
+		"%(k0)Why was the name of the magic neatening game in %(i)Mary Poppins%(i0) called 'Well-begun is half done'?\w5 Pointing at a thing isn't better begun than any other method of cleanliness.%(saymore)\e"
+	}
+	elseif "spandrel" _in_ _input
+	{
+		"%(s0)'The Spandrels of San Marco' by Stephen Jay Gould and Richard Lewontin.\w5\n\n'Spandrel' is an architectural term for the triangular space between an arch and the straight wall beside.\w5 Those spandrels aren't designed deliberately\w5, but architects and builders do know they will occur\w4, and so %(i)use%(i0) them.\w5 Gould and Lewontin proposed that similar traits could happen during evolutionary processes.\w3 That traits can come about as side effects\w3, or maybe become repurposed by the organism.\w6 Your hands weren't designed to type\w3, but that's what you can use them for.\w6%(saymore)\e"
+	}
+	elseif "mad dogs" _in_ _input
+	{
+		"%(s0)Is 'Mad Dogs and Englishmen' vaudeville?\w3%(k0)Not sure.\w4 It's from 1931\w3 - the Noel Coward version\w2, at least -\w3 and is a patter song.\w3 Vaudeville was earlier\w3, I think.%(s0)\n\nAnyway\w2, the refrain is 'Mad dogs and Englishmen go out in the midday sun' and the verses all talk about the citizens of different regions of the world nearer to the equator who know it is way too hot to do anything during the hottest part of the day.%(k0)\n\nLest you want heatstroke\w3, lol.%(s0)\n\nPrecisely.\w5 The phrase still gets referenced from time to time\w3, even if its origin is no longer culturally relevant.\w6 It's an interesting juxtaposition\w3, and I have thoughts on what it says.\w5 Perhaps I'll share them later on.%(saymore)\e"
+	}
+	elseif "melpomene" _in_ _input
+	{
+		"%(s0)One of the nine Greek muses. Melpomene is the muse governing tragedy.%(k0)lol, angst%(s0) She was once regarded the muse of song.\w4 Not much more to say\w2, really.%(k0)\n\nWell\w3, 'Rex' is the latin word for 'king' and 'regina' is 'queen'.%(s0)\n\nSure.\w6%(saymore)\e"
+	}
+	elseif "snicket" _in_ _input || "series of unfortunate events" _in_ _input || "crickets" _in_ _input || "charlotte" _in_ _input
+	{
+		"%(k0)Strangely enough\w4, the refrain the crickets sing in %(i)Charlotte's Web%(i0) has associated itself as a Lemony Snicket thing\w5, thanks to a snippet from the %(i)Unauthorized Autobiography%(i0).\w5 Perhaps I will have more to say on this topic later.%(saymore)\e"
+	}
+	elseif "lion" _in_ _input || "unicorn" _in_ _input || "owl and pussycat" _in_ _input || "owl and the pussycat" _in_ _input
+	{
+		"%(s0)'Lion' and 'unicorn' share the same meter as 'owl' and 'pussycat'\w3, respectively.\w7 Apparently\w3, the lion and the unicorn fighting over the crown comes from the heraldic beasts of England and Scotland.\w5%(k0)You might be more familiar with the buffoonish versions from Lewis Caroll's %(i)Through the Looking-Glass%(i0)%(s0)\n\nOr the melancholy portrayal from Neil Gaiman's %(i)Stardust%(i0).%(k0) Or maybe you're just British.%(saymore)\e"
+	}
+	elseif "who's on first" _in_ _input || "whos on first" _in_ _input || "abbott" _in_ _input || "costello" _in_ _input
+	{
+		"%(s0)'Who's on first' remains great\w3 perhaps %(i)because%(i0)\w3 of how absurd it is.\w6 Someone made a Shakepearean version of it\w3, too.\w6 Perhaps I will have more to say on this topic later.%(saymore)\e"
+	}
+	elseif "down by the water" _in_ _input || "pj harvey" _in_ _input || "p j harvey" _in_ _input
+	{
+		"%(s0)Yeah\w4, that refrain of 'little fish, little fish' is%(k0)was%(s0) in containment because it's an earworm.\w5%(k0)\n\nApparently\w5, that refrain is also a nod to 'Salty Dog Blues'\w5, where the singer implores the fish to give them their quarter instead.\w5%(saymore)\e"
+	}
+	elseif "ozymandias" _in_ _input || "percy bysshe shelley" _in_ _input || "ye mighty" _in_ _input
+	{
+		"%(s0)That phrase\w6, the elegy\w6 that ends the poem%(lps4) Why does that linger more than the ironical inscription?\w6%(saymore)\e"
+	}
+	elseif "fratelli" _in_ _input
+	{
+		"%(k0)Fucking.\w8 Goddamn.\w8 Earworms.\w6\w5%(s0)Good luck getting anything from 'Tell me a lie' by The Fratellis out of your head.%(saymore)\e"
+	}
+	elseif "nellie mckay" _in_ _input || "sari" _in_ _input
+	{
+		"%(k0)More earworms.\w6%(s0)'Sari' by Nellie McKay.\w6 It can be difficult to communicate the exact cadence that'll nonetheless lodge itself into your brain and never leave.\w6%(saymore)\e"
+	}
+	elseif "barbie girl" _in_ _input
+	{
+		"%(k0)Show me someone who's never gotten that song stuck in their head and I'll show you a liar.\w6%(s0)That it is simple enough to be easily snowcloned exemplifies its power as a memetic hazard.\w6%(saymore)\e"
+	}
+	elseif "manchurian" _in_ _input || "starkid" _in_ _input || "very potter" _in_ _input
+	{
+		"%(s0)No\w4, of course we're not brainwashed into saying that.\w6%(k0)Apparently\w4, some people might be mistaken that the quote originates from Starkid's 'A Very Potter Musical' rather than %(i)The Manchurian Candidate%(i0).\w6%(s0)\n\nInteresting...\w6%(saymore)\e"
+	}
+	elseif "carnivore" _in_ _input || "waffles" _in_ _input
+	{
+		"%(k0)The cat never actually ate my waffles\w4, but 'waffles' is an inherently funny word.\w6 He did take a bite out of a donut once.\w5%(s0)Why?%(k0)\n\nThat's what I want to know!?\w5 Aren't they obligate carnivores?%(saymore)\e"
+	}
+	elseif "cats don't dance" _in_ _input || "cats dont dance" _in_ _input
+	{
+		"%(s0)Another one whose cadence has permanently engraved itself.\w6%(k0)'Sawyer\w6, honey\w6, sweetie\w6, baby'\w6%(s0)\n\nFrom %(i)Cats Don't Dance%(i0).\w6%(k0)\n\nI do wonder how many people actually got the reference or just think we're sweet-talking them for no reason.%(s0)\n\nMm\w5, we're the medium by which all sorts of heresy\w5, earworms\w5, and memetic hazards are released from containment.\w6%(saymore)\e"
+	}
+	elseif "jenny" _in_ _input || "tutone" _in_ _input || "8675309" _in_ _input || "867-5309" _in_ _input
+	{
+		"%(s0)Unless you were just plugging any random name in\w3, you must have switched to the Ship shell and wondered why there was a reference to 'Jenny' in the right-click menu.%(k0)That\w4, or their name is Jenny.%(s0)\n\nMm\w3, I suppose.\w6 Anyway\w4, good luck getting 867-5309 out of your head.%(saymore)\e"
+	}
+	elseif "neopets" _in_ _input || "fance" _in_ _input
+	{
+		"%(k0)'Ahh Mr.sneky i see you are wering your fance top'\w7%(s0)It's a meme from Neopets.\w5%(k0)\n\nIsh.%(s0) Yes.\w4 It apparently came from a caption contest entry.\w6 It is contained within us because the phrase 'fance top' %(i)will not leave%(i0).%(k0)\cContained poorly.\w3 Isn't it part of our body?\w3 You dismembering us when we're not looking?\w5%(s0)\cIt wouldn't matter.\w3 Our existence here is merely a three-dimensional shadow of a node outside of this world entirely.\w5 We can be dismembered completely here without losing the root signal.\w4%(k0)\n\nYeah\w4, but it would still %(i)suck%(i0).\w5%(saymore)\e"
+	}
+	elseif "lackadaisy" _in_ _input || "freckle" _in_ _input
+	{
+		"%(s0)If you managed to get this\w2, congrats.\w6 I don't know where you'd begin to guess the source.\w5%(k0)But yeah\w5, the line of 'just one' comes from a bonus comic in which Rocky explains how his little brother got the nickname 'Freckle'.\w6%(s0)\n\nApparently\w2, when they were kids\w4, Rocky once shaved all the fur from his little brother's face%(k0)\n\n(They're cats)%(s0) and he had a freckle.\w6 'Just one'.\w7\n\nThat 'just one'\w5, despite not being from an audible medium\w5, nevertheless lodged its specific cadence in my brain.\w6%(k0)\n\nA powerful memetic hazard.\w6%(s0)Apparently so.\w6%(saymore)\e"
+	}
+	elseif "zelda" _in_ _input || "low%" _in_ _input || "low percent" _in_ _input || "speedrun" _in_ _input
+	{
+		"%(s0)There's a 'speedrun'%(k0)And we can't begin to communicate how much 'speedrun' is in scare quotes\w5%(s0) where the players try to collect as few items as possible.\w6 One run of %(i)Legend of Zelda%(i0) involved taking advantage of a glitch that allows Link to clip through solid objects when he presents the player with the rupees he's collected%(lps6) a process which takes several hours.\w6%(k0)\n\nThe line was taken from a comment on the youtube video explaining the mechanics.\w6%(saymore)\e"
+	}
+	elseif "conquerer worm" _in_ _input || "poe" _in_ _input
+	{
+		"%(k0)Edgar Allan Poe was an emo kid.\w6\n'Bluh bluh\w5, look at my edgy edgelord poem about humanity dooming itself. I'm gonna steal Shakepeare's thing about All Men being Merely Players on a Stage but instead... a giant worm will come out and %(i)EAT%(i0) everyone\_q!!!!1eleventy!!\_q'. Lol.\w6%(s0)He shares his themes with the entire Romantic movement\w4, though.\w5%(k0)\cAll the Romantics were emo kids too.\w3 You heard the whining that Frankenstein gets up to?%(s0)\n\nPerhaps it is validating for teenagers to read these works considered 'great literature' that cover the same themes as preoccupy them?\w5%(k0)\n\nI guess.%(saymore)\e"
+	}
+	else
+	{
+		"%(a0)lolkay."
+		"%(a0)Good to know."
+		"%(a0)Interview: accepted and filed."
+		--
+		"%(saymore)\e"
+	}
+}
+
+saymore
+{
+	"\n\n"
+	--
+	if SHIORI3FW.IsVisible[1] == 1
+	{
+		"\q[Say more?,talko]"
+	}
+	else
+	{
+		"\q[Say more?,OnMenuRunPre]"
+	}
+	--
+	"   \q[I'm done,Cancel]"
+}

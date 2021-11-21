@@ -1,7 +1,7 @@
 Charset,UTF-8
-install,688322796
-surfacecount,74
-update_result,NG(timeout)
-firstboot,688322796
-commitmemorysize,802369
-lastboot,690598291
+install,690676247
+surfacecount,48
+update_result,NG(md5 miss:broadcast/font_readme.txt)
+firstboot,690676269
+commitmemorysize,656214
+lastboot,690845524

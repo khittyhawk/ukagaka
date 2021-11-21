@@ -109,6 +109,16 @@ tmo
 	"\![set,balloontimeout,-1]"
 }
 
+i
+{
+	"\f[italic,1]"
+}
+
+i0
+{
+	"\f[italic,0]"
+}
+
 a0
 {
 	if SHIORI3FW.IsVisible[1] == 1
@@ -652,7 +662,7 @@ timeslot //From the GT template. Breaking down the day into a few distinct chunk
 
 Select.dirtybit
 {
-	goodgollygosh = ("bitch","fuck","prostitute","shit","damn")
+	goodgollygosh = ("bitch","fuck","prostitute","shit","damn","whore")
 }
 
 Select.ssp_downloads

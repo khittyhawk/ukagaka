@@ -14,6 +14,7 @@ dic, rn_menus.dic
 dic, rn_parser.dic
 dic, rn_ramble.dic
 dic, rn_time.dic
+dic, rn_bonus.dic
 dic, Dev_Tools/rn_balloontest.dic
 dic, Dev_Tools/rn_cipher.dic
 

@@ -52,6 +52,7 @@ speakboy : nonoverlap
 	parallel Pool("Pool_midsun","%(weatheris == 'Sunny' && timeslot=='lunch')")
 	parallel Pool("Pool_rain","%(weatheris == 'Rain')")
 	parallel Pool("Pool_CalaverasCounty", "%(jumpingfrog=='Allowed')")
+	parallel Pool("Pool_CalaverasKero", "(%(jumpingfrog=='Allowed') && %(SHIORI3FW.IsVisible[1] == 1))")
 	parallel Pool("Pool_winter","%(GETTIME()[1]==12) || %(GETTIME()[1]==1) || %(GETTIME()[1]==2)")
 	
 	"%(s0)Broken wings and eyes.\w6 Thousands upon thousands of eyes.\e"
@@ -74,16 +75,17 @@ speakboy : nonoverlap
 	"%(a1)Walk like a monkey.\w7 Kick like a mule.\e"
 	"%(s0)I'm\w7\w3 soooooooooooooooooo\c[char,17]\_qrry\_q\w5 for the mess\w5, the stupid way I dress\e"
 	"%(a1)We can, should, must, and will fuck the moon.\e"
+	"%(a0)Is smitten. Has smitten.\e"
 	"%(a0)Don't dead open inside\e"
 	_pro = prons
 	"%(a0)Who %(_pro[3]) %(_pro[0])? Who %(_pro[3]) %(_pro[0])? Who %(_pro[3]) %(_pro[0])?\e"
 	"%(a0)Angles of Incidence and Experience.\e"
 	"%(a0)Can bees feel want?\e"
-	"%(a0)'So you are not the cleverest man within twenty kingdoms?'\n\n\w6\w6'Well as you can see, I am no man'\e"
+	"%(a0)'So you are not the cleverest man within twenty kingdoms?'\n\n\w6\w6'Well as you can see, %(i)I am no man%(i0)'\e"
 	"%(a0)Fixed.\w6\w6 As in 'immovable',\w6 fixed in place.\w6 Cannot be separated.\e"
 	"%(a0)The lion and the unicorn went to sea\w3, in a beautiful pea-green boat.\e"
 	"%(a0)'Nevada' means 'snowy' and 'Las Vegas' means 'the meadows'.\e"
-	"%(s0)There is a old name\w4 for both \f[italic,1]god\f[italic,0] and \f[italic,1]monster\f[italic,0].\w6\w6 There isn't much of a difference\w6, really.\e"
+	"%(s0)There is a old name\w4 for both %(i)god%(i0) and %(i)monster%(i0).\w6\w6 There isn't much of a difference\w6, really.\e"
 	"%(s0)The gorgons are sisters\w4, not by blood\w4, but by what they've\w2 become.\e"
 	"%(s0)\![set,balloonwait,4]Those beasts you wear\w7, in your eyelashes\w8\w3, under your skin\w8\w3%(lps6)\w7 You are their only home\w8, do you know that?\w5\w7 Are you stewarding it to their satisfaction?\e"
 	"%(s0)\![set,balloontimeout,10000]Dost thou wish me to play Mercutio?\w5\w5 Spill all the secrets of Queen Mab?\e"
@@ -93,7 +95,7 @@ speakboy : nonoverlap
 	"%(s0)The end of the world is already here.\e"
 	"%(a0)Rock doves,\w4 your Galatea.\e"
 	"%(a0)'Vermin' is a word for any creature better at surviving than you.\e"
-	"%(s0)--Señor Perfecto?\w5\n--¡Es \f[italic,1]\_qdoctor\_q\f[italic,0]\w5 Perfecto!\e"
+	"%(s0)--Señor Perfecto?\w5\n--¡Es %(i)\_qdoctor\_q%(i0)\w5 Perfecto!\e"
 	"%(a1)Who's on first; What's on second; and I don't know's on third.\e"
 	"%(s0)Summer is\w8\_l[85,2em] over and gone\w8\n\nSummer is\w8\n\n[half]\_l[4.5em] dying,\w7\n\n\_l[6em] dying.\e"
 	"%(a1)Why,\w4 if only we were all wiener dogs,\w4 all our problems would be solved!\e"
@@ -103,7 +105,7 @@ speakboy : nonoverlap
 	"%(a0)You are a carnivore.\w6 Why did you eat my waffles?\e"
 	"%(a0)Lord\w3, what fools these mortals be!\e"
 	"%(a0)Arsenic is unlike other toxins.\w5 You cannot build up an immunity\w8, adjust\w8, inure\w8, weather it.\w5\w5\w5 It lingers in your system\w7, building up and building up and building up\w6\w6 until you smother in it.\e"
-	"%(s0)Spoiler-free tip for playing \f[italic,1]Baba is You\f[italic,0]:\w6\w6 test every interaction of every rule until you know for sure.\w6 Your assumptions beget your failures.\e"
+	"%(s0)Spoiler-free tip for playing %(i)Baba is You%(i0):\w6\w6 test every interaction of every rule until you know for sure.\w6 Your assumptions beget your failures.\e"
 	"%(a0)It looked better on me anyway.\e"
 	"%(s0)Well begun is half done.\e"
 	"%(a1)I want crime\w4, not flags.\e"
@@ -123,9 +125,9 @@ speakboy : nonoverlap
 	"\![set,balloonwait,1.3]%(s0)And all my life the radio\w6\w6\n\_l[1em] told me how it loved me so.\w6\w6\nAll for me\w5\w5,\n\_l[1em] a yearning song\w5\w5 -\n\_l[2em] a long\w6, last\w4 love where I\w8\n\_l[3em] belong.\e"
 	"%(s0)I could be anywhere.\e"
 	"%(s0)It writhes!\w4 It writhes!\w4 With mortal pangs!\e"
-	"%(a0)\f[italic,1]Heretic.\f[italic,0]"
+	"%(a0)%(i)Heretic.%(i0)"
 	"%(a0)Bald eagles cry like seagulls.\w6\w6 Red-tailed hawks are the ones that screech.\e"
-	"%(a0)\f[italic,1]kallisti, motherfucker.\f[italic,0]"
+	"%(a0)%(i)kallisti, motherfucker.%(i0)"
 	"%(a0)It runs just fine on a potato.\e"
 	"%(a1)I'm a garbage man\w4, in a garbage can.\e"
 	"%(a0)No one has good taste in music.\w5\w5 Anyone who says so is either lying or deluding themselves.\e"
@@ -144,6 +146,7 @@ Pool_CalaverasCounty
 {
 	"%(s0)\![set,balloonwait,2]Those beasts you wear\w7, in your eyelashes\w8\w3, under your skin\w8\w3%(lps6)\w7\x You are their only home\w8, do you know that?\w5\w7\x[noclear] Are you stewarding it to their satisfaction?\e"
 	"%(s0)I never met the devil, but I did meet his grandmother at a crossroads.\e:chain=hisgrandmother"
+	
 }
 
 Pool_username //just stuff that's funny
@@ -165,11 +168,17 @@ Pool_kerohere //if the kero is present
 	"%(s0)Brown bear\w5, brown bear\w7, what do you see?%(k0)\w6\w6ALL.\e"
 	"\_sSave us! Save us! Cry for help! Kill the messenger!\_s%(k0) Bring the fire back to the mountaintop!\e"
 	"%(s0)Melpomene Rex%(k0)Regina%(s0)\nMelpomene Regina\e:chain=Tragic"
-	"%(k0)Wait until I tell you about \f[italic,1]all five hundred million Friedrich Wilhelms\f[italic,0].%(s0)?\w6\w6%(k0)Prussia.\w6 Nothing but Friedrichs and Wilhelms and Friedrich Wilhelms as far as the eye can see.\e"
+	"%(k0)Wait until I tell you about %(i)all five hundred million Friedrich Wilhelms%(i0).%(s0)?\w6\w6%(k0)Prussia.\w6 Nothing but Friedrichs and Wilhelms and Friedrich Wilhelms as far as the eye can see.\e"
 	parallel Pool("Pool_spoops","ARRAYSIZE(ghostexlist)>0")
-	
+	"%(k0)A cat may look at a king.\w6%(s0)A cat has no duty but to do exactly as he pleases.\w4\e"
 	"%(s0)Baa baa black sheep, have you any wool?\w7\w5\n\nA - B - C - D - E - F - G\w7\w5\n\nTwinkle, twinkle, little star%(k0)They all have the same melody!%(s0)\w5\n\nYes.\e"
 	"%(s0)lol%(k0)lol\e"
+}
+
+Pool_CalaverasKero
+{
+	"%(k0)How do you know if something is a word or not?\w6%(s0)?\w6%(k0)So\w3, a word like\w3, say\w3, 'worked' is made of two parts:\w3 the root 'work' and the suffix 'ed'\w4, indicating past tense.\w6 But we consider that one word\w4, even though it is made of two parts that each convey meaning\w5, right?\w5 Why say 'worked' is one word and not a compound 'work ed'?\w6\w4 The future tense 'will work' is considered two different words\w5, after all.\w6\w5%(s0)Mm\w5, closeness of the sounds\w5, perhaps?\w5 The slurring of them into one\w4, such as in 'gonna' or 'kinda'?\w6 Those are often written as one word\w5 (albeit deemed incorrectly so by prescriptivists%(k0)\n\nFuck prescriptivists.%(s0))\w4, so have those become one word?\w6%(k0)\n\nIs 'ice cream' one word?\w6%(s0)\n\n...It'd be weird to write it as one.\w5%(k0)Orthography is meta-linguistic\w4, so we don't care about that.\w5 If we limit ourselves to spoken language.\w5%(s0)\n\nDo speakers of languages without writing systems even think of their language in terms of words?\e"
+	
 }
 
 Pool_radio //if the shell is Radio
@@ -213,7 +222,7 @@ Pool_gaster
 
 Pool_rys
 {
-	"%(s0)How do you think his hoodie stays so red?%(k0)It's dyed with the blood of his enemies.%(s0)\w5\n\f[italic,1]What\f[italic,0] enemies?\w6\w5 He's a bean!%(k0)\n%(lps6)Enemy beans.\e"
+	"%(s0)How do you think his hoodie stays so red?%(k0)It's dyed with the blood of his enemies.%(s0)\w5\n%(i)What%(i0) enemies?\w6\w5 He's a bean!%(k0)\n%(lps6)Enemy beans.\e"
 	"%(k0)Hey.\xDidja know you can boop his snoot?\e"
 }
 

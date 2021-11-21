@@ -1,4 +1,0 @@
-//menu balloon
-
-origin.x,55
-origin.y,45

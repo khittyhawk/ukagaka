@@ -178,7 +178,7 @@ OnInstallBegin
 	ssp_downloads
 	if (SHIORI3FW.IsVisible[1] == 1)
 	{
-		"%(k0)Did you smell that?%(lps6) \![set,balloonwait,1.1]Did you \f[italic,1]feel\f[italic,0] that?"
+		"%(k0)Did you taste that?%(lps6) \![set,balloonwait,1.1]Did you %(i)feel%(i0) that?"
 	}
 	--
 	"%(s0)A course has been set. A weight has been laden. Entropy is increased.\n\n%(urname) has accepted the pact.\e"
@@ -478,8 +478,11 @@ OnNotifyFontInfo
 OnBalloonChange
 // (＾＾)ｂ Inbuilt!
 {
-	"\C\b2"
-	--
+	if balloontest = 1
+	{
+		balloontest = 0
+		OnBalloonTest
+	}
 }
 
 
@@ -487,14 +490,14 @@ OnBalloonChange
 OnUpdateCheckResult
 // (＾＾)ｂ Inbuilt!
 {
-	updortresult[0] = (reference0[0],reference0[1],reference0[2])
+	updortresult = "success",reference1
 
 }
 
 OnUpdateCheckFailure
 // (＾＾)ｂ Inbuilt!
 {
-	updortresult = (updortresult,reference0,reference3,reference4)
+	updortresult = "failure",reference0
 
 }
 
@@ -594,9 +597,9 @@ OnTestPause
 
 OnLoc
 {
-	"\C\n\n%(s0)To activate this feature, please go to \_a[https://www.wunderground.com/]Weather Underground\_a, search your location, and input the URL:\n/
+	"\C\_q\n\n%(s0)To activate this feature, please go to \_a[https://www.wunderground.com/]Weather Underground\_a, search your location, and input the URL:\n/
 	\nNote: this feature will not work if another website is entered./
-	\![open,inputbox,OnWeathering,-1]"
+	\![open,inputbox,OnWeathering,-1]"							  
 }
 
 
@@ -604,7 +607,7 @@ OnWeathering
 {
 	weatherurl = reference0
 	curloc = (Capitalize(weatherurl[6,'/']),TOUPPER(weatherurl[5,'/']))
-	optweather = "On"
+	optweather = "On"								  
 	--
 	OnRegWeather
 }
@@ -623,17 +626,19 @@ OnRegWeather
             regex[_i] = _buff
             _i++        
         }    
-    }
+    }											
 	--
 	"\![execute,http-get,%(weatherurl),--async=OnWeatherVars,--file=weather2.html,--timeout=200]"
 }
 
 OnGetSomeWeather
 {
-	if optweather == "On"
+	if reference0 == "manual"
 	{
-		"\![execute,http-get,%(weatherurl),--async=OnWeatherVars,--file=weather2.html,--timeout=200]"
+		manual_check = 1
 	}
+	--
+	"\![execute,http-get,%(weatherurl),--async=OnWeatherVars,--file=weather2.html,--timeout=200]"
 }
 
 OnWeatherVars
@@ -667,6 +672,9 @@ OnWeatherVars
 	dawntime = "Unk"
 	dusktime = "Unk"
 	
+	w_array = (curlat,curlong,hightemp,lowtemp,realtemp,feeltemp,windthing,weatheris,toomoist,dawntime,dusktime)
+	LOGGING("%curlat,%curlong,%hightemp,%lowtemp,%realtemp,%feeltemp,%windthing,%weatheris,%toomoist,%dawntime,%dusktime")
+	LOGGING("OnWeatherVars achieved==============")
 	
 	
 	if FOPEN(_file2,'r')
@@ -706,9 +714,11 @@ OnWeatherVars
 
 		}
 	--
+	timechecked = (hour,nowmin,nowmonth,GETTIME()[2],GETTIME()[0])
+	LOGGING("%curlat,%curlong,%hightemp,%lowtemp,%realtemp,%feeltemp,%windthing,%weatheris,%toomoist,%dawntime,%dusktime")
 	weatheris = REPLACE(weatheris, " in", " soon")
 	--
-	if remindhr == "On"
+	if (remindhr == "On" && minute == 0) || (manual_check == 1)
 	{
 		OnWeatherMe
 	}
@@ -718,10 +728,12 @@ OnWeatherVars
 	}
 	--
 	FCLOSE(_file2)
+	--
 }
 
 OnWeatherMe
 {
+	LOGGING("OnWeatherMe achieved===================")											   
 	if (realtemp[0] == "") || (feeltemp == "") || (windthing == "") || (weatheris == "") || (toomoist == "") || (dawntime == "") || (dusktime == "")
 	{
 		OnGetSomeWeather
@@ -731,7 +743,7 @@ OnWeatherMe
 		//OnGetSomeWeather
 		//would you like to check the weather?
 		"%(a0)There is no weather today.\n\n/
-		\q[Try again?,OnGetSomeWeather]   \q[Try another site?,OnLoc]   \q[No weather,noweather]"
+		\q[Try again?,OnGetSomeWeather]   \q[Try another site?,OnLoc]   \q[No weather,noweather]\e"
 	}
 	else
 	{
@@ -744,20 +756,22 @@ OnWeatherMe
 		--
 		if GETTYPE(highesttemp) != 1
 		{
-			"T"
+			//
 		}
 		else
 		{
-			"Today's high is %highesttemp and t"
+			"High: %highesttemp\n"
 		}
 		--
-		"onight's low is %lowtemp\nWindspeed is %windthing mph\n%weatheris\n%toomoist% humidity\nSunrise: %dawntime AM and sunset: %dusktime PM\e"
+		"Low: %lowtemp\nWindspeed is %windthing mph\n%weatheris\n%toomoist% humidity\nSunrise: %dawntime AM and sunset: %dusktime PM\n\nRetrieved %(timechecked[0]):%(timechecked[1]), %(timechecked[2]) %(timechecked[3]), %(timechecked[4])\e"
+		manual_check = 0
 	}
 }
 
 Select.noweather
 {
 	optweather = "Off"
+	manual_check = 0
 	"\![raise,Cancel]"
 }
 

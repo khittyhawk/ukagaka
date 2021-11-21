@@ -69,17 +69,15 @@ OnMinuteChange
 
 Select.hourtell
 {
-	if optweather != "Off"
-	{
-		"\b2%(tmo)"
-	}
-	--
 	if remindhr == "On"
 	{
 		"It is the hour %hour\n\n"
 	}
 	--
-	OnGetSomeWeather
+	if optweather == "On"
+	{
+		OnGetSomeWeather
+	}
 }
 
 
