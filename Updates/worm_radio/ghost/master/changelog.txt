@@ -1,3 +1,12 @@
+Update 11-27-21
+
+-Added in two alternative calendars! Both are in-progress, but should function in the meantime
+-Fixed Broadcast balloon ocasionally showing the wrong background image
+-More randomtalk
+-Various bugfixes
+
+--
+
 Update 11-20-21
 
 -Fixed a lone quotation mark that caused SSP to crash

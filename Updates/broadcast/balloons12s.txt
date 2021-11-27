@@ -1,0 +1,19 @@
+//menu balloon
+
+origin.x,35
+origin.y,35
+wordwrappoint.x,400
+
+font.height,16
+
+font.color.r,0
+font.color.g,0
+font.color.b,0
+
+
+cursor.notselect.font.shadowcolor.r,100
+cursor.notselect.font.shadowcolor.g,100
+cursor.notselect.font.shadowcolor.b,100
+
+
+cursor.notselect.font.shadowstyle,outline

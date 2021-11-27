@@ -1,7 +1,9 @@
 Charset,UTF-8
 install,690676247
+homeurl_found,1
 surfacecount,48
-update_result,NG(md5 miss:broadcast/font_readme.txt)
+homeurl,https://khittyhawk.github.io/ukagaka/Updates/worm_radio/
+update_result,OK(1)
 firstboot,690676269
 commitmemorysize,656214
-lastboot,690845524
+lastboot,691360392

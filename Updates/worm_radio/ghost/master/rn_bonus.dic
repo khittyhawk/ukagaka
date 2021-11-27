@@ -11,6 +11,18 @@ OnQuest
 	{
 		"%(k0)Isn't it kind've bonkers that a folk song about a girl murdering her sister over a boy has the refrain 'I'll be true to my love if you'll be true to me'?%(s0)\w5Well\w4, that depends on which version you use.\w3 Folk songs beget variants\w3, tear back and re-weave and build up mutations from misremembered or intentionally-modified lyrics.%(k0)\n\nYeah\w4, but a ton of versions have some refrain about being true to one's lover.\w5 Do you think that it's a threat?\w3 As in\w3, 'that's a nice true love we got going on here\w3; it would be a shame if something \![set,balloonwait,1.2]happened to it'\![set,balloonwait,1].%(s0)\n\nCould be%(lps4) could be.%(saymore)\x%(s0)If you are interested\w4, there is a very\w3, %(i)very%(i0) dark modern take by Jon Brooks.%(k0)Like\w3, serial killer dark.%(saymore)\e"
 	}
+	elseif " scp" _in_ _input || "scp " _in_ _input
+	{
+		"%(s0)Pfft.\w5%(k0)Good luck containing %(i)this%(i0).\w4 This is Radio Free %(urname)\w2, baby!\w5%(saymore)\e"
+	}
+	elseif "homestuck" _in_ _input
+	{
+		"%(k0)'Sloppy makeouts' is a Homestuck reference\w4, isn't it?\w5%(s0)Oh damn you're right.\w5%(saymore)\e"
+	}
+	elseif "springsteen" _in_ _input
+	{
+		"%(k0)Yeah, we stole our name from a Bruce Springsteen song\w5, so what?\w5%(s0)Actually\w3, it was taken from a chapter title from ErinPtah's Welcome to Night ValeXHis Dark Materials crossover fic\w3, whose title was in turn taken from the Springsteen song.\w4%(k0)\n\nIt's an evocative title!\w5%(saymore)\e"
+	}
 	elseif "macbeth" _in_ _input
 	{
 		"%(s0)There's this idea that most of 'Macbeth' has been lost to history.%(k0)Which makes sense\w3, because that play is %(i)short%(i0).\w5 It's like the meme 'That escalated quickly' made manifest.%(s0)\n\nIn one scene, Macbeth confonts an apparition of a ghostly child, who calls 'Macbeth! Macbeth! Macbeth!'\w5, to which his reply is 'Had I three ears I'd hear ye!'%(k0)\n\nIt's probably meant to be a desperate plea of sorts\w5, but let's be real-\w6 it is %(i)abolutely hilarious%(i0) to think of Macbeth as an exasperated dad going 'I heard you the first time!'%(saymore)"
@@ -33,7 +45,7 @@ OnQuest
 	{
 		"%(s0)Damn 'In Ruins' by Fol Chen is a good song.\w5 Pity I don't know anything else about it.%(saymore)\e"
 	}
-	elseif "walking dead" _in_ _input
+	if "walking dead" _in_ _input
 	{
 		"%(s0)Even if you don't know the context\w4, the phrase is still amusing.\w5%(k0)I'd say it's even more memorable than how it's %(i)supposed%(i0) to read.\w5 'Don't open;\w4 dead inside' is kind've a mouthful.\w5 'Don't dead open inside' features two alliterative single stressed syllables followed by two double-syllable words that both start with vowels.\w6%(s0)\n\nI don't think that counts as real literary analysis.\w5%(k0)\n\nI mean\w4, if it works\w4, it works.%(saymore)\e"
 	}
@@ -71,6 +83,10 @@ OnQuest
 	{
 		"%(s0)Pygmalion carved a statue from milk-white marble and named it 'Galatea'-%(k0)From the same root as 'galaxy' meaning 'milky'\w4, natch.\w4%(s0) Yes.\w3 - Pygmalion fell in love with his creation and prayed to Aphrodite to give her life.%(k0)\cIt's a dumb story.\w5 'Bluh bluh\w3, what if I manufactured the perfect partner?'\w4 Pygmalion would be ranting about 2-D girls being better than 3-D girls if he were alive today.%(s0)\n\nHave you never poured your soul into a work of art so heavily you wished it were real?\w3 Spent so long in a fictional world that it almost breaks your heart it will never exist beyond the bounds of its medium?%(k0)\n\nSee\w3, when you put it like that\w3, it sounds almost romantic.\w5 But it's still a %(i)thing%(i0)\w3, y'know?\w5 Pygmalion didn't fall in love with Galatea's personality\w3, is what I'm saying.\w4 And\w4, like\w4. what going though Galatea's mind the whole time?\w4 Did Aphrodite make her a person\w3, or is she effectively a nonsentient sex toy that was programmed to give the perfect responses to Pygmalion?\w4 If that's his deal\w3, sure\w3, whatever.\w4 Kinktomato and all that.\w4 But that's not %(i)romantic%(i0).\w4 Not two people learning to love each other\w4, faults and all.%(saymore)\e"
 		"%(k0)Humans made the pigeon.\w6 That's not a joke.%(s0)They selectively bred it for domesticity.%(k0)\n\nYes.\w3 All those traits you find annoying\w4 - those are artifacts of pigeons being in love with you.%(s0)\n\nHence\w3, why pigeons aren't 'wild'\w4, but 'feral'.\w5 You made them to need you.%(k0)\n\nSame with most other domesticated organisms\w3 - dogs, cats, broccoli%(lps4)%(s0)\n\nAnd then\w4, when you didn't need them any more\w4, you turned them out and called them pests.\w8 Poisoning them\w5, denigrating them\w5, building your disgust for them into the very architecture\w3 - cruel spikes to ward off the unwanted.%(k0)\n\nThey love you.%(s0)\n\nThey need you.%(k0)\n\nYou made them love you.%(s0)\n\nYou are Pygmalion\w4, grown bored of your perfect lover and cast your Galatea back to the quarry\w5, expecting her to turn back to broken stone%(lps6) If you make something\w4, are you not responsible for it?%(k0)\n\nMore than that\w3, what do you think will happen to dogs when humans eventually decide they're obsolete?%(saymore)\e"
+	}
+	elseif RE_SEARCH("%(_input)","c?han+uk+ah?") == 1
+	{
+		"Hi\n%(explain_h)"
 	}
 	elseif "brave little toaster" _in_ _input
 	{
@@ -135,7 +151,7 @@ OnQuest
 	}
 	elseif "down by the water" _in_ _input || "pj harvey" _in_ _input || "p j harvey" _in_ _input
 	{
-		"%(s0)Yeah\w4, that refrain of 'little fish, little fish' is%(k0)was%(s0) in containment because it's an earworm.\w5%(k0)\n\nApparently\w5, that refrain is also a nod to 'Salty Dog Blues'\w5, where the singer implores the fish to give them their quarter instead.\w5%(saymore)\e"
+		"%(s0)Yeah\w4, that refrain of 'little fish, big fish' is%(k0)was%(s0) in containment because it's an earworm.\w5%(k0)\n\nApparently\w5, that refrain is also a nod to 'Salty Dog Blues'\w5, where the singer implores the fish to give them their quarter instead.\w5%(saymore)\e"
 	}
 	elseif "ozymandias" _in_ _input || "percy bysshe shelley" _in_ _input || "ye mighty" _in_ _input
 	{
@@ -185,14 +201,15 @@ OnQuest
 	{
 		"%(k0)Edgar Allan Poe was an emo kid.\w6\n'Bluh bluh\w5, look at my edgy edgelord poem about humanity dooming itself. I'm gonna steal Shakepeare's thing about All Men being Merely Players on a Stage but instead... a giant worm will come out and %(i)EAT%(i0) everyone\_q!!!!1eleventy!!\_q'. Lol.\w6%(s0)He shares his themes with the entire Romantic movement\w4, though.\w5%(k0)\cAll the Romantics were emo kids too.\w3 You heard the whining that Frankenstein gets up to?%(s0)\n\nPerhaps it is validating for teenagers to read these works considered 'great literature' that cover the same themes as preoccupy them?\w5%(k0)\n\nI guess.%(saymore)\e"
 	}
-	else
+	elseif "teen titans" _in_ _input
 	{
-		"%(a0)lolkay."
-		"%(a0)Good to know."
-		"%(a0)Interview: accepted and filed."
-		--
-		"%(saymore)\e"
+		"%(s0)There's an episode of 'Teen Titans' where Robin goes to train with this old master\w5, but has to face several trials on the way up the mountain.\w5%(k0)I don't know why he didn't simply %(i)ask%(i0) to pass by the bear guard.\w5 That's the oldest trick in the book\w4, right?\w5 'No one can cross without getting past me.' 'Well\w3, may I cross\w3, then?'\w5%(s0)\n\nIt wouldn't have worked\w3, likely.\w5 Anyway\w3, Robin faces an albino snake guardian in a cave.\w5 The snake hisses\w4 'You cannot trust your eyes.\w5 You cannot trust your ears.\w5 I could be anywhere.'\w5\n\nFor some reason\w3, the cadence of that 'I could be anywhere' has stuck with me.\w5%(k0)\n\nTo be honest\w3, it's a vague enough statement that you probably just thought it was us being ominous again.\w5%(saymore)\e"
 	}
+	
+	"%(a0)lolkay.%(saymore)\e"
+	"%(a0)Good to know.%(saymore)\e"
+	"%(a0)Interview: accepted and filed.%(saymore)\e"
+
 }
 
 saymore
@@ -209,4 +226,28 @@ saymore
 	}
 	--
 	"   \q[I'm done,Cancel]"
+}
+
+
+Select.explain_h
+{
+	"%(s0)There's this joke that all Jewish holidays are 'They tried to kill us.\w4 They didn't.\w4 Let's eat.'\n\w3/
+	%(k0)And %(hrom) fits squarely into that.\w5\x/
+	%(k0)Basically the story goes\w6 the Greeks were like\w4, 'Okay so\w4, you can't be Jewish anymore.\w3 You gotta be Greek because Hellenization\w3, y'know?'\w4\n/
+	And the Jews were like\w4, 'buuuuut\w5, we don't wanna.'\w4\n/
+	And the Greeks were like\w3, 'Look\w3, you just gotta.'\w4\n/
+	And the Jews were like\w3, 'Uh no?'\w5\n/
+	%(s0)And the Greeks cracked down on the heresy in their midst.\w5\n/
+	%(k0)\cAnd this mofo named Judah went\w5, 'fuck that.\w3 that's bullshit' and decided to become Captain Hammer and led the hammerheads in rebellion against the Greeks.\w3\n/
+	%(s0)\c...That's not what they're called.\n\n/
+	\w5'Maccabee' - Judah's epithet - means 'the hammer'.\w4 Judah led the Maccabees in rebellion.\n/
+	%(k0)\cRight.\w3 Which means it's a completely legit translation!\w3/
+	%(s0)\n\nNo.\n/
+	%(k0)\cAnyway\w3, Captain Hammer and his crew defeated their oppressors and Yahweh showed up fifteen minutes later with Starbucks and was like\w3, 'Oh.\w5 You%(lps4) did the whole rebellion without me.\w5 That's%(lps4) cool.\w4 %(lps4)Here\w3, let me help you clean up.'\w4\n/
+	%(s0)\cLess facetiously\w3, during their retreat\w3, the Greeks defiled and ransacked the Jews' holy temple.\w3 The Jews searched and\w4, among the wreckage\w4, found only enough oil to keep the eternal flame lit for a single night.\w5\nIt would take eight days to make more oil.\w5\n\n/
+	The miracle - of the oil lasting eight days when it seemed it held barely enough to last one - was seen as a sign that their god never left them.\w4\n/
+	%(k0)\cMy interpretation's legit!\w3/
+	%(s0)\cAnd it gave them the hope they needed to press on and rebuild despite their losses.\w5\n\n/
+	\_q\q[Hear again?,explain_h]    \q[I'm good,heard_han]\e"
+	
 }

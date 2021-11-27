@@ -57,11 +57,12 @@ MouseDoubleClickKero
 	--
 	if SHIORI3FW.ShellName == "Radio"
 	{
-		"-bzzt-\e"
+		"-bzzt-"
+		
 	}
 	elseif SHIORI3FW.ShellName == "Ship"
 	{
-		"[creak]\e"
+		"[creak]"
 	}
 }
 

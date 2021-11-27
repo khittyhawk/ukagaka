@@ -1,3 +1,104 @@
+daychange
+{
+	highesttemp = ""
+	dawntime = ""
+	dusktime = ""
+	OnMoonphase
+	--
+	if get_j == "On"
+	{
+		OnJacobinMonths
+	}
+	--
+	if get_h == "On"
+	{
+		OnHebrewCal
+		--
+		hgreet = 0
+		--
+		if h_m == "Kislev"
+		{
+			isholiday = 1
+			--
+			if h_d == 25
+			{
+				ishanu = 1
+				
+				/*
+				K25 = 1
+				26 = 2
+				27 = 3
+				28 = 4
+				29 = 5
+				30/T1 = 6
+				T1/2 = 7
+				T2/3 = 8
+				*/
+			}
+			elseif h_d == 26
+			{
+				ishanu = 2
+			}
+			elseif h_d == 27
+			{
+				ishanu = 3
+			}
+			elseif h_d == 28
+			{
+				ishanu = 4
+			}
+			elseif h_d == 29
+			{
+				ishanu = 5
+			}
+			elseif h_d == 30
+			{
+				ishanu = 6
+			}
+			else
+			{
+				isholiday = 0
+				ishanu = 0
+			}
+
+		}
+		elseif h_m == "Tevet"
+		{
+			isholiday = 1
+			--
+			if h_d == 1
+			{
+				ishanu = 7
+			}
+			elseif h_d == 2
+			{
+				ishanu = 8
+			}
+			else
+			{
+				isholiday = 0
+				ishanu = 0
+			}
+		}
+		else
+		{
+			isholiday = 0
+		}
+		--
+		if ishanu != 0
+		{
+			"%(s0)Tonight is the %(Ord(ishanu)) night of %(hrom).\w6 %(hbless)\n"
+			hgreet = 1
+		}
+	}
+	--
+	if optweather == "On" 
+	{
+		OnGetSomeWeather
+	}
+}
+
+
 OnSecondChange
 // (＾＾)ｂ Inbuilt!
 {
@@ -38,6 +139,55 @@ OnMinuteChange
 {
 	//time since midnight
 	cursec = (hour*60*60) + (minute*60)
+	
+	if dawntime != "" && dawntime != 'Unk'
+	{
+		if dusktime != "" && dusktime != 'Unk'
+		{
+			if cursec > dawnsec && cursec < dusksec
+			{
+				dayornight = 'day'
+			}
+			else
+			{
+				dayornight = "night"
+			}
+		}
+		else
+		{
+			if cursec > dawnsec && hour < 18
+			{
+				dayornight = "day"
+			}
+			else
+			{
+				dayornight = "night"
+			}
+		}
+	}
+	elseif dusktime != "" && dusktime != 'Unk'
+	{
+		if hour >= 6 && cursec < dusksec
+		{
+			dayornight = "day"
+		}
+		else
+		{
+			dayornight = "night"
+		}
+	}
+	else
+	{
+		if hour >= 6 && hour < 18
+		{
+			dayornight = "day"
+		}
+		else
+		{
+			dayornight = "night"
+		}
+	}
+	--
 	_isdawn = cursec - dawnsec
 	_isdusk = cursec - dusksec
 	--
@@ -58,12 +208,23 @@ OnMinuteChange
 	{
 		if hour == 0
 		{
-			highesttemp = ""
-			dawntime = ""
-			dusktime = ""
+			daychange
 		}
 		--
 		Select.hourtell
+	}
+	--
+	if pauseweather[0] == 1
+	{
+		if pauseweather[1] < 10
+		{
+			pauseweather[1] += 1
+		}
+		else
+		{
+			pauseweather = (0,0)
+			OnGetSomeWeather
+		}
 	}
 }
 
@@ -155,4 +316,301 @@ OnMoonphase
 		}
 	}
 	moonmoon ,= _lumperc
+}
+
+//Jacobin Calendar
+
+
+OnJacobinMonths
+{
+	OnPastEquinox
+	
+	jmonth = (jcal_passed/30)
+	jdate = (jcal_passed%30)
+	
+	Jacobin_days = ("décadi","primidi","duodi","tridi","quartidi","quintidi","sextidi","septidi","octidi","nonidi")
+	jacobin_months_all = ("Vendémiaire","Brumaire","Frimaire","Nivôse","Pluviôse","Ventôse","Germinal","Floréal","Prairial","Messidor","Thermidor","Fructidor")
+	
+	LOGGING("the months are here===============")
+	
+	case jmonth
+	{
+		when 0
+		{
+			//Vendémiaire
+			jdays = ("","grape","saffron","chestnut","autumn crocus","horse","impatiens","carrot","amaranth","parsnip","vat","potato","strawflower","winter squash","mignonette","donkey","four o'clock flower","pumpkin","buckwheat","sunflower","wine-press","hemp","peach","turnip","amaryllis","ox","eggplant","chili pepper","tomato","barley","barrel")
+		}
+		when 1
+		{
+			//Brumaire
+			jdays = ("","apple","celery","pear","beetroot","goose","heliotrope","common fig","black salsify","checker tree","plough","salsify","water caltrop","jerusalem artichoke","endive","turkey","skirret","watercress","leadworts","pomegranate","harrow","baccharis","azarole","madder","orange","pheasant","pistachio nut","tuberous pea","quince","service tree","roller")
+		}
+		when 2
+		{
+			//Frimaire
+			jdays = ("","rampion","cattle turnip","chicory","medlar","pig","lamb's lettuce","cauliflower","honey","juniper","pickaxe","wax","horseradish","cedar tree","fir","roe deer","gorse","cypress tree","ivy","savin juniper","grub-hoe","sugar maple","heather","reed plant","sorrel","cricket","pine nut","cork","truffle","olive","shovel")
+		}
+		when 3
+		{
+			//Nivôse
+			jdays = ("","peat","coal","bitumen","sulphur","dog","lava","topsoil","manure","saltpeter","flail","granite","clay","slate","sandstone","rabbit","flint","marl","limestone","marble","winnowing fan","gypsum","salt","iron","copper","cat","tin","lead","sinc","mercury","sieve")
+		}
+		when 4
+		{
+			//Pluviôse
+			jdays = ("","spurge-laurel","moss","butcher's broom","snowdrop","bull","laurustinus","tinder polypore","daphne mezereum","poplar","axe","hellebore","broccoli","bay laurel","filbert","cow","box tree","lichen","yew tree","lungwort","billhook","pennycress","rose daphne","couch grass","common knotgrass","hare","woad","hazel","cyclamen","celandine","sleigh")
+		}
+		when 5
+		{
+			//Ventôse
+			jdays = ("","coltsfoot","dogwood","matthiola","privet","billygoat","wild ginger","italian buckthorn","violet","goat willow","spade","narcissus","elm","common fumitory","hedge mustard","goat","spinach","doronicum","pimpernel","chervil","gardner's line","mandrake","parsley","scurvy-grass","daisy","tuna","dandelion","wood anemone","maidenhair fern","ash tree","dibber")
+		}
+		when 6
+		{
+			//Germinal
+			jdays = ("","primrose","plane tree","asparagus","tulip","hen","chard","birch","daffodil","alder","incubator","periwinkle","hornbeam","morel","beech tree","bee","lettuce","larch","hemlock","radish","hive","judas tree","romaine lettuce","horse chestnut","arugula","pigeon","lilac","anemone","pansy","bilberry","grafting knife")
+		}
+		when 7
+		{
+			//Floréal
+			jdays = ("","rose","oak tree","fern","hawthorne","nightingale","common columbine","lily of the valley","button mushroom","hyacinth","rake","rhubarb","sainfoin","wallflower","fan palm tree","silkworm","comfrey","salad burnet","basket of gold","orache","weeding hoe","sea thrift","fritillary","borage","valerian","carp","spindle","chive","bugloss","white mustard","shepherd's crook")
+		}
+		when 8
+		{
+			//Prairial
+			jdays = ("","alfalfa","daylily","clover","angelica","duck","lemon balm","oat grass","martagon lily","wild thyme","scythe","strawberry","betony","pea","acacia","quail","carnation","elderberry","poppy plant","linden","pitchfork","cornflower","camomile","honeysuckle","bedstraw","tench","jasmine","verbena","thyme","peony","hand cart")
+		}
+		when 9
+		{
+			//Messidor
+			jdays = ("","rye","oat","onion","speedwell","mule","rosemary","cucumber","shallot","wormwood","sickle","coriander","artichoke","clove","lavender","chamois","tobacco","redcurrant","hairy vetchling","cherry","park","mint","cumin","bean","alkanet","guineafowl","sage","garlic","tare","wheat","shawn")
+		}
+		when 10
+		{
+			//Thermidor
+			jdays = ("","spelt","common mullein","melon","ryegrass","ram","horsetail","mugwort","safflower","blackberry","watering can","foxtail millet","common glasswort","apricot","basil","ewe","marsh mallow","flax","almond","gentian","lock","carline thistle","caper","lentil","inula","otter","myrtle","canola","lupin","cotton","mill")
+		}
+		when 11
+		{
+			//Fructidor
+			jdays = ("","plum","millet","puffball","six-row barley","salmon","tuberose","winter barley","apocynum","licorice","ladder","watermelon","fennel","european barberry","walnut","trout","lemon","teasel","buckthorn","mexican marigold","harvesting basket","wild rose","hazelnut","hops","sorghum","crayfish","bitter orange","goldenrod","maize","sweet chestnut","pack basket")
+		}
+		others
+		{
+			//complementary days
+			jdays = ("Celebration of Virtue","Celebration of Talent","Celebration of Labor","Celebration of Convictions","Celebration of Honors","Celebration of the Revolution")
+		}
+	}
+	
+	jmd = (jacobin_months_all[jmonth],jdays[jdate])
+	decadi = Jacobin_days[(jdate%10)]
+	
+	jyear = OnRomanNumerals(yearsince)
+}
+
+
+OnEquinoxDate
+{
+	regex_date = "\s+(\d{4}).*9\/(\d{2,3})\s{0,3}(\d+):"
+	_file = "var\\srevents.cgi"
+	_buff = ""
+	
+	j1 = ""
+	j0 = ""
+	
+	FCHARSET(1)
+	
+	if FOPEN(_file,'r')
+	{
+		for _buff = FREAD(_file); _buff != -1; _buff = FREAD(_file)
+		{
+			if RE_SEARCH (_buff, regex_date)
+			{
+				//set the equinox for the current year
+				if TOINT(RE_GETSTR[1]) == GETTIME()[0]
+				{
+					//if the hour is 2300, add one for CEST and get the day after
+					if TOINT(RE_GETSTR[3]) != 23
+					{
+						j1 = RE_GETSTR[2]
+					}
+					else
+					{
+						j1 = TOINT(RE_GETSTR[2])+1
+					}
+					
+				}
+				//set the equinox for the previous year
+				elseif TOINT(RE_GETSTR[1]) == (GETTIME()[0]-1)
+				{
+					//if the hour is 2300, add one for CEST and get the day after
+					if TOINT(RE_GETSTR[3]) != 23
+					{
+						j0 = RE_GETSTR[2]
+					}
+					else
+					{
+						j0 = TOINT(RE_GETSTR[2])+1
+					}
+				}
+			}
+		}
+	}
+	
+	
+}
+
+OnPastEquinox
+{
+	OnEquinoxDate
+	monthdays
+	
+	_sept_left = 30-j1
+	_sept_left0 = 30-j0
+	
+	jcal_passed = 0
+	
+	if GETTIME()[1] > 9
+	{
+		//if it's past september
+		for _val = 10; _val < GETTIME()[1]; _val++
+		{
+			
+			jcal_passed += md[_val]
+			yearsince = (GETTIME()[0]-1791)
+		}
+		
+		jcal_passed = jcal_passed + _sept_left + GETTIME()[2]
+		
+	}
+	elseif GETTIME()[1] < 9
+	{
+		//if it's before september
+		for _val = 10; _val < 12; _val++
+		{
+			jcal_passed += md[_val]
+		}
+		for _val = 1; _val < GETTIME()[1]; _val++
+		{
+			jcal_passed += md[_val]
+		}
+		jcal_passed = jcal_passed + _sept_left0 + GETTIME()[2]
+		yearsince = (GETTIME()[0]-1792)
+	}
+	else
+	{
+		//if it is september
+		if GETTIME()[2] > j1
+		{
+			//if it's past the equinox
+			jcal_passed = GETTIME()[2] - j1
+			yearsince = (GETTIME()[0]-1791)
+		}
+		elseif GETTIME()[2] < j1
+		{
+			//if it's before the equinox
+			for _val = 10; _val < 12; _val++
+			{
+				jcal_passed += md[_val]
+			}
+			for _val = 1; _val < GETTIME()[1]; _val++
+			{
+				jcal_passed += md[_val]
+			}
+			
+			jcal_passed += GETTIME()[2]
+			yearsince = (GETTIME()[0]-1792)
+		}
+		else
+		{
+			//if it is the equinox
+			jcal_passed = 0
+		}
+	}
+	--
+	jcal_passed += 1
+}
+
+
+OnHebrewCal
+{
+	_url = "https://www.hebcal.com/converter?cfg=xml&gy=" + "%(GETTIME()[0])" + "&gm=" + "%(GETTIME()[1])" + "&gd=" + "%(GETTIME()[2])" + "&g2h=1"
+	--
+	"\![execute,http-get,%(_url),--async=OnHRead1,--file=hcal.html,--timeout=200]"
+	
+	LOGGING("1 %_url===========")
+	--
+	tomorrowis
+	
+	_url2 = "https://www.hebcal.com/converter?cfg=xml&gy=" + tomyear + "&gm=" + tommonth + "&gd=" + tomday + "&g2h=1"
+	--
+	"\![execute,http-get,%(_url2),--async=OnHRead2,--file=hcal2.html,--timeout=200]"
+	
+	LOGGING("2 %(_url2)===========")
+}
+
+
+OnHRead1
+{
+	LOGGING("arrived at h1===============")
+	_file = "var\\hcal.html"
+	_buff = ""
+	
+	_output = ''
+	
+	FCHARSET(1)
+	
+	if FOPEN(_file,'r')
+	{
+	    for _buff = FREAD(_file); _buff != -1; _buff = FREAD(_file)
+		{
+			_output += _buff
+		}
+	}
+	
+	h_data = SPLIT(_output,'"')
+	
+	hyear = h_data[9]
+	hmonth = h_data[11]
+	hday = h_data[13]
+	
+	if SUBSTR(hmonth,0,2) == "Sh"
+	{
+		hmonth = "Shevat"
+	}
+	--
+	FCLOSE(_file)
+}
+
+OnHRead2
+{
+	LOGGING("arrived at h2================")
+	_file2 = "var\\hcal2.html"
+	_buff2 = ""
+	
+	_output2 = ''
+	
+	FCHARSET(1)
+	
+	if FOPEN(_file2,'r')
+	{
+	    for _buff2 = FREAD(_file2); _buff2 != -1; _buff2 = FREAD(_file2)
+		{
+			_output2 += _buff2
+		}
+	}
+	
+	h_data6 = SPLIT(_output2,'"')
+	
+	hyear6 = h_data6[9]
+	hmonth6 = h_data6[11]
+	hday6 = h_data6[13]
+	
+	if SUBSTR(hmonth6,0,2) == "Sh"
+	{
+		hmonth6 = "Shevat"
+	}
+	--
+	FCLOSE(_file2)
+	
 }

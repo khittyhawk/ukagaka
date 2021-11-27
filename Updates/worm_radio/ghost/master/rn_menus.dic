@@ -8,7 +8,7 @@
 
 OpenSakuraMenu
 {
-	"\![set,autoscroll,disable]\b2%(s0)Hallo and ahoy!\n\n\_q" //big balloon for menu + calls idles for the specific mode
+	"\![set,autoscroll,disable]\b2%(s0)Hallo and ahoy!\n\_q" //big balloon for menu + calls idles for the specific mode
 	--
 	OnMenuRun
 }
@@ -24,9 +24,38 @@ OnMenuRunPre
 
 OnMenuRun
 {
+	"\_l[]\n[half]"
+	--
+	if get_j == "On"
+	{
+		"\f[align,right]\f[height,80%]temp_veg Today is %Capitalize(decadi), the %Ord(jdate) of %(jmd[0]),\nDay of the %(Capitalize(jmd[1])), Year %(jyear)\n\f[height,default]\f[align,left]"
+	}
+	--
+	if get_h == "On"
+	{
+		"\f[align,right]\f[height,80%]num_aleph Today is the %Ord(h_d) of %(h_m), %(h_y)"
+		--
+		if isholiday == 1
+		{
+			if ishanu != 0
+			{
+				"\nThe %Ord(ishanu) night of %(hrom)\n"
+				--
+				if (heard_h != 1) && (SHIORI3FW.IsVisible[1] == 1)
+				{
+					"(\q[Whats %(hrom)?,explain_h])"
+				}
+			}
+		}
+		--
+		"\f[height,default]\n\f[align,left]"
+	}
+	--
+	"\n[half]"
+	--
 	if lastTalk != ""
 	{
-		"\![*]\q[Say again?,OnLastTalk]\n\n"
+		"\![*]\q[Say again?,OnLastTalk]\n"
 	}
 	--
 	"\![*]\q[Speak!,OnAiTalk,_talkplease]\n\n/
@@ -50,6 +79,9 @@ Select.settingmenu
 	if jumpingfrog == ""; {jumpingfrog = "Allowed"}
 	if remindhr == ""; {remindhr = "On"}
 	if washurmouth == ""; {washurmouth = "Fuck yes"}
+	if altcal == ""; {altcal = 0}
+	if get_j == ""; {get_j = "Off"}
+	if get_h == ""; {get_h = "Off"}
 	
 	"\b2\_q\f[align,center]Settings\n\n\f[align,left]/
 	\![*]\q[Change username?,gonamae]:\n\_l[2em]Now: %(urname)\n/
@@ -96,9 +128,18 @@ Select.settingmenu
 		"\n"
 	}
 	--
-	"\![*]\q[Keep things worksafe?,fffff]:\nCurrently: %(washurmouth)"
+	"\![*]\q[Keep things worksafe?,fffff]:\n\_l[2em]Currently: %(washurmouth)\n/
+	\![*]\q[Alternative Calendars,othercal]:\n"
+	
 	--
-	"\n\n\![*]\q[Main Menu,OnMenuRunPre]     \![*]\q[Cancel,Cancel]"
+	if altcal == 1
+	{
+		"\_l[2em]\q[Jacobin,get_j] (%(get_j))\n/
+		\_l[2em]\q[Hebrew,get_h] (%(get_h))\n"
+
+	}
+	--
+	"\n\![*]\q[Main Menu,OnMenuRunPre]     \![*]\q[Cancel,Cancel]"
 	
 }
 
@@ -295,9 +336,9 @@ OnShelltering
 	--
 	if reference0 == "Ship"
 	{
-		"\b[3]%(tmo)Note: While the 'Ship of Theseus' shell is\w5, arguably\w5, the intended body of this ghost\w5, it is also a bunch of barely-readable garbage bullshit most likely only amusing to the dev.\w5\w5 Are you sure you want to change to this shell?\n\n/
+		"\b[12]\[set,balloonalign,left]%(tmo)Note: While the 'Ship of Theseus' shell is\w5, arguably\w5, the intended body of this ghost\w5, it is also a bunch of barely-readable garbage bullshit most likely only amusing to the dev.\w5\w5 Are you sure you want to change to this shell?\n\n/
 		
-		\q[I'm sure,script:\![change,shell,Ship\]]   \q[Keep current shell,script:\![raise,Select.settingmenu\]]"
+		\_l[1.5em]\_q\q[I'm sure,script:\![change,shell,Ship\]]                     \q[Keep current shell,script:\![raise,Select.settingmenu\]]\_q"
 	}
 	else
 	{
@@ -310,7 +351,7 @@ Select.togglespeed
 	"\_qCurrent sequence: #%(boatspeed)/
 	\![open,sliderinput,OnFast,-1,%(boatspeed),0,9,--option=noclose]/
 	\n\n/
-	\![*]\q[Settings,settingmenu]   \![*]\q[Cancel,Cancel]"
+	\![*]\q[Settings,settingmenu] \![*]\q[Cancel,Cancel]"
 	
 }
 
@@ -405,6 +446,53 @@ Select.fffff
 }
 
 
+Select.othercal
+{
+	if altcal != 1
+	{
+		altcal = 1
+	}
+	else
+	{
+		altcal = 0
+	}
+	--
+	Select.settingmenu
+}
+
+Select.get_j
+{
+	if get_j != "On"
+	{
+		get_j = "On"
+		LOGGING("calendar is on====================")
+		--
+		OnJacobinMonths
+	}
+	else
+	{
+		get_j = "Off"
+	}
+	--
+	Select.settingmenu
+}
+
+Select.get_h
+{
+	if get_h != "On"
+	{
+		get_h = "On"
+		OnHebrewCal
+	}
+	else
+	{
+		get_h = "Off"
+	}
+	--
+	Select.settingmenu
+}
+
+
 Select.functionslol
 {
 	_updortSSP = "\![update\,platform\]"
@@ -460,9 +548,12 @@ Select.CloseGhost
 {
 	CloseVars
 	OnTimeDifference
-	
+	if dayornight == "night" && (RAND(366) < 2)
+	{
+		"%(s0)The earth rockets around a roiling cauldron of plasma\w5, forever on the edge of plummeting into its tentacled maw\w5, or spiraling into the lifelessness of the void.\w5 All we ever have is each other.\w6 Goodnight\w3, %(urname)."
+	}
 	"%(s0)Fare well, %(urname)"
-	"%(a0)On next week's episode%(lps6)"
+	"%(a1)On next week's episode%(lps6)"
 	--
 	"\w8\w8\-\e"
 }

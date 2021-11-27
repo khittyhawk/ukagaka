@@ -1,6 +1,6 @@
 ghostver
 {
-	"Version 0.1.1 alpha"
+	"Version 0.1.2 alpha"
 }
 
 OnFirstBoot
@@ -19,13 +19,19 @@ OnBoot
 	OnTimeDifference
 	
 	--
-	if (openSec-closingSec) < 400
+	if get_h == "On" && ishanu != 0 && hgreet != 1
+	{
+		
+		"%(s0)Tonight is the %(Ord(ishanu)) night of %(hrom).\w6 %(hbless)"
+		hgreet = 1
+	}
+	elseif (openSec-closingSec) < 400
 	{
 		_cens = ""
 		if _currentshell == "Ship"; {_cens = ""}
 		if _currentshell == "Radio"; {_cens = "0"}
 		LOGGING("%(_currentshell) %(_cens) =================")
-		"%(s0)Hera's \_b[censored%(_cens).png,inline,opaque]! Must you drag me hither and thither so?\e"
+		"%(s0)Hera's \_b[censored%(_cens).png,inline,opaque]! Must you drag me hither and thither so?"
 	}
 	else
 	{
@@ -33,6 +39,8 @@ OnBoot
 		"%(s0)Latest developments%(lps4)"
 		"%(s0)Frequency: accessed."
 	}
+	--
+	"\e"
 }
 
 
@@ -83,15 +91,13 @@ OnGhostChanging
 OnGhostChanged
 // (＾＾)ｂ Inbuilt!
 {
-	OnMoonphase
-	--
 	if reference0 == sakuraname
 	{
-		RebootVars
 		"%(s0)"
 	}
 	else
 	{
+		RebootVars
 		anotherspoopy = reference2
 		"%(s0)"
 		--
@@ -192,13 +198,9 @@ OnSysResume
 {
 	//call the 
 	risetime = GETTIME()
-	if (optweather == "On") && (risetime[0] != naptime[0] || risetime[7] != naptime[7])
+	if (risetime[0] != naptime[0] || risetime[7] != naptime[7])
 	{
-		highesttemp = ""
-		dawntime = ""
-		dusktime = ""
-		OnGetSomeWeather
-		moonmoon = OnMoonphase
+		daychange
 	}
 	LOGGING("~~~~~~~~~~~~~~~~~~~~~~~restored")
 	
@@ -222,13 +224,10 @@ OnClose
 RebootVars
 {
 	_nowtime = GETTIME()
-	if (optweather == "On") && ((_nowtime[7] != closingTime[7]) || (_nowtime[0] != closingTime[0]))
+	if ((_nowtime[7] != closingTime[7]) || (_nowtime[0] != closingTime[0]))
 	//if the year is different OR the day is different
 	{
-		highesttemp = ""
-		dawntime = ""
-		dusktime = ""
-		OnGetSomeWeather
+		daychange
 	}
 	--
 	lastTalk = ""
@@ -244,7 +243,6 @@ RebootVars
 	stroke[0] = 0
 	stroke[1] = 0
 	
-	OnMoonphase
 	--
 	"\![get,property,OnMe,currentghost.scope(0).rect]/
 	\![get,property,OnMe2,currentghost.scope(1).rect]"
@@ -320,17 +318,21 @@ OnVanishButtonHold
 //ISVAR is a built in YAYA function that checks if a variable exists (is initialized) or not. It returns 0 if the variable doesn't exist, and 1 if it does.
 UpdateVars
 {
-	if stopfunction == ""; {stopfunction = 1}
-	if urname == ""; {urname = "My good bitch"}
-	if aitalkinterval == ""
+	if !ISVAR('stopfunction'); {stopfunction = 1}
+	if !ISVAR('urname'); {urname = "My good bitch"}
+	if !ISVAR('aitalkinterval')
 	{
 		aitalkinterval = 600
 		talkrate = "every 10 minutes"
 	}
-	if deleteshitai == ""; {deleteshitai = "Off"}
-	if installdate == ""; {installdate = ("%(year)","%(month)","%(day)","%(hour)","%(minute)","%(second)","%(ghostver)")}
-	if timeOut == ""; {timeOut = 0}
-	if timeHere == ""; {timeHere = 0}
+	if !ISVAR('deleteshitai'); {deleteshitai = "Off"}
+	if !ISVAR('installdate'); {installdate = ("%(year)","%(month)","%(day)","%(hour)","%(minute)","%(second)","%(ghostver)")}
+	if !ISVAR('timeOut'); {timeOut = 0}
+	if !ISVAR('timeHere'); {timeHere = 0}
+	if !ISVAR('dayornight'); {dayornight = ''}
+	if !ISVAR('pauseweather'); {pauseweather = (0,0)}
+	if !ISVAR('hb_yr'); {hb_yr = IARRAY}
+	if !ISVAR('hgreet'); {hgreet = 0}
 }
 
 InitFirstBoot
@@ -355,9 +357,12 @@ InitFirstBoot
 	
 	urname = "My good bitch"
 	stopfunction = 1
+	pauseweather = (0,0)
+	hb_yr = IARRAY
 	
 	nowscale = 100
 	OnMoonphase
+	dayornight = ''
 	//mouse_interaction_variables
 	--
 	"\![get,property,OnMe,currentghost.scope(0).rect]/

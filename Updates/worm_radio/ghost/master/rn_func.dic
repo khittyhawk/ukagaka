@@ -297,6 +297,14 @@ OnUpdateComplete
 		_who = reference3
 		"%(s0)The %(_who) has more pieces than it used to - %(ARRAYSIZE(_files)) more.\w7 Was it complete before?\w7 Things are either whole\w6, or they are not\w6, yes?\e"
 	}
+	--
+	"\n\n%(s0)Would you like to behold a record of what has altered within us?\n\n/
+	\q[See Changelog,OnShowLog]   \q[No thanks,Cancel]"
+}
+
+OnShowLog
+{
+	"\![open,file,changelog.txt]\e"
 }
 
 OnUpdateFailure
@@ -478,7 +486,7 @@ OnNotifyFontInfo
 OnBalloonChange
 // (＾＾)ｂ Inbuilt!
 {
-	if balloontest = 1
+	if balloontest == 1
 	{
 		balloontest = 0
 		OnBalloonTest
@@ -629,6 +637,9 @@ OnRegWeather
     }											
 	--
 	"\![execute,http-get,%(weatherurl),--async=OnWeatherVars,--file=weather2.html,--timeout=200]"
+	--
+	FCLOSE(_file)
+	--
 }
 
 OnGetSomeWeather
@@ -743,7 +754,8 @@ OnWeatherMe
 		//OnGetSomeWeather
 		//would you like to check the weather?
 		"%(a0)There is no weather today.\n\n/
-		\q[Try again?,OnGetSomeWeather]   \q[Try another site?,OnLoc]   \q[No weather,noweather]\e"
+		\q[Try again?,OnGetSomeWeather]   \q[Try in ten minutes,pauseweather=(1,0)/
+		\q[Try another site?,OnLoc]   \q[No weather,noweather]\e"
 	}
 	else
 	{
@@ -763,7 +775,7 @@ OnWeatherMe
 			"High: %highesttemp\n"
 		}
 		--
-		"Low: %lowtemp\nWindspeed is %windthing mph\n%weatheris\n%toomoist% humidity\nSunrise: %dawntime AM and sunset: %dusktime PM\n\nRetrieved %(timechecked[0]):%(timechecked[1]), %(timechecked[2]) %(timechecked[3]), %(timechecked[4])\e"
+		"Low: %lowtemp\nWindspeed is %windthing mph\n%weatheris\n%toomoist% humidity\nSunrise: %dawntime AM and sunset: %dusktime PM\n\n\f[height,80%]Retrieved %(timechecked[0]):%(timechecked[1]), %(timechecked[2]) %(timechecked[3]), %(timechecked[4])\n\f[height,default]\e"
 		manual_check = 0
 	}
 }

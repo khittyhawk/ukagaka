@@ -25,38 +25,27 @@ RandomTalk
 	{
 		speakboy
 	}
-	--
-	if huggingboats == 1
-	{
-		overlaptalk
-	}
 }
 
-overlaptalk
-{
-	"%(tmo)"
-	--
-	"%(a0)We cannot be returned to what we once were.\e"
-	"%(a0)We have changed far, far too much to be one again.\e"
-	"%(a0)You cannot take the volume of two spheres and reshape it into one.\e"
-	--
-	"\w8\w8"
-}
 
 speakboy : nonoverlap
 {
+	parallel Pool("Pool_hug","%(huggingboats == 1)")
 	parallel Pool("Pool_username","%(urname != '')")
 	parallel Pool("Pool_radio","%(SHIORI3FW.ShellName == 'Radio')")
 	parallel Pool("Pool_kerohere","%(SHIORI3FW.IsVisible[1] == 1)")
 	parallel Pool("Pool_windy","%(windthing > 2)")
 	parallel Pool("Pool_midsun","%(weatheris == 'Sunny' && timeslot=='lunch')")
-	parallel Pool("Pool_rain","%(weatheris == 'Rain')")
+	parallel Pool("Pool_rain","%(weatheris == 'Rain' || weatheris == 'Showers')")
+	parallel Pool("Pool_clear","%(weatheris == 'Clear')")
+	parallel Pool("Pool_cloudy","%('loudy' _in_ weatheris)")
+	parallel Pool("Pool_night","%(dayornight == 'night')")
+	
 	parallel Pool("Pool_CalaverasCounty", "%(jumpingfrog=='Allowed')")
 	parallel Pool("Pool_CalaverasKero", "(%(jumpingfrog=='Allowed') && %(SHIORI3FW.IsVisible[1] == 1))")
 	parallel Pool("Pool_winter","%(GETTIME()[1]==12) || %(GETTIME()[1]==1) || %(GETTIME()[1]==2)")
 	
 	"%(s0)Broken wings and eyes.\w6 Thousands upon thousands of eyes.\e"
-	"%(a0)Bi-B-B-B-B-B-B-Bi-\w3 Bi-B-B-B-B-B-B-Bi-\w3 Bi-B-B-B-B-B-B-Bi-\e"
 	"%(a0)S-s-s-seven- S-s-s-severing-\e"
 	"%(a0)See, if you unwind time and steal his shape, then...\e"
 	"%(s0)...Bearing the weight of weaving entropy\w5, folding back upon itself\w6, building up and kinking timespace beyond its shape\w5, as plastic as it naturally is...\e"
@@ -98,6 +87,7 @@ speakboy : nonoverlap
 	"%(s0)--Señor Perfecto?\w5\n--¡Es %(i)\_qdoctor\_q%(i0)\w5 Perfecto!\e"
 	"%(a1)Who's on first; What's on second; and I don't know's on third.\e"
 	"%(s0)Summer is\w8\_l[85,2em] over and gone\w8\n\nSummer is\w8\n\n[half]\_l[4.5em] dying,\w7\n\n\_l[6em] dying.\e"
+	
 	"%(a1)Why,\w4 if only we were all wiener dogs,\w4 all our problems would be solved!\e"
 	"\t%(s0)Name me love and violence.\e" //unbreakable t
 	"%(a0)Unbreakable tea.\e"
@@ -111,15 +101,27 @@ speakboy : nonoverlap
 	"%(a1)I want crime\w4, not flags.\e"
 	"%(s0)Nothing beside remains.\e"
 	"%(a0)Sloppy skeleton makeouts.\e"
+	"%(s0)May the might of your enemies be nothing more than a paper tiger.\w3\e"
 	"%(s0)How long does it take for the world to drown itself?\e"
 	"%(a0)Après moi\w4, le déluge.\e"
 	"%(a0)They chitter chatter chitter chatter on endlessly\w3, don't they?\e"
 	"%(a0)All ghosts are liars.\e"
 	"%(a0)I met Robert Johnson at a crossroads at %(spooptime).\e"
+	{
+		"%(a1)The earth has a goddamn \![set,balloonwait,1.1]magical girl shield\![set,balloonwait,1] it uses to protect the organisms that live in its crust from the searing tentacles that sprout from the roiling mass of plasma constantly bending space-time to tumble the planets into its maw.\w6"
+		--
+		if RAND(100) < 50
+		{
+			" I just thought that was neat."
+		}
+		--
+		"\w5\e"	
+	}
 	"%(a0)Mister Richter couldn't predict 'er kicking our asphalt!\e"
 	"%(s0)Sing to me\w3, my misery.\e"
 	"%(s0)Hapax legomenon\e"
-	"%(s0)Little fish\w7, little fish\w7, swimming in the water.\w6\w6\w6 Come back here, man,\w7 give me my daughter.\e"
+	"%(a0)Blue eyes unopened.\e"
+	"%(s0)Little fish\w7, big fish\w7, swimming in the water.\w6\w6\w6 Come back here, man,\w7 give me my daughter.\e"
 	"%(a0)A thief! A thief!\w4 A dirty sneak-thief!\e"
 	"%(s0)Smells like old\w3, rotten blood under damp floorboards.\e"
 	"\![set,balloonwait,1.3]%(s0)And all my life the radio\w6\w6\n\_l[1em] told me how it loved me so.\w6\w6\nAll for me\w5\w5,\n\_l[1em] a yearning song\w5\w5 -\n\_l[2em] a long\w6, last\w4 love where I\w8\n\_l[3em] belong.\e"
@@ -128,7 +130,16 @@ speakboy : nonoverlap
 	"%(a0)%(i)Heretic.%(i0)"
 	"%(a0)Bald eagles cry like seagulls.\w6\w6 Red-tailed hawks are the ones that screech.\e"
 	"%(a0)%(i)kallisti, motherfucker.%(i0)"
-	"%(a0)It runs just fine on a potato.\e"
+	{
+		"%(a0)It runs just fine on a potato."
+		--
+		if RAND(100) < 50
+		{
+			"\w5\w5 Potatoes are stems\w4, you know."
+		}
+		--
+		"\w5\e"
+	}
 	"%(a1)I'm a garbage man\w4, in a garbage can.\e"
 	"%(a0)No one has good taste in music.\w5\w5 Anyone who says so is either lying or deluding themselves.\e"
 	"%(s0)Satyrs do not understand thermal gradients.\e"
@@ -136,17 +147,28 @@ speakboy : nonoverlap
 	"%(s0)The storyteller Aesop claimed that a thing's nature is immutable.\w7\nHe told a fable whereupon the gods argued such a question and\w5 to settle it\w5, Jupiter transformed a cat into a human-bride.\w6\w6 At the wedding, the goddess Venus cast down a mouse\w3, upon which the woman fell to all fours and chased it.\w8\nDoes that tell you a thing's core nature is immutable?\w6 Or that all gods are liars?\e:chain=hera"
 	"%(a1)I am the dumbest of pigeons.\e"
 	"%(a0)Just one.\e"
+	
 	"%(s0)It shudders and shakes.\w8\w8 It wants to come out.\e"
 	"%(a0)The moon is wrong.\e"
 	"%(a0)Well\w6, it is definitely saliva.\e"
 	"%(s0)Imagine staring at jewelry so long you meld through a wall.\e"
+	"%(a1)Hmmmmmmmmmmmmmmmmmm - \_qbeep\_q\e"
+	"%(s0)We tesser.\e"
 }
 
 Pool_CalaverasCounty
 {
 	"%(s0)\![set,balloonwait,2]Those beasts you wear\w7, in your eyelashes\w8\w3, under your skin\w8\w3%(lps6)\w7\x You are their only home\w8, do you know that?\w5\w7\x[noclear] Are you stewarding it to their satisfaction?\e"
 	"%(s0)I never met the devil, but I did meet his grandmother at a crossroads.\e:chain=hisgrandmother"
-	
+	"%(s0)How horrifying can you imagine it to be\w5, being followed by a creature that steals your armor and makes it their own?\e:chain=poisoneater"
+	if riddlesp != 1
+	{
+		"%(s0)Two sisters are we\w6, one dark and one fair\w7\e:chain=riddle_sp"
+	}
+	if riddlefs != 1
+	{
+		"%(s0)My first is a number\w5, my second\w3, another.\w5\e:chain=riddle_fs"
+	}
 }
 
 Pool_username //just stuff that's funny
@@ -162,13 +184,16 @@ Pool_username //just stuff that's funny
 
 Pool_kerohere //if the kero is present
 {
+	"%(s0)The juice.\w4%(k0)Of fruit?\w4%(s0)\nOf meat.\w5\e"
+	"%(s0)Heartland.\w5%(k0)If you strike it\w4, does it bleed out?\e"
 	"%(k0)It is an anomany."
 	"%(s0)Miss Lucy had a steamboat.\w6 The steamboat had a bell.\w6 Miss Lucy went to heaven and the steamboat went to%(k0)Hello operator\w7, please give me number 9.\w7 And if you disconnect me then I'll kick you from%(s0)\nBehind the 'frigerator\w6, there lay a piece of glass.\w7 Miss Lucy sat upon it and cut her little%(k0)\nAsk me no more questions\w6, I'll tell you no more lies.\w7 The boys are in the bathroom zipping down their%(s0)\nFlies are in the backyard\w6, the bees are in the park.\w7 Miss Lucy and her boyfriend are kissing in the \_s\nD - A - R - K dark dark dark.\_s\w6\w6\e"
 	"%(s0)Hello.\w6\w6\nWe are magical talking bear prostitutes.%(k0)Give us all your valuables and food\w6, and no one needs to get hurt.\e"
 	"%(s0)Brown bear\w5, brown bear\w7, what do you see?%(k0)\w6\w6ALL.\e"
 	"\_sSave us! Save us! Cry for help! Kill the messenger!\_s%(k0) Bring the fire back to the mountaintop!\e"
 	"%(s0)Melpomene Rex%(k0)Regina%(s0)\nMelpomene Regina\e:chain=Tragic"
-	"%(k0)Wait until I tell you about %(i)all five hundred million Friedrich Wilhelms%(i0).%(s0)?\w6\w6%(k0)Prussia.\w6 Nothing but Friedrichs and Wilhelms and Friedrich Wilhelms as far as the eye can see.\e"
+	"%(k0)Wait until I tell you about %(i)all five hundred million Friedrich Wilhelms%(i0).%(s0)?\w6\w6%(k0)nPrussia.\w6 Nothing but Friedrichs and Wilhelms and Friedrich Wilhelms as far as the eye can see.\e"
+	
 	parallel Pool("Pool_spoops","ARRAYSIZE(ghostexlist)>0")
 	"%(k0)A cat may look at a king.\w6%(s0)A cat has no duty but to do exactly as he pleases.\w4\e"
 	"%(s0)Baa baa black sheep, have you any wool?\w7\w5\n\nA - B - C - D - E - F - G\w7\w5\n\nTwinkle, twinkle, little star%(k0)They all have the same melody!%(s0)\w5\n\nYes.\e"
@@ -179,6 +204,14 @@ Pool_CalaverasKero
 {
 	"%(k0)How do you know if something is a word or not?\w6%(s0)?\w6%(k0)So\w3, a word like\w3, say\w3, 'worked' is made of two parts:\w3 the root 'work' and the suffix 'ed'\w4, indicating past tense.\w6 But we consider that one word\w4, even though it is made of two parts that each convey meaning\w5, right?\w5 Why say 'worked' is one word and not a compound 'work ed'?\w6\w4 The future tense 'will work' is considered two different words\w5, after all.\w6\w5%(s0)Mm\w5, closeness of the sounds\w5, perhaps?\w5 The slurring of them into one\w4, such as in 'gonna' or 'kinda'?\w6 Those are often written as one word\w5 (albeit deemed incorrectly so by prescriptivists%(k0)\n\nFuck prescriptivists.%(s0))\w4, so have those become one word?\w6%(k0)\n\nIs 'ice cream' one word?\w6%(s0)\n\n...It'd be weird to write it as one.\w5%(k0)Orthography is meta-linguistic\w4, so we don't care about that.\w5 If we limit ourselves to spoken language.\w5%(s0)\n\nDo speakers of languages without writing systems even think of their language in terms of words?\e"
 	
+}
+
+Pool_hug
+{
+
+	"%(a0)We cannot be returned to what we once were.\e"
+	"%(a0)We have changed far, far too much to be one again.\e"
+	"%(a0)You cannot take the volume of two spheres and reshape it into one.\e"
 }
 
 Pool_radio //if the shell is Radio
@@ -203,21 +236,52 @@ Pool_rain //rainy weather
 	"%(s0)I'll be true to my love if you'll be true to me.\e"
 }
 
+Pool_clear //clear weather
+{
+	if dayornight == "day"
+	{
+		"%(a0)Stand and face upward.\w6 Stare through the brittle shield that bends light blue\w4, and understand the fragility of the earth's grip on your body.\w4\e"
+	}
+	elseif dayornight == "night"
+	{
+		"%(s0)They wheel above.\w6 How many can you count?\w5\e"
+	}
+}
+
+Pool_cloudy
+{
+	"%(s0)Suffocating%(lps8) condensing%(lps8) gaining color where none had existed.\w5\e"
+	"%(a0)Take umbrage at the way the clouds occlude the sun.\w4 It is imperative.\w4 Inevitable.\w6"
+	if dayornight == "day"
+	{
+		"%(a0)The darkness may make it easier to see.\w6 Else, it may be blinding.\w5\e"
+	}
+}
+
+Pool_night
+{
+	"%(s0)Each of them above you\w5, burning themselves to ash in prolonging their existence\w5, then burning the ash when the fuel runs out%(lps6)\nDoes that make them alive\w3, do you think?\w5\e"
+}
+
 Pool_winter
 {
 	"%(s0)And the wolves will swallow the sun.\e"
+	"%(s0)Things still.\w5 Chemistry slows.\w5 This small pocket of the universe tends toward stasis.\w5\e"
 }
 
 Pool_spoops //if there are other ghosts about!
 {
 	parallel Pool("Pool_gaster","SHIORI3FW.IsGhostExist('Dr. W.D. Gaster')")
 	parallel Pool("Pool_rys","SHIORI3FW.IsGhostExist('S the Skeleton')")
+	parallel Pool("Pool_spam","SHIORI3FW.IsGhostExist('SPAMTON G. SPAMTON!!')")
+	parallel Pool("Pool_dts","SHIORI3FW.IsGhostExist('Dreamtale Sans')")
 	"%(k0)\![set,balloonwait,0.5]What do you see?\w6 What do you see?\w6%(s0)\![set,balloonwait,3]%(raveyard).\e"
 }
 
 Pool_gaster
 {
 	"%(k0)Hey.\w8 Hey.\x\n\nDidja know you can smack that cigarette right out of his hand?\w5 He won't like it\w4, but it won't count as a punch.\e"
+	"%(s0)Martyrdom is an obscenity.\w5 To be eliminated\w4, never pursued.\w4\e"
 }
 
 Pool_rys
@@ -225,6 +289,47 @@ Pool_rys
 	"%(s0)How do you think his hoodie stays so red?%(k0)It's dyed with the blood of his enemies.%(s0)\w5\n%(i)What%(i0) enemies?\w6\w5 He's a bean!%(k0)\n%(lps6)Enemy beans.\e"
 	"%(k0)Hey.\xDidja know you can boop his snoot?\e"
 }
+
+Pool_spam
+{
+	"%(a0)Bi-B-B-B-B-B-B-Bi-\w3 Bi-B-B-B-B-B-B-Bi-\w3 Bi-B-B-B-B-B-B-Bi-\w3 Bi-B-B-B-B-B-B-Bi-\w3 Bi-B-B-B-B-B-B-Bi-\w3 Bi-B-B-B-B-B-B-Bi-\w3 Bi-B-B-B-B-B-B-Bi-\e"
+	"%(a0)Would you buy a used car from this man?\e"
+}
+
+Pool_dts
+{
+	"%(s0)Started with an apple\w5 and ended with a horse.\w5\e"
+}
+
+riddle_sp
+{{CHAIN
+	"%(s0)In twin towers dwelling\w5, we're quite the pair.\w6\e"
+	"%(s0)One from the land\w5, and one from the sea,\w6\e"
+	"%(s0)Tell us truly\w5, who are we?\w4\c\b2\_q%(tmo)Two sisters are we, one dark and one fair\nIn twin towers dwelling, we're quite the pair.\nOne from the land, and one from the sea,\nTell us truly, who are we?\n\n\_q\![open,inputbox,OnRiddleSp,-1]\e"	
+CHAIN}}
+
+riddle_fs
+{{CHAIN
+	"%(s0)And each\w4, I assure you\w4, will rhyme with the other.\w5\e"
+	"%(s0)My first\w4, you will find\w4, is one-fifth of my second.\w5\e"
+	"%(s0)And truly my whole\w4, a long period reckoned.\w5\e"
+	"%(s0)Yet\w3, my first and my second\w3 (nay\w1, think not I cozen!)\w4\nWhen added together\w4 will make but two dozen.\w5\w5\n\nHow many am I\c\b\_q%(tmo)My first is a number, my second another\nAnd each, I assure you, will rhyme with the other.\nMy first, you wil find, is one-fifth of my second\nAnd truly my whole a long period reckonedn\nYet my first and my second (nay, think not I cozen!)\nWhen added together will make but two dozen.\n\nHow many am I?\_q\w4\![open,inputbox,OnRiddleFs,-1?\e"
+	
+CHAIN}}
+
+poisoneater
+{{CHAIN
+	if (SHIORI3FW.IsVisible[1] == 1) && (RAND(100) < 50)
+	{
+		"%(k0)The blue-ringed octopus steals the poison of its prey and garlands itself with it.\w6%(s0)The human being will swallow capsacin\w3, or caffeine\w3, or theobromine\w3 and beg for more.\w5\e:chain=end"
+	}
+	else
+	{
+		"%(s0)A lamia will shield itself with the synthesis of foul-tasting poison\w4, strong enough to warn away an enemy (for dead men tell no tales).\w5 The human felt its barbs\w5, and begged for more-\w3 the lamia had such skill with poisons\w3, you see.\w5 The lamia wanted nothing to do with the human\w5, caring only for the flourishing of itself and its kin\w3, but the human nonetheless devoted itself to preserving such an artful chemist.\w5\e"
+		"(s0)The human's terms were simple:\w3 the lamia would make more potent and pungent poisons to slake the human's unnatural desires.\w5 In exchange\w3, the human would offer protection against the lamia's enemies\w3, and the sabotage of its rivals.\w5 As long as the lamia and its children held up their end of the bargain\w3, the human and its children would do the same.\w5\e"
+		"%(s0)The bargain is still held to this day.\w7\w7\nStrong-willed creatures\w4, the lamia.\w6 As independent as cats.\w8 Moreso\w3, perhaps.\w6 A cat may track down its human warden;\w5 a lamia will never.\w7 Left abandoned\w3, a lamia will use the advantage its human warden provided\w3 to gift all fertile ground to its tenacious offspring.\e:chain=end"
+	}
+CHAIN}}
 
 hera
 {{CHAIN
@@ -246,7 +351,8 @@ hisgrandmother
 	"%(s0)I didn't get a good look at her face - bad light. Harsh light.\w6 I know she wore a ratty red baseball cap, so worn it was almost maroon, but her face was in shadow.\w6\w3 She was hunched in a well-worn sweater, too, but that's all I can describe.\w5 I'm sorry.\e"
 	"%(s0)She just told me 'Looks like you want a ride', and I got in.\w5 She seemed to know what I was searching for, though I didn't think it was odd at the time.\w5 It was late, and things were%(lps4) eerie.\w5\w5 It's hard to explain.\w5 I just had this feeling.\w5 That I had slipped into a world where the rules no longer applied.\e"
 	"%(s0)I had to leave the bike, unfortunately.\w6 Maybe someone in need will find it.\w7\n\nThis truck driver - after several minutes of me staring at the bare highway out the windshield - told me to be careful, as her grandson was fond of wandering around these parts at this time of night, and that it was better I not run into him.\w6 I told her that's who I was looking for.\e"
-	"%(s0)Initially she only scoffed, but after some time, she told me that%(lps6)\e:chain=end"
+	"%(s0)Initially she only scoffed, but after some time, she told me that\![set,balloonwait,0.9] - she didn't  tell me where to find him\![set, balloonwait,1], but she didn't stop me.\w5\w5 She\w5 gave me some advice\w4, so that when\w4- if!\w4 I met him\w3, he wouldn't be able to claim me%(lps4)\e"
+	"%(s0)She left me off at a trucker stop -\w6Ehh\w6, I think one of the state rest areas\w3, actually?\w5 We played cards on one of the cafeteria tables for a while.\w5 The fluorescents had that same cant as the headlights%(lps6)\e:chain=end"
 CHAIN}}
 
 
@@ -254,6 +360,8 @@ Tragic
 {{CHAIN
 	"%(s0)She was originally the muse of song before she became the muse of tragedy.%(k0)Because of lamentations?%(s0)\w7\nPerhaps.\e:chain=end"
 CHAIN}}
+
+
 
 OnLastTalk //Repeats the last thing the ghost said
 {
