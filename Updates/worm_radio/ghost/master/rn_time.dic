@@ -10,18 +10,31 @@ daychange
 		OnJacobinMonths
 	}
 	--
+	hcal_change
+	--
+	if optweather == "On" 
+	{
+		OnGetSomeWeather
+	}
+}
+
+hcal_change
+{
 	if get_h == "On"
 	{
+		LOGGING("i have the calendar============")
 		OnHebrewCal
 		--
 		hgreet = 0
 		--
-		if h_m == "Kislev"
+		if h_m == "kislev"
 		{
+			LOGGING("it is kislev============")
 			isholiday = 1
 			--
 			if h_d == 25
 			{
+				LOGGING("i have captured============")
 				ishanu = 1
 				
 				/*
@@ -90,11 +103,6 @@ daychange
 			"%(s0)Tonight is the %(Ord(ishanu)) night of %(hrom).\w6 %(hbless)\n"
 			hgreet = 1
 		}
-	}
-	--
-	if optweather == "On" 
-	{
-		OnGetSomeWeather
 	}
 }
 
@@ -209,6 +217,10 @@ OnMinuteChange
 		if hour == 0
 		{
 			daychange
+		}
+		elseif hour == 18
+		{
+			hcal_change
 		}
 		--
 		Select.hourtell

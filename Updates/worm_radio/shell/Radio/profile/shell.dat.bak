@@ -4,12 +4,12 @@ balloon,C:\Users\khitt\Desktop\Applications\Ghosts\balloon\broadcast\
 Char1.balloon.isleft,0
 inputbox.left,983
 scriptbox.left,658
-balloon0.offset,-29.-107
-Char0.centery,861
-balloon1.offset,428.-143
+balloon0.offset,-126.-214
+Char0.centery,855
+balloon1.offset,434.-252
 Char0.balloon.isleft,1
 Char.VirtualDesktop,5748092a-4369-47c0-9900-47e364cc97cb
-Char0.center,1315
+Char0.center,1098
 scriptbox.top,185
 Char1.centery,839
 Char1.center,961

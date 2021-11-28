@@ -1,3 +1,11 @@
+Quick Patch 11-28-21
+
+-Made it so the Hebrew calendar should kick in on the day change at 6pm.
+-Added more images for the Jacobin calendar
+-Minor bugfixes and randomtalk
+
+
+
 Update 11-27-21
 
 -Added in two alternative calendars! Both are in-progress, but should function in the meantime

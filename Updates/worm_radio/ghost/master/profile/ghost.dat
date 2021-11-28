@@ -4,12 +4,12 @@ balloon,C:\Users\khitt\Desktop\Applications\Ghosts\balloon\broadcast\
 inputbox.left,983
 scriptbox.left,658
 Char.VirtualDesktop,5748092a-4369-47c0-9900-47e364cc97cb
-Char0.center,1315
+Char0.center,1098
 scriptbox.top,185
 shell,shell\Radio\
 FirstBoot,booted
 Char1.center,961
-shell.ischanged.2,0
+shell.ischanged.2,1
 inputbox.top,245
 update.lastexec,690847126
 DeveloperPalette.visible,1

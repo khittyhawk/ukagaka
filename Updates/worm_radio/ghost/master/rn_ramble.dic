@@ -58,6 +58,7 @@ speakboy : nonoverlap
 	"%(a0)Indifference\w6 or malice?\e"
 	"%(a0)A big bundle of anxiety.\e"
 	"%(a0)BAKE BAKE is MOVE\e"
+	"%(a0)Plutonia\e"
 	"%(a0)It is an anomaly.\e"
 	"%(a1)Defenestration of plague...\e"
 	"%(a0)He's a liar!\w6 He's a liar!\w6 And a good one at that.\e"
@@ -313,7 +314,7 @@ riddle_fs
 	"%(s0)And each\w4, I assure you\w4, will rhyme with the other.\w5\e"
 	"%(s0)My first\w4, you will find\w4, is one-fifth of my second.\w5\e"
 	"%(s0)And truly my whole\w4, a long period reckoned.\w5\e"
-	"%(s0)Yet\w3, my first and my second\w3 (nay\w1, think not I cozen!)\w4\nWhen added together\w4 will make but two dozen.\w5\w5\n\nHow many am I\c\b\_q%(tmo)My first is a number, my second another\nAnd each, I assure you, will rhyme with the other.\nMy first, you wil find, is one-fifth of my second\nAnd truly my whole a long period reckonedn\nYet my first and my second (nay, think not I cozen!)\nWhen added together will make but two dozen.\n\nHow many am I?\_q\w4\![open,inputbox,OnRiddleFs,-1?\e"
+	"%(s0)Yet\w3, my first and my second\w3 (nay\w1, think not I cozen!)\w4\nWhen added together\w4 will make but two dozen.\w5\w5\n\nHow many am I?\w4\c\b2\_q%(tmo)My first is a number, my second another\nAnd each, I assure you, will rhyme with the other.\nMy first, you wil find, is one-fifth of my second\nAnd truly my whole a long period reckonedn\nYet my first and my second (nay, think not I cozen!)\nWhen added together will make but two dozen.\n\nHow many am I?\_q\w4\![open,inputbox,OnRiddleFs,-1]\e"
 	
 CHAIN}}
 

@@ -230,6 +230,11 @@ RebootVars
 		daychange
 	}
 	--
+	if get_h == "On"
+	{
+		hcal_change
+	}
+	--
 	lastTalk = ""
 	waitingcommuS = IARRAY
 	waitingcommuM = IARRAY

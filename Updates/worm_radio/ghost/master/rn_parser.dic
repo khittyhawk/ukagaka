@@ -51,7 +51,7 @@ OnTranslate
 			_cens = "0"
 		}
 		
-		_talk = REPLACE(_talk,"Yahweh","Y\_b[censored%(_cens).png,inline,opaque]h")
+		_talk = REPLACE(_talk,"Jehovah","J\_b[censored%(_cens).png,inline,opaque]h")
 		//do i have to cycle through goodgollygosh here?
 		for _var = 0; _var < _len; _var++
 		{
@@ -667,6 +667,18 @@ veg
 	"chicory"
 	"heliotrope"
 	"medlar"
+	"lambslettuce"
+	"lambs lettuce"
+	"pig"
+	"cauliflower"
+	"honey"
+	"juniper"
+	"pickaxe"
+	"horseradish"
+	"water caltrop"
+	"water caltrop1"
+	"water caltrop2"
+	"water caltrop3"
 }
 
 nowhour //hour12 displays the hour like a 12 hour clock, except for 12 which is displayed as 0
