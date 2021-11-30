@@ -271,7 +271,7 @@ OnUpdateReady
 	_changes = reference0
 	if (SHIORI3FW.IsVisible[1] == 1)
 	{
-		"%(s0)%(_changes).%(k0)But how many changes is that\w5, truly?\w6%(s0)\n\nCan it even be known?\e"
+		"%(s0)%(_changes) made.%(k0)But how many changes is that\w5, truly?\w6%(s0)\n\nCan it even be known?\e"
 	}
 	else
 	{

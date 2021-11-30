@@ -6,4 +6,4 @@ homeurl,https://khittyhawk.github.io/ukagaka/Updates/worm_radio/
 update_result,OK(1)
 firstboot,690676269
 commitmemorysize,656214
-lastboot,691442823
+lastboot,691551777

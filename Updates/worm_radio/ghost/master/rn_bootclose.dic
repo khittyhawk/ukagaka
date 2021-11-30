@@ -190,6 +190,7 @@ OnSysSuspend
 // (＾＾)ｂ Inbuilt!
 {
 	naptime = GETTIME()
+	napSec = GETSECCOUNT()
 	LOGGING("suspended~~~~~~~~~~~~~~~~~~~~~~~")
 }
 
@@ -201,6 +202,15 @@ OnSysResume
 	if (risetime[0] != naptime[0] || risetime[7] != naptime[7])
 	{
 		daychange
+	}
+	--
+	if get_h == "On" 
+	{
+		if (((GETSECCOUNT()-napSec) > 86400) || ((naptime[4] < 18) && (nowhour >= 18)))
+			//if it's been more than a day (in seconds)
+		{
+			hcal_change
+		}
 	}
 	LOGGING("~~~~~~~~~~~~~~~~~~~~~~~restored")
 	
@@ -224,15 +234,23 @@ OnClose
 RebootVars
 {
 	_nowtime = GETTIME()
-	if ((_nowtime[7] != closingTime[7]) || (_nowtime[0] != closingTime[0]))
-	//if the year is different OR the day is different
+	if (_nowtime[0] != closingTime[0])
+		//if the year is different
 	{
-		daychange
-	}
-	--
-	if get_h == "On"
-	{
-		hcal_change
+		if (_nowtime[7] != closingTime[7])
+		//if the day is different
+		{
+			daychange
+		}
+		--
+		if get_h == "On" 
+		{
+			if (((GETSECCOUNT()-closingSec) > 86400) || ((closingTime[4] < 18) && (nowhour >= 18)))
+				//if it's been more than a day (in seconds)
+			{
+				hcal_change
+			}
+		}
 	}
 	--
 	lastTalk = ""

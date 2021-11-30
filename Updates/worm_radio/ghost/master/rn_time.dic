@@ -10,8 +10,6 @@ daychange
 		OnJacobinMonths
 	}
 	--
-	hcal_change
-	--
 	if optweather == "On" 
 	{
 		OnGetSomeWeather
@@ -27,7 +25,7 @@ hcal_change
 		--
 		hgreet = 0
 		--
-		if h_m == "kislev"
+		if TOLOWER(h_m) == "kislev"
 		{
 			LOGGING("it is kislev============")
 			isholiday = 1
@@ -75,7 +73,7 @@ hcal_change
 			}
 
 		}
-		elseif h_m == "Tevet"
+		elseif TOLOWER(h_m) == "tevet"
 		{
 			isholiday = 1
 			--

@@ -48,7 +48,7 @@ OnMenuRun
 			}
 		}
 		--
-		"\f[height,default]\n\f[align,left]"
+		"\f[height,default]\f[align,left]"
 	}
 	--
 	"\n[half]"
@@ -83,7 +83,7 @@ Select.settingmenu
 	if get_j == ""; {get_j = "Off"}
 	if get_h == ""; {get_h = "Off"}
 	
-	"\b2\_q\f[align,center]Settings\n\n\f[align,left]/
+	"\![set,autoscroll,disable]\b2\_q\f[align,center]Settings\n\n\f[align,left]/
 	\![*]\q[Change username?,gonamae]:\n\_l[2em]Now: %(urname)\n/
 	\![*]\q[Change talk rate?,toggletalk]:\n\_l[2em]Now: %(talkrate)\n/
 	\![*]\q[Enable long-winded rambles?,storytime]:\n\_l[2em]%(jumpingfrog)\n/	
@@ -134,7 +134,8 @@ Select.settingmenu
 	--
 	if altcal == 1
 	{
-		"\_l[2em]\q[Jacobin,get_j] (%(get_j))\n/
+		"\_l[2em]\f[height,70%]\q[Explain calendars?,explaincalpls]\n\f[height,default]/
+		\_l[2em]\q[Jacobin,get_j] (%(get_j))\n/
 		\_l[2em]\q[Hebrew,get_h] (%(get_h))\n"
 
 	}
@@ -445,7 +446,6 @@ Select.fffff
 	Select.settingmenu
 }
 
-
 Select.othercal
 {
 	if altcal != 1
@@ -458,6 +458,61 @@ Select.othercal
 	}
 	--
 	Select.settingmenu
+}
+
+Select.explaincalpls
+{
+	"\![set,autoscroll,disable]\b2\_qBy default, SSP uses the Georgian calendar. I figured I could add in some alternative calendars as well!\n\n/
+	Currently, the two available calendars are the French Republican or 'Jacobin' calendar and the Hebrew calendar.\n\n/
+	\q[Explain Jacobin,exp_j]\n"
+	--
+	if exp_j == 1
+	{
+		"\f[height,90%]\_l[1em]The Jacobin calendar is a decimal, fixed-date calendar in use for slightly over a decade after the French Revolution, starting 1793. Each week has 10 days, and each month has 30 days and each day of the year has a unique name related to the rural economy of the time. Currently, the dev only has a few of these icons drawn, so for the time being, the icon in the menu will be randomly taken from the icons that currently exist.\n/
+		\_l[1em]The new year starts on the Autumn Equinox. This ghost comes with a file of the dates of the equinoxes from 1970-2050, taken from NASA's Goddard Institute for Space Studies, available at this link: https://data.giss.nasa.gov/modelE/ar5plots/srvernal.html \n/
+		\_l[1em]As this file comes with the ghost, there should be no need for the ghost to download anything to use this calendar.\n\f[height,default]"
+	
+	}
+	--
+	"\q[Explain Hebrew,exp_h]\n"
+	--
+	if exp_h == 1
+	{
+		"\f[height,90%]\_l[1em]The Hebrew calendar is a lunisolar, semireligious calendar that is very confusing to derive. As such, until the dev can construct a native function for this, the data is taken from the Hebrew Date Converter API put out by Hebcal, which is part of the Open Souce Judaism initiatives.\n/
+		\_l[1em]Using this calendar will also show Jewish holidays (currently only Hanukkah) and the ghost may comment on them. The radio can be a bit... irreverent, but no harm is meant.\n/
+		\_l[1em]The icon for this calendar is the number of the date in Hebrew characters. Technically, the twenties in Hebrew should have double apostrophes between the two characters, but the dev claims stylization.\n\f[height,default]"
+	}
+	--
+	"\n\![*]\q[Return?,settingmenu]"
+}
+
+Select.exp_j
+{
+	if exp_j != 1
+	{
+		exp_j = 1
+	}
+	else
+	{
+		exp_j = 0
+	}
+	--
+	Select.explaincalpls
+}
+
+
+Select.exp_h
+{
+	if exp_h != 1
+	{
+		exp_h = 1
+	}
+	else
+	{
+		exp_h = 0
+	}
+	--
+	Select.explaincalpls
 }
 
 Select.get_j
@@ -482,7 +537,8 @@ Select.get_h
 	if get_h != "On"
 	{
 		get_h = "On"
-		OnHebrewCal
+		--
+		hcal_change
 	}
 	else
 	{
