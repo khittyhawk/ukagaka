@@ -69,8 +69,8 @@ On_sakura.portalsites
 portalsites_sakura : array
 {
 	"Built on X. Template YAYA - v.1.0.7 | https://zichqec.github.io/s-the-skeleton/xtemplate.html"
-	"Zarla's Ghost Template Walkthrough  | https://zichqec.github.io/s-the-skeleton/github.html"
-	"How to set up updates with Github   | http://www.ashido.com/ukagaka/walkthrough.html"
+	"Zarla's Ghost Template Walkthrough  | http://www.ashido.com/ukagaka/walkthrough.html"
+	"How to set up updates with Github   | https://zichqec.github.io/s-the-skeleton/github.html"
 	"Ukagaka Dream Team Discord          | https://ukagakadreamteam.tumblr.com/discord"
 	"SSP (J)                             | http://ssp.shillest.net/"
 	"Ukadoc (J)                          | http://ssp.shillest.net/ukadoc/manual/list_shiori_event.html"
@@ -281,7 +281,7 @@ On_addressbarbutton.caption //Address Bar
 
 On_openfolderbutton.caption //Open Folder (E)
 {
-	if SHIORI3FW.ShellName != "Radio"
+	if SHIORI3FW.ShellName!= "Radio"
 	{
 		"Summon thee"
 	}
@@ -902,6 +902,41 @@ OnShellChanged
 	LOGGING("%reference0")
 }
 
+OnDressupChanged
+// (＾＾)ｂ Inbuilt!
+{
+	if reference0 == 1 && reference3 == "unit circle" && reference2 == 0
+	{
+		"\C\![set,property,currentghost.seriko.tooltip.scope(1).textlist(L Button).text,]/
+		\![set,property,currentghost.seriko.cursor.scope(1).mouseuplist(L Button).path,system:arrow]/
+		\![set,property,currentghost.seriko.tooltip.scope(1).textlist(R Button).text,]/
+		\![set,property,currentghost.seriko.cursor.scope(1).mouseuplist(R Button).path,system:arrow]/
+		\1\![bind,color,,0]"
+		//no tooltip if dressups/unit circle isn't on
+		unitcircleactive = (0,0)
+	}
+	elseif reference0 == 1 && reference3 == "unit circle" && reference2 == 1
+	{
+		
+		if reference1 == "Middleweight Circle"
+		{
+			"\C\![set,property,currentghost.seriko.tooltip.scope(1).textlist(L Button).text,Remove unit circle]/
+			\![set,property,currentghost.seriko.cursor.scope(1).mouseuplist(L Button).path,system:finger]/
+			\![set,property,currentghost.seriko.tooltip.scope(1).textlist(R Button).text,]/
+			\![set,property,currentghost.seriko.cursor.scope(1).mouseuplist(R Button).path,system:arrow]/
+			\1\![bind,color,,0]"
+			unitcircleactive = (0,1)
+		}
+		else
+		{
+			"\C\![set,property,currentghost.seriko.tooltip.scope(1).textlist(L Button).text,Remove unit circle]/
+			\![set,property,currentghost.seriko.cursor.scope(1).mouseuplist(L Button).path,system:finger]/
+			\![set,property,currentghost.seriko.tooltip.scope(1).textlist(R Button).text,Change color?]/
+			\![set,property,currentghost.seriko.cursor.scope(1).mouseuplist(R Button).path,system:finger]"
+			unitcircleactive = (1,1)
+		}
+	}
+}
 
 OnSpeakerMenu
 {
@@ -909,7 +944,10 @@ OnSpeakerMenu
 	\q[Art Deco,OnSpeaker,0]\n/
 	\q[Asclepioid,OnSpeaker,1]\n/
 	\q[Arabesque,OnSpeaker,2]\n/
-	\q[Fat Deco,OnSpeaker,3]\n\n/
+	\q[Fat Deco,OnSpeaker,3]\n/
+	\q[Malucetum,OnSpeaker,4]\n/
+	\q[Lightner Rune,OnSpeaker,5]\n/
+	\q[Darkner Rune,OnSpeaker,6]\n\n/
 	\q[Done,Cancel]\e"
 	
 }
@@ -917,15 +955,79 @@ OnSpeakerMenu
 OnSpeaker
 {
 	_value = reference0
-	speakeris = TOINT(_value)
+	
+	switch _value
+	{
+		"\![bind,grille,Art Deco,1]"
+		"\![bind,grille,Asclepioid,1]"
+		"\![bind,grille,Arabesque,1]"
+		"\![bind,grille,Fat Deco,1]"
+		"\![bind,grille,Malucetum,1]"
+		"\![bind,grille,Ligher Rune,1]"
+		"\![bind,grille,Darkner Rune,1]"
+	}
 	--
 	OnSpeakerMenu
+}
+
+OnUnitCircle
+{
+	_value = reference0
+	
+	switch _value
+	{
+		"\1\![bind,unit circle,,0]"
+		"\1\![bind,unit circle,Middleweight Circle,1]"
+		"\1\![bind,unit circle,Pi,1]"
+		"\1\![bind,unit circle,Digits,1]"
+		"\1\![bind,unit circle,Arctan,1]"
+	}
+	--
+	"\1\![bind,color,%(color_value),1]"
+	--
+	OnChooseCircle
+}
+
+OnChangeColors
+{
+	"\1\b2%(tmo)%(noscroll)\_qChange color?\n\n/     
+	dial_g\q[Green,OnColorCircle,green]\n/
+	dial_o\q[Orange,OnColorCircle,orange]\n/
+	dial_r\q[Red,OnColorCircle,red]\n/
+	dial_b\q[Blue,OnColorCircle,blue]\n/
+	\![*]\q[Black,OnColorCircle,none]\n/
+	\n\q[Cancel,Cancel]"
+}
+
+
+OnColorCircle
+{
+	color_value = reference0
+	
+	if color_value == "none"
+	{
+		"\1\![bind,color,,0]"
+	}
+	else
+	{
+		"\1\![bind,color,%(color_value),1]"
+	}
+	--
+	OnChangeColors
 }
 
 OnSurfaceRestore
 // (＾＾)ｂ Inbuilt!
 {
 	"\0\s[%(reference0)]\1\s[%(reference1)]"
+}
+
+
+
+//This bit of code is what makes menu options that don't start with On direct to Select.options instead. Remove or comment it if you prefer!
+OnChoiceSelect
+{
+	EVAL("Select.%(reference0)")
 }
 
 //---- 소멸 지시 버튼 표시 교체 -------------------------------------------------------

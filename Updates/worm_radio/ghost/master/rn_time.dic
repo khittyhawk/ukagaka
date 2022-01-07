@@ -1,9 +1,28 @@
 daychange
 {
+	autoupdates[0] = 0
 	highesttemp = ""
 	dawntime = ""
 	dusktime = ""
-	OnMoonphase
+	dawnsec = ""
+	dusksec = ""
+	weatherless = no_sun
+	--
+	"\![raise,OnMoonphase]"
+	--
+	"\![updatebymyself,checkonly]"
+	--
+	if autoupdates[1] == 1
+	//if you told the user yesterday
+	{
+		autoupdates[1] = 2
+		//now you can tell the user toda
+	}
+	elseif updortresult[0] == "success"
+	{
+		autoupdates[0] = 1
+		//there is an update in queue
+	}
 	--
 	if get_j == "On"
 	{
@@ -18,89 +37,14 @@ daychange
 
 hcal_change
 {
+	LOGGING("Hebrew calendar check===================")
 	if get_h == "On"
+	//I decided to check whether the user has the Hebrew calendar activated here rather than have this^ same if check repeated in code everywhere
 	{
-		LOGGING("i have the calendar============")
 		OnHebrewCal
+		//this^ calls the api which gives the ghost the calendar date
 		--
-		hgreet = 0
-		--
-		if TOLOWER(h_m) == "kislev"
-		{
-			LOGGING("it is kislev============")
-			isholiday = 1
-			--
-			if h_d == 25
-			{
-				LOGGING("i have captured============")
-				ishanu = 1
-				
-				/*
-				K25 = 1
-				26 = 2
-				27 = 3
-				28 = 4
-				29 = 5
-				30/T1 = 6
-				T1/2 = 7
-				T2/3 = 8
-				*/
-			}
-			elseif h_d == 26
-			{
-				ishanu = 2
-			}
-			elseif h_d == 27
-			{
-				ishanu = 3
-			}
-			elseif h_d == 28
-			{
-				ishanu = 4
-			}
-			elseif h_d == 29
-			{
-				ishanu = 5
-			}
-			elseif h_d == 30
-			{
-				ishanu = 6
-			}
-			else
-			{
-				isholiday = 0
-				ishanu = 0
-			}
-
-		}
-		elseif TOLOWER(h_m) == "tevet"
-		{
-			isholiday = 1
-			--
-			if h_d == 1
-			{
-				ishanu = 7
-			}
-			elseif h_d == 2
-			{
-				ishanu = 8
-			}
-			else
-			{
-				isholiday = 0
-				ishanu = 0
-			}
-		}
-		else
-		{
-			isholiday = 0
-		}
-		--
-		if ishanu != 0
-		{
-			"%(s0)Tonight is the %(Ord(ishanu)) night of %(hrom).\w6 %(hbless)\n"
-			hgreet = 1
-		}
+		ishebrewholiday
 	}
 }
 
@@ -108,7 +52,24 @@ hcal_change
 OnSecondChange
 // (＾＾)ｂ Inbuilt!
 {
-
+	if spamon == 1
+	{
+		OnGloriousSpam
+	}
+	--
+	if stopfollow == 0
+	{
+		if seetime < 5
+		{
+			seetime++
+		}
+		else
+		{
+			"\![raise,OneWingedAngle,follow]"
+			seetime = 0
+		}
+	}
+	--
 	if reference2 == 1
 	{
 		//if overlapping
@@ -145,6 +106,8 @@ OnMinuteChange
 {
 	//time since midnight
 	cursec = (hour*60*60) + (minute*60)
+	_isdawn = cursec - dawnsec
+	_isdusk = cursec - dusksec
 	
 	if dawntime != "" && dawntime != 'Unk'
 	{
@@ -194,19 +157,19 @@ OnMinuteChange
 		}
 	}
 	--
-	_isdawn = cursec - dawnsec
-	_isdusk = cursec - dusksec
-	--
-	if remindme == "Allowed"
+	if remindme == "Allowed" || remindme != "Allowed"
 	{
 		if (_isdawn > -1800) && (_isdawn < 1800)
 		{
-			//dawn alerts
+			dawnduskmenu = "dawn"
 		}
-		--
-		if (_isdusk > -1800) && (_isdusk < 1800)
+		elseif (_isdusk > -1800) && (_isdusk < 1800)
 		{
-			//dusk alerts
+			dawnduskmenu = "dusk"
+		}
+		else
+		{
+			dawnduskmenu = "    "
 		}
 	}
 	--
@@ -217,6 +180,7 @@ OnMinuteChange
 			daychange
 		}
 		elseif hour == 18
+		//the Hebrew day rolls over at 1800, not 000
 		{
 			hcal_change
 		}
@@ -240,110 +204,218 @@ OnMinuteChange
 
 Select.hourtell
 {
+	_isdawn = cursec - dawnsec
+	_isdusk = cursec - dusksec
+	--
 	if remindhr == "On"
 	{
-		"It is the hour %hour\n\n"
+		"It is the hour %hour\n"
+		--
+		if _isdawn < 0
+		//if it's before dawn
+		{
+			_abs = TOINT(SQRT(POW(_isdawn,2)))
+			if _abs > 3600
+			{
+				_hrs = _abs/3600
+				"Dawn will arrive in %_hrs hours"
+			}
+			else
+			{
+				_mins = _abs/60
+				"Dawn will arrive in %_mins minutes"
+			}
+			--
+			".\n"
+		}
+		elseif _isdusk < 0
+		//if it's before dusk
+		{
+			_abs = SQRT(POW(_isdusk,2))
+			if _abs > 3600
+			{
+				_hrs = TOINT(ROUND(_abs/3600))
+				"It is %_hrs hours until dusk"
+			}
+			else
+			{
+				_mins = TOINT(_abs/60)
+				"It is %_mins minutes until dusk"
+			}
+			--
+			".\n"
+		}
 	}
 	--
 	if optweather == "On"
 	{
+		"\x"
+		--
 		OnGetSomeWeather
+	}
+	elseif weirdweather == 1
+	{
+		"\C%(Select.weather_less)"
 	}
 }
 
 
+/*
+function Simple(year,month,day)
+//http://www.ben-daglish.net/moon.shtml
+{
+	var lp = 2551443; 
+	var now = new Date(year,month-1,day,20,35,0);						
+	var new_moon = new Date(1970, 0, 7, 20, 35, 0);
+	var phase = ((now.getTime() - new_moon.getTime())/1000) % lp;
+	return Math.floor(phase /(24*3600)) + 1;
+}
+*/
 OnMoonphase
 {
-	_interval = 29.53058770576
-	_dayssince = ""
-	//for all you dorks who muck about hooking time
-	if GETTIME()[0] < 2000
+	LOGGING("reference is %(reference0) and args are %(_argc)")
+	LOGGING("the reference type is %(GETTYPE(reference0)) and the second element is %(reference0[1])")
+	
+	testvar = reference0
+	
+	_lp = 2551443
+	//dunno what this is for - leap year?
+	
+	//starting new moon will be jan 7, 1970, at 20:35:00
+	//let's make sure we evaluate that with the correct number of hours and minutes
+	//so this will be the seconds since 01/01/1970 00:00:0
+	_newestmoon = (GETSECCOUNT(1970,1,7,,20,35,0))
+	//610500
+
+	_nownewmoon = GETSECCOUNT(year,month,day,,20,35,0)
+	//1638754500
+	
+	if reference0[1] != ""
 	{
-		_dayssince = ((GETSECCOUNT()-604800)/(86400))
-		//january 7th was the new moon //604800 seconds since UTC 0? or 7 days since
-		//86400 is the number of seconds in a day
-	}
-	elseif GETTIME()[0] < 2020
-	{
-		_dayssince = ((GETSECCOUNT()-947116800)/(86400))
-		//10962 btw UTC 0 and 010100 //in seconds would be ~947116800 from UTC0 to 010100
+		_nownewmoon = GETSECCOUNT(reference0[0],reference0[1],reference0[2],,20,35,0)
+		LOGGING("the moon is right============")
 	}
 	else
 	{
-		//if you're a normal person
-		//122619 was a new moon, 18256 days from UTC 0 to then
-		//18946-690 = 18256
-		_secs = (18256*86400) //1577318400
-		_dayssince = ((GETSECCOUNT()-1577318400)/(86400))
-		
+		moonmoon = IARRAY
 	}
-    
+
+	_phase = (_nownewmoon-_newestmoon)%_lp
+	//difference = 1638144000
+	//after modulo = 117594
+	_moonmainder = ((_phase/(24*3600))+1)
 	
-    _moonmath = ((_dayssince)/(_interval))
-	//how many days have passed divided by the complete moon cycle gets how many moon cycles have passed
-    _moonmainder = ((_moonmath - TOINT(_moonmath))*_interval)
-	//the remainder should store how much of a cycle is left over
+	LOGGING("%_moonmainder is the moonmainder")
 	
+	//now to put together the illumination
+	_interval = 29.53058770576
 	_fullness = (_interval/2)
+
+	_illumination = (_moonmainder/_fullness)
+	LOGGING("the illumination of the moon is %(_illumination)")
 	
-	_illumination = ((_moonmainder/_fullness)+0.07)
+	_moonmath = "ready"
 	_lumperc = TOINT(ROUND(_illumination*100))
-	LOGGING("%_illumination================")
-	LOGGING("%_dayssince and the intervals passed is %_moonmath and the rest of this cycle is %_moonmainder")
+
 	case _illumination
 	{
 		when 0.3-0.45
 		{
-			moonmoon = "waxing crescent"
+			LOGGING("the crescent is here")
+			_moonmath = "waxing crescent"
 		}
 		when 0.45-0.55
 		{
-			moonmoon = "half moon"
+			_moonmath = "first quarter"
 		}
 		when 0.55-0.8
 		{
-			moonmoon = "waxing gibbous"
+			_moonmath = "waxing gibbous"
 		}
 		when 0.8-1.3
 		{
-			moonmoon = "full moon"
+			_moonmath = "full moon"
 		}
 		when 1.3-1.45
 		{
-			moonmoon = "waning gibbous"
+			_moonmath = "waning gibbous"
 		}
 		when 1.45-1.55
 		{
-			moonmoon = "half moon"
+			_moonmath = "last quarter"
 		}
 		when 1.55-1.8
 		{
-			moonmoon = "waning crescent"
+			_moonmath = "waning crescent"
 		}
 		others
 		{
-			moonmath = "new moon"
+			_moonmath = "new moon"
 		}
 	}
-	moonmoon ,= _lumperc
+	--
+	if reference0[1] != ""
+	{
+		LOGGING("the moon math is attained: %(_moonmath)")
+		_moonmath ,= _lumperc
+		_moonmath
+	}
+	else
+	{
+		moonmoon = (_moonmath,_lumperc)
+	}
 }
 
-//Jacobin Calendar
 
+
+//Jacobin Calendar
+/*
+
+ _______                _     _       
+(_______)              | |   (_)      
+     _ _____  ____ ___ | |__  _ ____  
+ _  | (____ |/ ___) _ \|  _ \| |  _ \ 
+| |_| / ___ ( (__| |_| | |_) ) | | | |
+ \___/\_____|\____)___/|____/|_|_| |_|
+                                      
+
+*/
 
 OnJacobinMonths
 {
-	OnPastEquinox
+	_yr = GETTIME()[0]
+	_mn = GETTIME()[1]
+	_dy = GETTIME()[2]
+
+	LOGGING("%(_argv) and %reference====")
 	
-	jmonth = (jcal_passed/30)
-	jdate = (jcal_passed%30)
+	_timegoneby = (jcal_passed,yearsince)
+	
+	if _argv[0] != ""
+	{
+		_yr = _argv[0]
+		_mn = _argv[1]
+		_dy = _argv[2]
+		LOGGING("year is %(_argv[0])")
+		LOGGING("month is %(_argv[1])")
+		LOGGING("day is %(_argv[2])")
+		_timegoneby = OnPastEquinox(_yr,_mn,_dy)
+	}
+	else
+	{
+		OnPastEquinox
+	}
+	
+	_jcal_passed = _timegoneby[0]
+	_yearsince = _timegoneby[1]
+	
+	_jmonth = (_jcal_passed/30)
+	_jdate = (_jcal_passed%30)
 	
 	Jacobin_days = ("décadi","primidi","duodi","tridi","quartidi","quintidi","sextidi","septidi","octidi","nonidi")
 	jacobin_months_all = ("Vendémiaire","Brumaire","Frimaire","Nivôse","Pluviôse","Ventôse","Germinal","Floréal","Prairial","Messidor","Thermidor","Fructidor")
 	
-	LOGGING("the months are here===============")
-	
-	case jmonth
+	case _jmonth
 	{
 		when 0
 		{
@@ -412,158 +484,301 @@ OnJacobinMonths
 		}
 	}
 	
-	jmd = (jacobin_months_all[jmonth],jdays[jdate])
-	decadi = Jacobin_days[(jdate%10)]
+	_jmd = (jacobin_months_all[_jmonth],jdays[_jdate])
+	_decadi = Jacobin_days[(_jdate%10)]
 	
-	jyear = OnRomanNumerals(yearsince)
+	_jyear = OnRomanNumerals(_yearsince)
+	
+	_acollection = (_jmonth,_jmd[0],_jdate,_jmd[1],_decadi,_jyear)
+	
+	if _argv[0] == ""
+	{
+		jmonth = _jmonth
+		jdate = _jdate
+		jmd = _jmd
+		decadi = _decadi
+		jyear = _jyear
+	}
+	else
+	{
+		_acollection
+	}
 }
 
 
 OnEquinoxDate
 {
+	_yr = GETTIME()[0]
+	
+	LOGGING("%(_yr)=============")
+	LOGGING("%(_argv[0])=============")
+	
+	if _argv[0] != ""
+	{
+		_yr = _argv[0]
+		LOGGING("%GETTYPE(_argv[0])")
+	}
+	
+	LOGGING("%(_yr)=============")
 	regex_date = "\s+(\d{4}).*9\/(\d{2,3})\s{0,3}(\d+):"
 	_file = "var\\srevents.cgi"
 	_buff = ""
 	
-	j1 = ""
-	j0 = ""
+	_j1 = ""
+	_j0 = ""
 	
 	FCHARSET(1)
 	
 	if FOPEN(_file,'r')
 	{
+		//LOGGING("opening==============")
 		for _buff = FREAD(_file); _buff != -1; _buff = FREAD(_file)
 		{
+			//LOGGING("reading==============")
 			if RE_SEARCH (_buff, regex_date)
 			{
+				//LOGGING("searching==============")
+				//LOGGING("string is %(RE_GETSTR[1])==============")
+				//LOGGING("yr is %(_yr)==============")
 				//set the equinox for the current year
-				if TOINT(RE_GETSTR[1]) == GETTIME()[0]
+				if TOINT(RE_GETSTR[1]) == _yr
 				{
+					LOGGING("year is %(RE_GETSTR[1])==============")
 					//if the hour is 2300, add one for CEST and get the day after
 					if TOINT(RE_GETSTR[3]) != 23
 					{
-						j1 = RE_GETSTR[2]
+						_j1 = RE_GETSTR[2]
 					}
 					else
 					{
-						j1 = TOINT(RE_GETSTR[2])+1
+						_j1 = TOINT(RE_GETSTR[2])+1
 					}
-					
+					LOGGING("j1 is %(_j1)====================")
 				}
 				//set the equinox for the previous year
-				elseif TOINT(RE_GETSTR[1]) == (GETTIME()[0]-1)
+				elseif TOINT(RE_GETSTR[1]) == (_yr-1)
 				{
+					LOGGING("last year is %(RE_GETSTR[1])==============")
 					//if the hour is 2300, add one for CEST and get the day after
 					if TOINT(RE_GETSTR[3]) != 23
 					{
-						j0 = RE_GETSTR[2]
+						_j0 = RE_GETSTR[2]
 					}
 					else
 					{
-						j0 = TOINT(RE_GETSTR[2])+1
+						_j0 = TOINT(RE_GETSTR[2])+1
 					}
 				}
 			}
 		}
 	}
+	--
+	FCLOSE(_file)
+	_equinoxes = (_j1,_j0)
 	
+	if _argv[0] == ""
+	{
+		j1 = _j1
+		j0 = _j0
+	}
+	else
+	{
+		_equinoxes
+	}
+	
+	LOGGING("%(_j0) and %(_j1)==============")
+	//LOGGING("j0 is %(j0) and j1 is %(j1)==============")
+	LOGGING("%(_equinoxes)==============")
 	
 }
 
 OnPastEquinox
 {
-	OnEquinoxDate
-	monthdays
 	
-	_sept_left = 30-j1
-	_sept_left0 = 30-j0
+	_yr = GETTIME()[0]
+	_mn = GETTIME()[1]
+	_dy = GETTIME()[2]
+
+	LOGGING("Past Equinox %(_argv) and %reference====")
 	
-	jcal_passed = 0
+	_j0 = j0
+	_j1 = j1
 	
-	if GETTIME()[1] > 9
+	if _argv[0] != ""
 	{
-		//if it's past september
-		for _val = 10; _val < GETTIME()[1]; _val++
-		{
-			
-			jcal_passed += md[_val]
-			yearsince = (GETTIME()[0]-1791)
-		}
-		
-		jcal_passed = jcal_passed + _sept_left + GETTIME()[2]
-		
-	}
-	elseif GETTIME()[1] < 9
-	{
-		//if it's before september
-		for _val = 10; _val < 12; _val++
-		{
-			jcal_passed += md[_val]
-		}
-		for _val = 1; _val < GETTIME()[1]; _val++
-		{
-			jcal_passed += md[_val]
-		}
-		jcal_passed = jcal_passed + _sept_left0 + GETTIME()[2]
-		yearsince = (GETTIME()[0]-1792)
+		_yr = TOINT(_argv[0])
+		_mn = TOINT(_argv[1])
+		_dy = TOINT(_argv[2])
+		LOGGING("year is %(_argv[0])")
+		LOGGING("month is %(_argv[1])")
+		LOGGING("day is %(_argv[2])")
+		_equinoxes = OnEquinoxDate(_yr)
+		_j0 = TOINT(_equinoxes[0])
+		_j1 = TOINT(_equinoxes[1])
 	}
 	else
 	{
-		//if it is september
-		if GETTIME()[2] > j1
+		OnEquinoxDate
+	}
+
+	LOGGING("%(_j0) and %(_j1)==============")
+	//LOGGING("j0 is %(j0) and j1 is %(j1)==============")
+
+	LOGGING("final year is %(_yr)")
+	LOGGING("final month is %(_mn)")
+	LOGGING("final day is %(_dy)")
+	
+	_sept_left = 30-_j1
+	_sept_left0 = 30-_j0
+	LOGGING("%(_sept_left) is the days left in september and %(_dy) are the days of this current month")
+	LOGGING("%(_sept_left0) is the days left in september and %(_dy) are the days of this current month")
+	_jcal_passed = 0
+	_yearsince = 0
+	
+	if _mn > 9
+	{
+		//if it's past september
+		for _val = 10; _val < _mn; _val++
 		{
-			//if it's past the equinox
-			jcal_passed = GETTIME()[2] - j1
-			yearsince = (GETTIME()[0]-1791)
+			LOGGING("the month is %(_val), which has %(md(_val)) days")
+			_jcal_passed += md(_val)
+			_yearsince = (_yr-1791)
 		}
-		elseif GETTIME()[2] < j1
+		
+		_jcal_passed = _jcal_passed + _sept_left + _dy
+		
+		
+	}
+	elseif _mn < 9
+	{
+		//if it's before september
+		for _val = 10; _val <= 12; _val++
 		{
+			_jcal_passed += md(_val)
+		}
+		for _val = 1; _val < _mn; _val++
+		{
+			_jcal_passed += md(_val)
+		}
+		
+		_jcal_passed = _jcal_passed + _sept_left0 + _dy
+		_yearsince = (_yr-1792)
+		LOGGING("there have been %(_jcal_passed) days since last year=======")
+	}
+	else
+	{
+		LOGGING("day is %(_dy) and last year's equinox is %(_j1)")
+		LOGGING("day is %GETTYPE(_dy) and last year's equinox is %GETTYPE(_j1)")
+		//if it is september
+		if _dy > _j1
+		{
+			LOGGING("it is past the equinox===========")
+			//if it's past the equinox
+			_jcal_passed = _dy - _j1
+			_yearsince = (_yr-1791)
+		}
+		elseif _dy < _j1
+		{
+			LOGGING("it is before the equinox=============")
 			//if it's before the equinox
-			for _val = 10; _val < 12; _val++
+			for _val = 10; _val <= 12; _val++
 			{
-				jcal_passed += md[_val]
+				_jcal_passed += md(_val)
 			}
-			for _val = 1; _val < GETTIME()[1]; _val++
+			for _val = 1; _val < _mn; _val++
 			{
-				jcal_passed += md[_val]
+				_jcal_passed += md(_val)
 			}
-			
-			jcal_passed += GETTIME()[2]
-			yearsince = (GETTIME()[0]-1792)
+
+			_jcal_passed = _jcal_passed + _dy + _sept_left0
+			_yearsince = (_yr-1792)
 		}
 		else
 		{
 			//if it is the equinox
-			jcal_passed = 0
+			_jcal_passed = 0
 		}
 	}
 	--
-	jcal_passed += 1
+	_jcal_passed += 1
+	
+	_timegoneby = (_jcal_passed,_yearsince)
+	
+	if _argv[0] == ""
+	{
+		jcal_passed = _jcal_passed
+		yearsince = _yearsince
+	}
+	else
+	{
+		_timegoneby
+	}
 }
+
+
+//---------------------------
+//The Hebrew calendar
+//---------------------------
+/***
+ *      _    _      _                       
+ *     | |  | |    | |                      
+ *     | |__| | ___| |__  _ __ _____      __
+ *     |  __  |/ _ \ '_ \| '__/ _ \ \ /\ / /
+ *     | |  | |  __/ |_) | | |  __/\ V  V / 
+ *     |_|  |_|\___|_.__/|_|  \___| \_/\_/  
+ *                                          
+ *                                          
+ */
 
 
 OnHebrewCal
 {
-	_url = "https://www.hebcal.com/converter?cfg=xml&gy=" + "%(GETTIME()[0])" + "&gm=" + "%(GETTIME()[1])" + "&gd=" + "%(GETTIME()[2])" + "&g2h=1"
-	--
-	"\![execute,http-get,%(_url),--async=OnHRead1,--file=hcal.html,--timeout=200]"
+	LOGGING("%funcalendarfun is the calendar fun when you open the function")
 	
-	LOGGING("1 %_url===========")
-	--
-	tomorrowis
+	_year = GETTIME[0]
+	_month = GETTIME[1]
+	_day = GETTIME[2]
 	
-	_url2 = "https://www.hebcal.com/converter?cfg=xml&gy=" + tomyear + "&gm=" + tommonth + "&gd=" + tomday + "&g2h=1"
-	--
-	"\![execute,http-get,%(_url2),--async=OnHRead2,--file=hcal2.html,--timeout=200]"
+	_filename1 = 'hcal1.html'
+	_filename2 = 'hcal2.html'
 	
-	LOGGING("2 %(_url2)===========")
+	if _argv[0] != ""
+	{
+		_year = _argv[0][0]
+		_month = _argv[0][1]
+		_day = _argv[0][2]
+		
+		_filename1 = 'funnow.html'
+		_filename2 = 'funnext.html'
+	}
+	
+	_url = "https://www.hebcal.com/converter?cfg=xml&gy=" + _year + "&gm=" + _month + "&gd=" + _day + "&g2h=1"
+	//the GETTIME array is so so useful. it stores pretty much everything you might want about the current day of the gregorian calendar. all you need to know right now is that the current year is in slot [0], the month is in slot [1], and the day is in slot [2]
+	
+	--
+	"\![execute,http-get,%(_url),--async=OnReadH,--file=%(_filename1),--timeout=200,--reference=today]"
+	//this checks the website, plugs the result into a html file, then calls the function to evaluate which hebrew date corresponds to this pre-1800 georgian date
+	
+	--
+	_return = tomorrowis(_year,_month,_day)
+	
+	_url2 = "https://www.hebcal.com/converter?cfg=xml&gy=" + _return[2] + "&gm=" + _return[0] + "&gd=" + _return[1] + "&g2h=1"
+	--
+	"\![execute,http-get,%(_url2),--async=OnReadH,--file=%(_filename2),--timeout=200]"
+	--
 }
 
 
-OnHRead1
+
+OnReadH
 {
-	LOGGING("arrived at h1===============")
-	_file = "var\\hcal.html"
+	LOGGING("%funcalendarfun is the calendar fun when you look at the url")
+	_incomingurl = SPLIT(reference3,'/')
+	_lengthurl = ARRAYSIZE(_incomingurl)
+	
+	_filename = _incomingurl[_lengthurl-1]
+	
+	_file = "var\\%(_filename)"
 	_buff = ""
 	
 	_output = ''
@@ -578,49 +793,250 @@ OnHRead1
 		}
 	}
 	
-	h_data = SPLIT(_output,'"')
+	_h_cal = SPLIT(_output,'"')
 	
-	hyear = h_data[9]
-	hmonth = h_data[11]
-	hday = h_data[13]
+	_h_year = _h_cal[9]
+	_h_month = _h_cal[11]
+	_h_day = _h_cal[13]
 	
-	if SUBSTR(hmonth,0,2) == "Sh"
+	if SUBSTR(_h_month,0,2) == "Sh"
 	{
-		hmonth = "Shevat"
+		_h_month = "Shevat"
+	}
+	--
+	
+	if _filename == "hcal1.html"
+	{
+		hyear = _h_year
+		hmonth = _h_month
+		hday = _h_day
+	}
+	elseif _filename == "hcal2.html"
+	{
+		hyear6 = _h_year
+		hmonth6 = _h_month
+		hday6 = _h_day
+	}
+	else
+	{
+		funcalendarfun ,= (_filename,_h_year,_h_month,_h_day)
+		LOGGING("%ARRAYSIZE(funcalendarfun) should be first")
+		
+		--
+		LOGGING("%funcalendarfun is the calendar fun while in the eval function")
+		if ARRAYSIZE(funcalendarfun) > 4
+		{
+			LOGGING("%ARRAYSIZE(funcalendarfun) should be second")
+			"%(lookity)"
+		}
 	}
 	--
 	FCLOSE(_file)
 }
 
-OnHRead2
+
+ishebrewholiday
 {
-	LOGGING("arrived at h2================")
-	_file2 = "var\\hcal2.html"
-	_buff2 = ""
-	
-	_output2 = ''
-	
-	FCHARSET(1)
-	
-	if FOPEN(_file2,'r')
+	hgreet = 0
+	//this is a personal variable that determines whether the ghost has given the user a holiday greeting yet or not.
+	--
+	isholiday = 1
+	//i have this variable (which determines if it is a jewish holiday) set automatically so i don't have to keep calling it if it *is* a holiday. if the dates don't match up, i simply set this to 0 in the else statement.
+	--
+	if TOLOWER(h_m) == "nisan"
 	{
-	    for _buff2 = FREAD(_file2); _buff2 != -1; _buff2 = FREAD(_file2)
+		case h_d
 		{
-			_output2 += _buff2
+			when 15-22
+			{
+				ispesach = 1
+			}
+			others
+			{
+				isholiday = 0
+			}
 		}
 	}
-	
-	h_data6 = SPLIT(_output2,'"')
-	
-	hyear6 = h_data6[9]
-	hmonth6 = h_data6[11]
-	hday6 = h_data6[13]
-	
-	if SUBSTR(hmonth6,0,2) == "Sh"
+	elseif TOLOWER(h_m) == "sivan"
 	{
-		hmonth6 = "Shevat"
+		if h_d == 5
+		{
+			isshavuot = 1
+		}
+		elseif h_d == 6
+		{
+			isshavuot = 2
+		}
+		elseif h_d == 7
+		{
+			isshavuot = 3
+		}
+		else
+		{
+			isholiday = 0
+		}
+	}
+	elseif TOLOWER(h_m) == "tishrei"
+	{
+		if h_d == 1
+		{
+			isrosh = 1
+		}
+		elseif h_d == 2
+		{
+			isrosh = 2
+		}
+		elseif h_d == 9
+		{
+			isyom = 1
+		}
+		elseif h_d == 10
+		{
+			isyom = 2
+		}
+		elseif h_d == 14
+		{
+			issukkot = -1
+		}
+		elseif h_d == 15
+		{
+			issukkot = 1
+		}
+		elseif h_d == 16
+		{
+			issukkot = 2
+		}
+		elseif h_d == 17
+		{
+			issukkot = 3
+		}
+		elseif h_d == 18
+		{
+			issukkot = 4
+		}
+		elseif h_d == 19
+		{
+			issukkot = 5
+		}
+		elseif h_d == 20
+		{
+			issukkot = 6
+		}
+		elseif h_d == 21
+		{
+			issukkot = 7
+		}
+		elseif h_d == 22
+		{
+			isshemini = 1
+			//Shemini Atzeret
+		}
+		elseif h_d == 23
+		{
+			issimchat = 1
+			//Simchat Torah
+		}
+		else
+		{
+			isholiday = 0
+		}
+	}
+	elseif TOLOWER(h_m) == "kislev"
+	{
+		if h_d == 25
+		{
+			ishanu = 1
+			//first night of Hanukkah
+				
+				
+			//right so
+			//the hebrew calendar is confusing and what days Hanukkah falls on depends on whether kislev has 29 or 30 days
+			//in the meantime, i have the days that are accurate for this year. this will be tweaked to be more accurate when i figure out how to make the whole calendar work
+			/*
+			K25 = 1
+			26 = 2
+			27 = 3
+			28 = 4
+			29 = 5
+			30/T1 = 6
+			T1/2 = 7
+			T2/3 = 8
+			*/
+		}
+		elseif h_d == 26
+		{
+			ishanu = 2
+		}
+		elseif h_d == 27
+		{
+			ishanu = 3
+		}
+		elseif h_d == 28
+		{
+			ishanu = 4
+		}
+		elseif h_d == 29
+		{
+			ishanu = 5
+		}
+		elseif h_d == 30
+		{
+			ishanu = 6
+		}
+		else
+		{
+			isholiday = 0
+			ishanu = 0
+		}
+
+	}
+	elseif TOLOWER(h_m) == "tevet"
+	{
+		if h_d == 1
+		{
+			ishanu = 7
+		}
+		elseif h_d == 2
+		{
+			ishanu = 8
+		}
+		else
+		{
+			isholiday = 0
+			ishanu = 0
+		}
+	}
+	elseif TOLOWER(h_m) == "shevat"
+	{
+		if h_d == 15
+		{
+			istrees = 1
+			//Tu Bishvat
+		}
+		else
+		{
+			isholiday = 0
+		}
+	}
+	elseif "adar" _in_ TOLOWER(h_m)
+	{
+		if h_d == 14
+		{
+			ispurim = 1
+		}
+		else
+		{
+			isholiday = 0
+		}
+	}
+	else
+	{
+		isholiday = 0
 	}
 	--
-	FCLOSE(_file2)
-	
+	if ishanu != 0
+	{
+		"%(s0)Tonight is the %(Ord(ishanu)) night of %(hrom).\w6 %(hbless)\n"
+		hgreet = 1
+	}
 }

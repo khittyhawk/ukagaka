@@ -36,46 +36,23 @@ surface0
 	//As a note, you can put your images in subfolders! I'd be careful doing it, but it could be very helpful! It would look something like this
 	//element0,overlay,yourfolder/surface0.png,0,0
 	//Any images in subfolders HAVE to be defined in a surface before you can use them in animations, though.
-		
-	animation7.interval,runonce
-	animation7.pattern0,overlay,1020,0,0,0
 
 }
 
 
 surface1
 {
+	collisionex1,Button1,circle,81,163,7
+	collisionex2,Button2,circle,63,182,7
+	collisionex3,Button3,circle,103,179,7
+	collisionex4,Button4,circle,83,186,7
+	
 	element0,overlay,surface1000.png,0,0
 	element1,overlay,surface1001.png,0,0
 	element2,overlay,surface1002.png,0,0
 	element3,overlay,surface1003.png,0,0
 	
-	animation7.interval,runonce
-	animation7.pattern0,overlay,1021,0,0,0
 }
-
-surface2
-{
-	element0,overlay,surface1000.png,0,0
-	element1,overlay,surface1001.png,0,0
-	element2,overlay,surface1002.png,0,0
-	element3,overlay,surface1003.png,0,0
-	
-	animation7.interval,runonce
-	animation7.pattern0,overlay,1022,0,0,0
-}
-
-surface3
-{
-	element0,overlay,surface1000.png,0,0
-	element1,overlay,surface1001.png,0,0
-	element2,overlay,surface1002.png,0,0
-	element3,overlay,surface1003.png,0,0
-	
-	animation7.interval,runonce
-	animation7.pattern0,overlay,1023,0,0,0
-}
-
 
 surface10
 {
@@ -88,6 +65,121 @@ surface10
 	animation3.interval,never
 	animation3.pattern0,parallelstop,(10,11,12,13,14,15,16.17,18,19,20,21,22,23,24,25,26,27,28)
 	animation3.pattern1,alternativestart,(10,11,12,13,14,15,16.17,18,19,20,21,22,23,24,25,26,27,28)
+	
+	//animation30.interval,never
+	//animation30.pattern0,parallelstop,(2,10)
+	
+	
+	//---------------------
+	//static dials
+	//---------------------
+	
+	//pi/6
+	animation31.interval,never
+	animation31.pattern0,stop,10
+	animation31.pattern1,overlay,0524,0,0,0
+	
+	//
+	animation32.interval,never
+	animation32.pattern0,stop,10
+	animation32.pattern1,overlay,0600,0,0,0
+	
+	
+	//pi/4
+	animation33.interval,never
+	animation33.pattern0,stop,10
+	animation33.pattern1,overlay,0785,0,0,0
+	
+	//pi/3
+	animation34.interval,never
+	animation34.pattern0,stop,10
+	animation34.pattern1,overlay,1047,0,0,0
+	
+	//pi/2
+	animation35.interval,never
+	animation35.pattern0,stop,10
+	animation35.pattern1,overlay,1571,0,0,0
+	
+	//2pi/3
+	animation36.interval,never
+	animation36.pattern0,stop,10
+	animation36.pattern1,overlay,2096,0,0,0
+	
+	//3pi/4
+	animation37.interval,never
+	animation37.pattern0,stop,10
+	animation37.pattern1,overlay,2356,0,0,0
+	
+	//5pi/6
+	animation38.interval,never
+	animation38.pattern0,stop,10
+	animation38.pattern1,overlay,2618,0,0,0
+	
+	//pi
+	animation39.interval,never
+	animation39.pattern0,stop,10
+	animation39.pattern1,overlay,3142,0,0,0
+	
+	//7pi/6
+	animation40.interval,never
+	animation40.pattern0,stop,10
+	animation40.pattern1,overlay,3665,0,0,0
+	
+	//5pi/4
+	animation41.interval,never
+	animation41.pattern0,stop,10
+	animation41.pattern1,overlay,3927,0,0,0
+	
+	//4pi/3
+	animation42.interval,never
+	animation42.pattern0,stop,10
+	animation42.pattern1,overlay,4189,0,0,0
+	
+	//<3pi/2
+	animation43.interval,never
+	animation43.pattern0,stop,10
+	animation43.pattern1,overlay,4711,0,0,0
+	
+	//3pi/2
+	animation44.interval,never
+	animation44.pattern0,stop,10
+	animation44.pattern1,overlay,4712,0,0,0
+	
+	//>3pi/2
+	animation45.interval,never
+	animation45.pattern0,stop,10
+	animation45.pattern1,overlay,4713,0,0,0
+	
+	//
+	animation46.interval,never
+	animation46.pattern0,stop,10
+	animation46.pattern1,overlay,5000,0,0,0
+	
+	//5pi/3
+	animation47.interval,never
+	animation47.pattern0,stop,10
+	animation47.pattern1,overlay,5236,0,0,0
+	
+	//7pi/4
+	animation48.interval,never
+	animation48.pattern0,stop,10
+	animation48.pattern1,overlay,5498,0,0,0
+	
+	//
+	animation49.interval,never
+	animation49.pattern0,stop,10
+	animation49.pattern1,overlay,5600,0,0,0
+	
+	//11pi/6
+	animation50.interval,never
+	animation50.pattern0,stop,10
+	animation50.pattern1,overlay,5760,0,0,0
+	
+	//0, 2pi
+	animation51.interval,never
+	animation51.pattern0,stop,10
+	animation51.pattern1,overlay,6203,0,0,0
+	
 }
 
 //q1
@@ -187,7 +279,7 @@ surface18
 
 
 //sakura stuff
-surface.append0-3
+surface.append0,1
 {
 
 	collisionex0,Speaker,polygon,53,76,66,58,82,53,100,61,110,75,103,117,56,115,52,73
@@ -205,21 +297,23 @@ surface.append0-3
 	animation3.pattern2,overlay,1013,200,0,0
 	animation3.pattern3,overlay,1011,200,0,0
 	animation3.pattern4,overlay,1013,200,0,0
-	animation3.pattern5,overlay,1011,200,0,0
-	animation3.pattern6,overlay,1013,200,0,0
-	animation3.pattern7,overlay,-1,200,0,0
-	animation3.pattern8,start,1
+	animation3.pattern5,overlay,1014,200,0,0
+	animation3.pattern6,overlay,1011,200,0,0
+	animation3.pattern7,overlay,1013,200,0,0
+	animation3.pattern8,overlay,-1,200,0,0
+	animation3.pattern9,start,1
 
 	animation4.interval,never
 	animation4.pattern0,parallelstop,(1,3,5)
 	animation4.pattern1,overlay,1016,0,0,0
 	animation4.pattern2,overlay,1017,200,0,0
 	animation4.pattern3,overlay,1016,200,0,0
-	animation4.pattern4,overlay,1017,200,0,0
-	animation4.pattern5,overlay,1016,200,0,0
-	animation4.pattern6,overlay,1017,200,0,0
-	animation4.pattern7,overlay,-1,200,0,0
-	animation4.pattern8,start,1
+	animation4.pattern4,overlay,1018,200,0,0
+	animation4.pattern5,overlay,1017,200,0,0
+	animation4.pattern6,overlay,1016,200,0,0
+	animation4.pattern7,overlay,1017,200,0,0
+	animation4.pattern8,overlay,-1,200,0,0
+	animation4.pattern9,start,1
 
 	animation5.interval,never
 	animation5.pattern0,parallelstop,(1,3,4)
@@ -243,22 +337,64 @@ surface.append0-3
 	animation6.pattern7,overlay,-1,200,0,0
 	animation6.pattern8,start,6
 	
-	animation10.interval,runonce
-	animation10.pattern0,overlay,1030,0,0,0
+	animation7.interval,bind
+	animation7.pattern0,overlay,1020,0,0,0
 	
-	animation11.interval,runonce
-	animation11.pattern0,overlay,1050,0,0,0
-
+	animation8.interval,bind
+	animation8.pattern0,overlay,1021,0,0,0
+	
+	animation9.interval,bind
+	animation9.pattern0,overlay,1022,0,0,0
+	
+	animation10.interval,bind
+	animation10.pattern0,overlay,1023,0,0,0
+	
+	animation11.interval,bind
+	animation11.pattern0,overlay,1024,0,0,0
+	
+	animation12.interval,bind
+	animation12.pattern0,overlay,1025,0,0,0
+	
+	animation13.interval,bind
+	animation13.pattern0,overlay,1026,0,0,0
+	
+	animation20.interval,runonce
+	animation20.pattern0,overlay,1030,0,0,0
+	
+	animation21.interval,runonce
+	animation21.pattern0,overlay,1050,0,0,0
 
 }
 
 surface.append10-18
 {
 	collisionex2,Buttons,polygon,45,50,97,43,101,55,46,61
+	collisionex3,L Button,circle,72,109,9
+	collisionex4,R Button,circle,99,109,9
 	
 	//antenna
 	animation1.interval,runonce
 	animation1.pattern0,interpolate,3050,0,0,0
+	
+	//unit circle
+	animation4.interval,bind
+	animation4.pattern0,overlay,505,0,-15,-10
+	
+	animation5.interval,bind
+	animation5.pattern0,overlay,500,0,-15,-10
+	
+	animation6.interval,bind
+	animation6.pattern0,overlay,501,0,-15,-10
+	
+	animation7.interval,bind
+	animation7.pattern0,overlay,504,0,-15,-10
+	
+	animation8.interval,bind
+	animation8.pattern0,overlay,502,0,-15,-10
+	
+	animation9.interval,bind
+	animation9.pattern0,overlay,503,0,-15,-10
+	
 	
 	//dial
 	animation10.interval,runonce
@@ -376,27 +512,50 @@ surface.append10-18
 	animation28.pattern1,overlay,-1,100-200,0,0
 	animation28.pattern2,start,2
 	
+	animation29.interval,never
+	animation29.pattern0,overlay,7854,0,0,0
+	animation29.pattern1,overlay,-1,100-200,0,0
+	animation29.pattern2,start,2
+	
+	
+	animation150.interval,talk,4
+	animation150.pattern0,alternativestart,(151,152)
+	
+	
+	animation151.interval,never
+	animation151.pattern0,overlay,103,0,-35,-50
+	animation151.pattern1,overlay,104,150,-35,-50
+	animation151.pattern2,overlay,105,0-150,-35,-50
+	animation151.pattern3,overlay,106,0-150,-35,-50
+	animation151.pattern4,overlay,107,150,-35,-50
+	animation151.pattern5,overlay,-1,150,0,0
+	
+	animation152.interval,never
+	animation152.pattern0,overlay,103,0,-35,-50
+	animation152.pattern1,overlay,105,150-300,-35,-50
+	animation152.pattern2,overlay,107,150-300,-35,-50
+	animation152.pattern3,overlay,-1,150,0,0
+	
+	//green
+	animation160.interval,bind
+	animation160.pattern0,overlayfast,506,0,-15,-10
+	
+	//orange
+	animation161.interval,bind
+	animation161.pattern0,overlayfast,507,0,-15,-10
+	
+	//blue
+	animation162.interval,bind
+	animation162.pattern0,overlayfast,508,0,-15,-10
+	
+	//red
+	animation163.interval,bind
+	animation163.pattern0,overlayfast,509,0,-15,-10
+	
 	//nub
-	animation100.interval,runonce
-	animation100.pattern0,overlay,3999,0,0,0
+	animation200.interval,runonce
+	animation200.pattern0,overlay,3999,0,0,0
 	
-	animation50.interval,talk,4
-	animation50.pattern0,alternativestart,(51,52)
-	
-	
-	animation51.interval,never
-	animation51.pattern0,overlay,103,0,-35,-50
-	animation51.pattern1,overlay,104,150,-35,-50
-	animation51.pattern2,overlay,105,0-150,-35,-50
-	animation51.pattern3,overlay,106,0-150,-35,-50
-	animation51.pattern4,overlay,107,150,-35,-50
-	animation51.pattern5,overlay,-1,150,0,0
-	
-	animation52.interval,never
-	animation52.pattern0,overlay,103,0,-35,-50
-	animation52.pattern1,overlay,105,150-300,-35,-50
-	animation52.pattern2,overlay,107,150-300,-35,-50
-	animation52.pattern3,overlay,-1,150,0,0
 }
 
 
@@ -410,7 +569,24 @@ surface.append10-18
 //Unique Collision Cursors
 //change icon of cursor when over a specific surface
 
+
+sakura.cursor
+{
+	mouseup1,Button1,system:finger
+	mouseup2,Button2,system:arrow
+	mouseup3,Button3,system:arrow
+	mouseup4,Button4,system:arrow
+}
+
+
 kero.cursor
 {
-mouseup0,Buttons,system:hand
+	mouseup0,Buttons,system:hand
+	mouseup1,L Button,system:arrow
+	mouseup2,R Button,system:arrow
+}
+
+sakura.tooltip
+{
+	Button1,Shut it off???
 }

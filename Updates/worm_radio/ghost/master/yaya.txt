@@ -17,6 +17,7 @@ dic, rn_time.dic
 dic, rn_bonus.dic
 dic, Dev_Tools/rn_balloontest.dic
 dic, Dev_Tools/rn_cipher.dic
+dic, Dev_Tools/rn_todo.dic
 
 //log, ayame.log
-msglang,english
+messagetxt,system/messagetxt/english.txt

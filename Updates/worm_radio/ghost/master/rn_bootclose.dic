@@ -1,6 +1,6 @@
 ghostver
 {
-	"Version 0.1.2 alpha"
+	"Version 0.2 alpha"
 }
 
 OnFirstBoot
@@ -10,6 +10,13 @@ OnFirstBoot
 	"\0\s[0]Cong\_q- bzzt -\_q unlocked the secret frequency\_q- bzzt -\_q broadcast all the ideas %(i)they%(i0)\_q- bzzt - kept contained!\n\nHeresy!\w5 Earworms!\w5 Memetic hazards!\w5\_q- bzzt -\_qthing else %(i)they%(i0) don't want you to hear!\w7\1\s[10]\_q- bzzt -\_q\w5\w5\e"
 }
 
+OnInitialize
+{
+	RebootVars
+	UpdateVars
+	OnTimeDifference
+}
+
 OnBoot
 // (＾＾)ｂ Inbuilt!
 {
@@ -17,32 +24,67 @@ OnBoot
 	RebootVars
 	UpdateVars
 	OnTimeDifference
-	
 	--
-	if get_h == "On" && ishanu != 0 && hgreet != 1
+	"%(tmo)"
+	--
+	if autoupdates[1] == 2 && autoupdates[2] == 1
+	//if you told the user yesterday and if autoupdates are on
 	{
-		
-		"%(s0)Tonight is the %(Ord(ishanu)) night of %(hrom).\w6 %(hbless)"
-		hgreet = 1
+		"Would you like to decode the new frequency?\n\n/
+		\q[Update now?,Select.updort]    \q[Update later,Select.laterdort]"
+	}
+	elseif (autoupdates[0] == 1) && (autoupdates[1] != 1) && autoupdates[2] == 1
+	//if an update is ready and you haven't told the user yet and if autoupdates are on
+	{
+		"Ah...\w3 More heresy has been liberated into our signals...\w3 Would you like to decode the new frequency?\n\n/
+		\q[Update now?,Select.updort]    \q[Update later,Select.laterdort]"
 	}
 	elseif (openSec-closingSec) < 400
 	{
-		_cens = ""
-		if _currentshell == "Ship"; {_cens = ""}
-		if _currentshell == "Radio"; {_cens = "0"}
-		LOGGING("%(_currentshell) %(_cens) =================")
-		"%(s0)Hera's \_b[censored%(_cens).png,inline,opaque]! Must you drag me hither and thither so?"
+		"%(s0)Hera's "
+		--
+		if washurmouth == "Fuck no"
+		{
+			"tits"
+			"peacock-feathered nightie"
+			"chariot of cats"
+			"loins"
+			"lions"
+			"cloaca"
+		}
+		else
+		{
+			_cens = ""
+			if _currentshell == "Ship"; {_cens = ""}
+			if _currentshell == "Radio"; {_cens = "0"}
+				
+			"\_b[censored%(_cens).png,inline,opaque]"
+		}
+		--
+		"! Must you drag me hither and thither so?"
 	}
 	else
 	{
-		"%(s0)Have I changed since we last met?"
-		"%(s0)Latest developments%(lps4)"
-		"%(s0)Frequency: accessed."
+		if month == "12" && day == "25"
+		{
+			"May the world swaddle you in its atmospheric cradle when you need rest\w3 from the quiescence of the universe\w6\w5, and may you extend that comfort to others who want such kindness.\w6\w6\e"
+		}
+		else
+		{
+			"%(s0)Have I changed since we last met?"
+			"%(s0)Latest developments%(lps(4))"
+			"%(s0)Frequency: accessed."
+		}
 	}
 	--
 	"\e"
 }
 
+Select.laterdort
+{
+	"%(s0)When your world turns its face to our frequency once more\w3, I will ask again.\w5\e"
+	autoupdates[1] = 1 //the user has been told today
+}
 
 OnTimeDifference
 {
@@ -72,7 +114,9 @@ OnTimeDifference
 OnGhostChanging
 // (＾＾)ｂ Inbuilt!
 {
-	if reference0 == reference2
+	_path = REPLACE(SHIORI3FW.Path,'\',"/")
+	_path = REPLACE(_path,"ghost/master/","")
+	if reference3 == _path //If reloading. thanks Zi
 	{
 		"%(s0)I shall return\e"
 	}
@@ -87,11 +131,16 @@ OnGhostChanging
 		"%(s0)\![set,balloonwait,1.5]%(raveyard).\w8\w8"
 	}
 }
+//: C:/Users/khitt/Desktop/Applications/Ghosts/ghost/radio_nowhere/
+// C:\Users\khitt\Desktop\Applications\Ghosts\ghost\radio_nowhere\ghost\master\\e
+//C:/Users/khitt/Desktop/Applications/Ghosts/ghost/radio_nowhere/
 
 OnGhostChanged
 // (＾＾)ｂ Inbuilt!
 {
-	if reference0 == sakuraname
+	_path = REPLACE(SHIORI3FW.Path,'\',"/")
+	_path = REPLACE(_path,"ghost/master/","")
+	if reference3 == _path //If reloading. thanks Zi
 	{
 		"%(s0)"
 	}
@@ -139,6 +188,11 @@ OnOtherGhostClosed
 // (＾＾)ｂ Inbuilt!
 {
 	anotherspoopy = reference2
+	if "SPAMTON" _in_ anotherspoopy
+	{
+		spamon = 0
+	}
+	--
 	if SHIORI3FW.IsVisible[1] == 1
 	{
 		"%(k0)\![set,balloonwait,0.5]What did you see?\w6 What did you see?\w6"
@@ -204,13 +258,10 @@ OnSysResume
 		daychange
 	}
 	--
-	if get_h == "On" 
+	if (((GETSECCOUNT()-napSec) > 86400) || ((naptime[4] < 18) && (nowhour >= 18)))
+		//if it's been more than a day (in seconds) or if the hour 1800 has passed in the intervening time
 	{
-		if (((GETSECCOUNT()-napSec) > 86400) || ((naptime[4] < 18) && (nowhour >= 18)))
-			//if it's been more than a day (in seconds)
-		{
-			hcal_change
-		}
+		hcal_change
 	}
 	LOGGING("~~~~~~~~~~~~~~~~~~~~~~~restored")
 	
@@ -234,8 +285,8 @@ OnClose
 RebootVars
 {
 	_nowtime = GETTIME()
-	if (_nowtime[0] != closingTime[0])
-		//if the year is different
+	if (_nowtime[0] == closingTime[0])
+		//if the year is the same
 	{
 		if (_nowtime[7] != closingTime[7])
 		//if the day is different
@@ -243,16 +294,29 @@ RebootVars
 			daychange
 		}
 		--
-		if get_h == "On" 
+		if (((closingTime[4] < 18) && (_nowtime[4] >= 18)) || ((GETSECCOUNT()-closingSec) > 86400))
+			//in order to get the correct hebrew date, we can't simply use the native day rollover
+			//the Hebrew calendar begins at sundown (1800)
+			//in order to determine if the Hebrew day is different fro when the user last ran the ghost, we need to check if the hour has passed 1800 in the intervening time, or if a day has passed
+			//since GETSECCOUNT is a native function, we can easily set a global variable when the ghost closes (closingSecc here) and determine whether the difference is greater than the amount of seconds in a day
 		{
-			if (((GETSECCOUNT()-closingSec) > 86400) || ((closingTime[4] < 18) && (nowhour >= 18)))
-				//if it's been more than a day (in seconds)
-			{
-				hcal_change
-			}
+			hcal_change
 		}
 	}
+	else
+		//if the year is different
+	{
+		daychange
+		--
+		if (((GETSECCOUNT()-closingSec) > 86400) || ((closingTime[4] < 18) && (nowhour >= 18)))
+			//if it's been more than a day (in seconds)
+		{
+			hcal_change
+		}
+	}
+	
 	--
+	dawnduskmenu = "    "
 	lastTalk = ""
 	waitingcommuS = IARRAY
 	waitingcommuM = IARRAY
@@ -266,6 +330,14 @@ RebootVars
 	stroke[0] = 0
 	stroke[1] = 0
 	
+	if saved_chainname != ""
+	{
+		CHAIN.IDName = saved_chainname
+		CHAIN.Index = saved_chainindex
+		
+		saved_chainname = ""
+		saved_chainindex = 0
+	}
 	--
 	"\![get,property,OnMe,currentghost.scope(0).rect]/
 	\![get,property,OnMe2,currentghost.scope(1).rect]"
@@ -282,6 +354,12 @@ CloseVars
 	closingTime = GETTIME()
 	//(Year, month, day, day of the week (0-6), hour, minute, second, number of days from the beginning of the year, daylight saving time [0 = false/1 = true])
 	emptymenu = IARRAY
+	
+	if CHAIN.IDName != ""
+	{
+		saved_chainname = CHAIN.IDName
+		saved_chainindex = CHAIN.Index
+	}
 }
 
 
@@ -291,11 +369,11 @@ OnVanishSelecting
 {
 	if SHIORI3FW.IsVisible[1] == 1
 	{
-		"%(k0)\![set,balloonwait,0.5]What is it?\![set,balloonwait,1.2]I can feel it%(lps6) looming%(lps8)%(s0)\![set,balloonwait,1.5]A pall.\e"
+		"%(k0)%(speed(0.5))What is it?%(speed(1.2))I can feel it%(lps(6)) looming%(lps(8))%(s0)%(speed(1.5))A pall.\e"
 	}
 	else
 	{
-		"%(s0)\![set,balloonwait,1.5]%(lps6)A pall encroaches.\e"
+		"%(s0)%(speed(1.2))%(lps(6))A pall encroaches.\e"
 	}
 }
 
@@ -307,9 +385,9 @@ OnVanishSelected
 		"%(s0)Signal lost.\w8\w8"
 		"%(s0)...cinco seis dos ocho seis seis cero\w6\w6"
 	}
-	"%(s0)\![set,balloonwait,1.5]The name of the end of all%(lps6)\w8\e"
-	"%(s0)\![set,balloonwait,1.5]Omicron\w6\w6, Omega\w8\e"
-	"%(s0)\![set,balloonwait,1.5]Am%(lps6) I%(lps6) still%(lps6)?\w8\e"
+	"%(s0)%(speed(1.5))The name of the end of all%(lps(6))\w8\e"
+	"%(s0)%(speed(1.5))Omicron\w6\w6, Omega\w8\e"
+	"%(s0)%(speed(1.5))Am%(lps(6)) I%(lps(6)) still%(lps(6))?\w8\e"
 }
 
 OnVanishCancel
@@ -317,22 +395,22 @@ OnVanishCancel
 {
 	if SHIORI3FW.ShellName == "Radio"
 	{
-		if (curloc != "") || (curloc != " : ") || (curloc != " ")
+		if (curloc != "") && (curloc != " : ") && (curloc != " ") && (curloc[0] != "Nowhere")
 		{
 			"%(a1)This is radio free %(curloc[0])"
 		}
 		"%(a1)Connection restored\e"
 	}
-	"%(s0)\![set,balloonwait,1.5]Staving off the inevitable?\e"
+	"%(s0)%(speed(1.5))Staving off the inevitable?\e"
 	"%(s0)That phrase... a 'perverse sentimentality'?\e"
 	"%(s0)\![set,balloonwait,1.5]Entropy%(lps6) increases\e"
-	"%(s0)%(lps6)Are we really still so amusing to another?\e"
+	"%(s0)%(lps(6))Are we really still so amusing to another?\e"
 }
 
 OnVanishButtonHold
 // (＾＾)ｂ Inbuilt!
 {
-	"%(a1)The taste of%(lps6) a warning shot\e"
+	"%(a1)The taste of%(lps(6)) a warning shot\e"
 	"%(s0)Gunboat diplomacy\e"
 }
 
@@ -349,6 +427,7 @@ UpdateVars
 		talkrate = "every 10 minutes"
 	}
 	if !ISVAR('deleteshitai'); {deleteshitai = "Off"}
+	if !ISVAR('autoupdates'); {autoupdates = (0,0,0)}
 	if !ISVAR('installdate'); {installdate = ("%(year)","%(month)","%(day)","%(hour)","%(minute)","%(second)","%(ghostver)")}
 	if !ISVAR('timeOut'); {timeOut = 0}
 	if !ISVAR('timeHere'); {timeHere = 0}
@@ -356,6 +435,27 @@ UpdateVars
 	if !ISVAR('pauseweather'); {pauseweather = (0,0)}
 	if !ISVAR('hb_yr'); {hb_yr = IARRAY}
 	if !ISVAR('hgreet'); {hgreet = 0}
+	if !ISVAR('weatherfromnowhere'); {weatherfromnowhere = 0}
+	if !ISVAR('weirdweather'); {weirdweather = "Off"}
+	--
+	if speakeris == 1
+	{
+		"\![bind,grille,Asclepioid,1]"
+	}
+	elseif speakeris == 2
+	{
+		"\![bind,grille,Arabesque,1]"
+	}
+	elseif speakeris == 3
+	{
+		"\![bind,grille,Fat Deco,1]"
+	}
+	else
+	{
+		"\![bind,grille,Art Deco,1]"
+	}
+	--
+	ERASEVAR(speakeris)
 }
 
 InitFirstBoot
@@ -366,6 +466,7 @@ InitFirstBoot
 	runtime[2] = 0		//Seconds, replaces passsec
 	timeOut = 0 //total time the ghost has been closed since installation
 	timeHere = 0 //total time the ghost has been run since installation
+	autoupdates = (0,0,0)
 	
 	stroke[0] = 0
 	stroke[1] = 0
@@ -384,7 +485,9 @@ InitFirstBoot
 	hb_yr = IARRAY
 	
 	nowscale = 100
-	OnMoonphase
+	--
+	"\![raise,OnMoonphase]"
+	--
 	dayornight = ''
 	//mouse_interaction_variables
 	--

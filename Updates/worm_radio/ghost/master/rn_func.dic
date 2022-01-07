@@ -1,5 +1,3 @@
-//functions
-
 
 OnFileDropping
 // (＾＾)ｂ Inbuilt!
@@ -58,7 +56,7 @@ Select.sakuraresponse
 
 Select.keroresponse
 {
-	"%(k0)%(lps6)It creaks%(lps6)"
+	"%(k0)%(lps(6))It creaks%(lps(6))"
 }
 
 OnUpdateDataCreating
@@ -106,7 +104,7 @@ OnWallpaperChange
 OnURLDropped
 // (＾＾)ｂ Inbuilt!
 {
-	"%(s0)A feed from another world%(lps6)\e"
+	"%(s0)A feed from another world%(lps(6))\e"
 }
 
 OnFailFail
@@ -178,7 +176,7 @@ OnInstallBegin
 	ssp_downloads
 	if (SHIORI3FW.IsVisible[1] == 1)
 	{
-		"%(k0)Did you taste that?%(lps6) \![set,balloonwait,1.1]Did you %(i)feel%(i0) that?"
+		"%(k0)Did you taste that?%(lps(6)) %(speed(1.1))Did you %(i)feel%(i0) that?"
 	}
 	--
 	"%(s0)A course has been set. A weight has been laden. Entropy is increased.\n\n%(urname) has accepted the pact.\e"
@@ -245,7 +243,7 @@ OnInstallRefuse
 	_name = reference0
 	_id = reference1
 	_what = reference2
-	"%(s0)\![set,balloonwait,1.2]I cannot touch it. It bears the sigil of another.%(lps8) %(_name)\w6\w6, %(adj) and %(ger)\w6\w6, can bear the weight of %(_what)\w6\w6, this %(_id).\e"
+	"%(s0)%(speed(1.2))I cannot touch it. It bears the sigil of another.%(lps(8)) %(_name)\w6\w6, %(adj) and %(ger)\w6\w6, can bear the weight of %(_what)\w6\w6, this %(_id).\e"
 }
 
 OnInstallReroute
@@ -254,7 +252,7 @@ OnInstallReroute
 	_name = reference0
 	_id = reference1
 	_what = reference2
-	"%(s0)\![set,balloonwait,1.2]I cannot touch it. It bears the sigil of another.%(lps8) %(_name)\w6\w6, %(adj) and %(ger)\w6\w6, can bear the weight of %(_what)\w6\w6, this %(_id).\e"
+	"%(s0)%(speed(1.2))I cannot touch it. It bears the sigil of another.%(lps(8)) %(_name)\w6\w6, %(adj) and %(ger)\w6\w6, can bear the weight of %(_what)\w6\w6, this %(_id).\e"
 }
 
 
@@ -282,6 +280,7 @@ OnUpdateReady
 OnUpdateComplete
 // (＾＾)ｂ Inbuilt!
 {
+	autoupdates = (0,0) //you have already reached the latest upd0rt
 	_win = reference0
 	if ASEARCH(_win,ntwyey) == -1
 	{
@@ -374,7 +373,7 @@ OnSNTPFailure
 OnBIFFBegin
 // (＾＾)ｂ Inbuilt!
 {
-	"%(s0)More broadly cast%(lps6)\e"
+	"%(s0)More broadly cast%(lps(6))\e"
 }
 
 OnBIFFComplete
@@ -440,6 +439,8 @@ OnSetVar
     2: System function exists
 */
 
+
+
 OnKeyPress
 // (＾＾)ｂ Inbuilt!
 {
@@ -495,18 +496,17 @@ OnBalloonChange
 
 
 
-OnUpdateCheckResult
+OnUpdateCheckResult : void
 // (＾＾)ｂ Inbuilt!
 {
-	updortresult = "success",reference1
+	updortresult = ("success",reference1)
 
 }
 
-OnUpdateCheckFailure
+OnUpdateCheckFailure : void
 // (＾＾)ｂ Inbuilt!
 {
-	updortresult = "failure",reference0
-
+	updortresult = ("failure",reference0)
 }
 
 OnVanished
@@ -545,7 +545,7 @@ OnTestW
 	\![*]\q[400 (w8),OnTestPause,8]\n/
 	\![*]\q[450 (w9),OnTestPause,9]\n/
 	\![*]\q[Custom amount?,OnTestPause,custom]\n\n/
-	\![*]\q[Main Menu,OnMenuRunPre]    \![*]\q[Cancel,Cancel]"
+	\![*]\q[Tools Menu,funstuff]    \![*]\q[Cancel,Cancel]"
 
 }	
 
@@ -613,11 +613,37 @@ OnLoc
 
 OnWeathering
 {
-	weatherurl = reference0
-	curloc = (Capitalize(weatherurl[6,'/']),TOUPPER(weatherurl[5,'/']))
-	optweather = "On"								  
-	--
-	OnRegWeather
+	if TOLOWER(reference0) == "nowhere"
+	{
+		optweather = "On?"
+		curloc = ("Nowhere","NW")
+		weatherfromnowhere = 1
+		if weatherless == ""
+		{
+			weatherless = no_sun
+		}
+		--
+		OnMenuRunPre
+	}
+	else
+	{
+		weatherurl = reference0
+		_urlsize = SPLIT(weatherurl,'/')
+		--
+		if ARRAYSIZE(_urlsize) > 6
+		{
+			LOGGING("specific station=============")
+		}
+		else
+		{
+			LOGGING("good size===========")
+		}
+		--
+		curloc = (Capitalize(weatherurl[6,'/']),TOUPPER(weatherurl[5,'/']))
+		optweather = "On"
+		--
+		OnRegWeather
+	}
 }
 
 OnRegWeather
@@ -649,7 +675,7 @@ OnGetSomeWeather
 		manual_check = 1
 	}
 	--
-	"\![execute,http-get,%(weatherurl),--async=OnWeatherVars,--file=weather2.html,--timeout=200]"
+	"\![execute,http-get,%(weatherurl),--async=OnWeatherVars,--file=weather2.html,--timeout=200]\b2  "
 }
 
 OnWeatherVars
@@ -682,6 +708,8 @@ OnWeatherVars
 	toomoist = "Unk"
 	dawntime = "Unk"
 	dusktime = "Unk"
+	dawnsec = "Unk"
+	dusksec = "Unk"
 	
 	w_array = (curlat,curlong,hightemp,lowtemp,realtemp,feeltemp,windthing,weatheris,toomoist,dawntime,dusktime)
 	LOGGING("%curlat,%curlong,%hightemp,%lowtemp,%realtemp,%feeltemp,%windthing,%weatheris,%toomoist,%dawntime,%dusktime")
@@ -743,23 +771,49 @@ OnWeatherVars
 }
 
 OnWeatherMe
-{
-	LOGGING("OnWeatherMe achieved===================")											   
+{										   
 	if (realtemp[0] == "") || (feeltemp == "") || (windthing == "") || (weatheris == "") || (toomoist == "") || (dawntime == "") || (dusktime == "")
 	{
 		OnGetSomeWeather
 	}
-	elseif (realtemp[0] == "Unk") || (feeltemp == "Unk") || (windthing == "Unk") || (weatheris == "Unk") || (toomoist == "Unk") || (dawntime == "Unk") || (dusktime == "Unk")
+	elseif (realtemp[0] == "Unk") && (feeltemp == "Unk") && (windthing == "Unk") && (weatheris == "Unk") && (toomoist == "Unk") && (dawntime == "Unk") && (dusktime == "Unk")
 	{
-		//OnGetSomeWeather
-		//would you like to check the weather?
+		_which = 'Try in ten minutes'
+		if nowmin >= 50
+		{
+			_which = 'Wait for the hour'
+		}
+		--
 		"%(a0)There is no weather today.\n\n/
-		\q[Try again?,OnGetSomeWeather]   \q[Try in ten minutes,pauseweather=(1,0)/
+		\q[Try again?,OnGetSomeWeather]   \q[%(_which),pausetenmins]\n/
 		\q[Try another site?,OnLoc]   \q[No weather,noweather]\e"
 	}
 	else
 	{
-		"%(s0)\b2\tCurrently %realtemp[0]°%realtemp[1], feels like %feeltemp°%realtemp[1]\n"
+		"%(s0)\b2%(tmo)\t\_q\f[align,right]\f[height,80%]Retrieved %(timechecked[0]):%(timechecked[1]), %(timechecked[2]) %(timechecked[3]), %(timechecked[4])\f[height,default]\n\f[align,left]\_q\w5/
+		Currently "
+		--
+		if realtemp[0] != "Unk"
+		{
+			"%realtemp[0]°%realtemp[1]"
+			--
+			if feeltemp != "Unk"
+			{
+				", "
+			}
+		}
+		--
+		if feeltemp != "Unk"
+		{
+			"feels like %feeltemp°%realtemp[1]"
+		}
+		--
+		if weatheris != "Unk"
+		{
+			":\w5 %weatheris"
+		}
+		--
+		"\n"
 		--
 		if (ISINTSTR(hightemp) == 1)
 		{
@@ -768,15 +822,50 @@ OnWeatherMe
 		--
 		if GETTYPE(highesttemp) != 1
 		{
-			//
+			if lowtemp != "Unk"
+			{
+				"Low: %lowtemp°%realtemp[1]"
+			}
 		}
 		else
 		{
-			"High: %highesttemp\n"
+			"High: %highesttemp°%realtemp[1]"
+			--
+			if lowtemp != "Unk"
+			{
+				"\_l[6.5em]Low: %lowtemp°%realtemp[1]"
+			}
 		}
 		--
-		"Low: %lowtemp\nWindspeed is %windthing mph\n%weatheris\n%toomoist% humidity\nSunrise: %dawntime AM and sunset: %dusktime PM\n\n\f[height,80%]Retrieved %(timechecked[0]):%(timechecked[1]), %(timechecked[2]) %(timechecked[3]), %(timechecked[4])\n\f[height,default]\e"
+		if windthing != "Unk"
+		{
+			"\nWindspeed is %windthing mph"
+		}
+		--
+		if toomoist != "Unk"
+		{
+			"\n%toomoist% humidity"
+		}
+		--
+		"\n"
+		--
+		if dawntime != "Unk"
+		{
+			"\n[half]Sunrise: %dawntime AM"
+		}
+		--
+		if dusktime != "Unk"
+		{
+			"\nSunset: %dusktime PM"
+		}
+		--
 		manual_check = 0
+		"\n[25]"
+	}
+	--
+	if weirdweather == "On"
+	{
+		Select.weather_less
 	}
 }
 
@@ -787,8 +876,790 @@ Select.noweather
 	"\![raise,Cancel]"
 }
 
+
+Select.pausetenmins
+{
+	if nowmin >= 55
+	{
+		"\![raise,Cancel]"
+	}
+	else
+	{
+		pauseweather=(1,0)
+	}
+}
+
+Select.weather_less
+{
+	if weirdweather == "On"
+	{
+		"\C\n[half]\f[align,center]\_q-------\_q\w5\n\f[align,left]"
+	}
+	else
+	{
+		"\b"
+	}
+	--
+	"Today's forecast is... \w5\w5\n%(weatherless)."
+}
+
 //time evaluations
 
 //currentime since midnight
 //onminute change to check dawn and dusk
 //half hour before + after each
+
+
+
+//Calendar conversions!
+
+OnFunConvert
+{
+	LOGGING("%(reference)")
+
+	_month = TOINT(bdate[0])
+	_day = bdate[1]
+	_year = TOINT(bdate[2])
+	if ISINTSTR(bdate[2]) != 1
+	{
+		_year = 1971
+	}
+	if forfundate != ""
+	{
+		_month = forfundate[1]
+		_day = forfundate[2]
+		_year = forfundate[0]		
+	}
+	--
+	"\![open,dateinput,OnConvertCal,-1,%(_year),%(_month),%(_day),--reference=%(reference)]"
+}
+
+OnConvertCal
+{
+	"\b2Converting Gregorian to %(reference2)...\n\n"
+	--
+	_nope = FDEL("var\\funnow.html")
+	_nope2 = FDEL("var\\funnext.html")
+	--
+	forfundate = reference0
+	funcalendarfun = IARRAY
+	if reference2 == "Hebrew"
+	{
+		OnHebrewCal(forfundate)
+		LOGGING("%funcalendarfun is the calendar fun immediately after the calendar get")
+		
+	}
+	elseif reference2 == "Jacobin"
+	{
+		
+		_return = OnJacobinMonths(forfundate[0],forfundate[1],forfundate[2])
+		
+		"%jour(_return)"
+		--
+		"\n\_q\![*]\q[Do another?,OnFunConvert,%(reference2)]       \![*]\q[I'm done,OnMenuRunPre]"
+	}
+	elseif reference2 == "moon phase"
+	{
+		_return = OnMoonphase(forfundate[0],forfundate[1],forfundate[2])
+		_return[0]
+	}
+}
+
+lookity
+{
+	_len = ARRAYSIZE(funcalendarfun)
+		
+	_a6 = ASEARCH('funnow.html',funcalendarfun)
+	_p6 = ASEARCH('funnext.html',funcalendarfun)
+		
+	_y = funcalendarfun[_a6+1]
+	_m = funcalendarfun[_a6+2]
+	_d = funcalendarfun[_a6+3]
+		
+	_y6 = funcalendarfun[_p6+1]
+	_m6 = funcalendarfun[_p6+2]
+	_d6 = funcalendarfun[_p6+3]
+	
+	--
+	
+	"\CBefore sunset: %_m %_d, %_y\n/
+	After sunset: %_m6 %_d6, %_y6\n"
+	--
+	"\n\_q\![*]\q[Do another?,OnFunConvert,Hebrew]       \![*]\q[I'm done,OnMenuRunPre]"
+}
+
+// unit conversions
+
+
+
+Select.tempconvmenu
+{
+	if ISVAR('starttemp') != 1; starttemp = IARRAY
+	if ISVAR('tempfigs') != 1; tempfigs = 0
+	
+	_zero = 0
+	_temparray = ("Celsius","Kelvin","Fahrenheit")
+	
+	_s0 = ""
+	_n0 = ""
+	_s1 = ""
+	_n1 = ""
+	
+	_degree = (" "," ")
+	if starttemp[0] != ""; {_zero = starttemp[0]}
+
+	if tempconversionarray[0] != "K"; {_degree[0] = "°"}
+	if tempconversionarray[1] != "K"; {_degree[1] = "°"}
+	
+	_len = ARRAYSIZE(_temparray)
+	_output = ""
+
+	"%(s0)\b2\_q%(tmo)Temperature: \f[bold,1]\q[%(ChopZero(_zero)),temptoconvert]\f[bold,0]%(_degree[0])%(tempconversionarray[0])     \f[bold,1]%(ChopZero(starttemp[1]))\f[bold,0]%(_degree[1])%(tempconversionarray[1])\n\n[half]\_l[3em]\f[bold,1]From:\_l[10em]To:\f[bold,0]\n"
+	--
+	for _var = 0; _var < _len; _var++
+	{
+		_unit = _temparray[_var]
+		_init = SUBSTR(_unit,0,1)
+		//LOGGING("===============================")
+		//LOGGING("the unit is %(_unit), the initial value is %(_init) and the array is %(tempconversionarray)")
+		//LOGGING("===============================")
+		if tempconversionarray[0] == _init
+		{
+			_s0 = "\_l[0.5em](x) \f[underline,1]"
+			_n0 = "\f[underline,0]"
+		}
+		else
+		{
+			_s0 = "\_l[2em]"
+			_n0 = ""
+		}
+		--
+		if tempconversionarray[1] == _init
+		{
+			_s1 = "\_l[8.5em](x) \f[underline,1]"
+			_n1 = "\f[underline,0]"
+		}
+		else
+		{
+			_s1 = "\_l[10em]"
+			_n1 = ""
+		}
+		--
+		_output += "%(_s0)\q[%(_unit),OnWhichTemp,0,%(_init)]%(_n0)%(_s1)\q[%(_unit),OnWhichTemp,1,%(_init)]%(_n1)\n"
+		--
+		
+	}
+	--
+	_output
+	--
+	"\n\![*]\q[Convert Another,unitselect]     \![*]\q[Cancel,Cancel]"
+}
+
+OnUnitToggle
+{
+	_cat = reference0
+	
+	_res = ASEARCH(_cat,unitarray)
+	
+	if _res == -1
+	{
+		unitarray ,= _cat
+	}
+	else
+	{
+		unitarray[_res] = IARRAY
+	}
+	--
+	Select.tempconvmenu
+}
+
+OnWhichTemp
+{
+	_ft = TOINT(reference0)
+	_which = SUBSTR(reference1,0,1)
+	LOGGING("%(_ft) and %(_which)")
+	
+	tempconversionarray[_ft] = _which
+	--
+	Select.convtemp
+}
+
+Select.temptoconvert
+{
+	"\![open,inputbox,OnStartTemp]"
+	--
+	Select.tempconvmenu
+}
+
+OnStartTemp
+{
+	LOGGING("arrived at onstarttemp==================")
+	if GETTYPE(reference0) != 1 && GETTYPE(reference0) != 2 || ((GETTYPE(reference0)) == 3 && (ISREALSTR(reference0) != 1))
+	{
+		LOGGING("is it arrived?====================")
+		LOGGING("type is %GETTYPE(reference0) and realable is %ISREALSTR(reference0)====================")
+		Select.temptoconvert
+	}
+	else
+	{
+		if GETTYPE(reference0) == 3 || GETTYPE(reference0) == 2
+		{
+			//take string, suss out sig figs
+			//no, i think there's a positional function in yaya
+			_avar = reference0
+			
+			if GETTYPE(reference0) == 2
+			//if real, convert to string
+			{
+				TOSTR(_avar)
+			}
+			if STRSTR(_avar,'.',0) != -1
+			//if there is a decimal within
+			{
+				_len = STRLEN(_avar)
+				_pos = STRSTR(_avar,'.',0)
+				//now we have the position of the decimal
+				//find how many slots from the end it is?
+				//simple subtraction of the total length minus _pos
+				tempfigs = _len-_pos
+			}
+			else
+			{
+				tempfigs = 0
+			}
+		}
+		else
+		//if int
+		{
+			tempfigs = 0
+			//zero sig figs
+		}
+		
+		LOGGING("can i set the variable?===================")
+		starttemp[0] = TOREAL(reference0)
+		Select.convtemp
+	}
+}
+
+Select.convtemp
+{
+	LOGGING("going to convert the temp now")
+	_from = tempconversionarray[0]
+	_to = tempconversionarray[1]
+	_init = starttemp[0]
+	LOGGING("we start from %(_from) and go to %(_to) and the initial temperature is %(_init)")
+	if _from == _to
+	{
+		LOGGING("the start and end temps are the same")
+		starttemp[1] = starttemp[0]
+	}
+	elseif _from == "F"
+	{
+		LOGGING("we are converting from fahrenheit")
+		_conc = ((_init-32)*5.0/9)
+		//check if initial value had a decimal/significant figures?
+		if _to == "K"
+		{
+			LOGGING("we are going to kelvin")
+			_conc += 273.15
+		}
+		starttemp[1] = _conc
+	}
+	else
+	{
+		_conc = _init
+		LOGGING("we are starting from either kelvin or celsius")
+		if _from == "K"
+		{
+			LOGGING("we are starting from kelvin")
+			_conc = _init - 273.15
+		}
+		elseif _to == "K"
+		{
+			LOGGING("we are going to kelvin (from celsius")
+			_conc = _init + 273.15
+		}
+		
+		if _to == "F"
+		{
+			LOGGING("we are going to fahrenheit")
+			_conc = ((_conc*9.0/5)+32)
+		}
+		starttemp[1] = _conc
+	}
+	LOGGING("%(starttemp) is the array")
+	--
+	Select.tempconvmenu
+	
+}
+
+Select.distconvmenu
+{
+	if ISVAR('startdist') != 1; startdist = IARRAY
+	if ISVAR('distfigs') != 1; distfigs = 0
+	
+	_zero = 0
+	_distarray = ("Feet","Kilometers","Meters","Miles")
+	_distabrv = ("ft","km","m","mi")
+	
+	_s0 = ""
+	_n0 = ""
+	_s1 = ""
+	_n1 = ""
+	
+	if startdist[0] != ""; {_zero = startdist[0]}
+	
+	_len = ARRAYSIZE(_distarray)
+	_output = ""
+	
+	"%(s0)\b2\_q%(tmo)Distance: \f[bold,1]\q[%(ChopZero(_zero)),disttoconvert]\f[bold,0] %(distconversionarray[0])     \f[bold,1]%(ChopZero(startdist[1]))\f[bold,0] %(distconversionarray[1])\n\n[half]\_l[3em]\f[bold,1]From:\_l[10em]To:\f[bold,0]\n"
+	--
+	for _var = 0; _var < _len; _var++
+	{
+		_unit = _distarray[_var]
+		_init = _distabrv[_var]
+		_metric = SUBSTR(_unit,-6,5)
+		//LOGGING("===============================")
+		//LOGGING("the unit is %(_unit), the initial value is %(_init) and the array is %(distconversionarray)")
+		//LOGGING("===============================")
+		if distconversionarray[0] == _init
+		{
+			_s0 = "\_l[0.5em](x) \f[underline,1]"
+			_n0 = "\f[underline,0]"
+		}
+		else
+		{
+			_s0 = "\_l[2em]"
+			_n0 = ""
+		}
+		--
+		if distconversionarray[1] == _init
+		{
+			_s1 = "\_l[8.5em](x) \f[underline,1]"
+			_n1 = "\f[underline,0]"
+		}
+		else
+		{
+			_s1 = "\_l[10em]"
+			_n1 = ""
+		}
+		--
+		_output += "%(_s0)\q[%(_unit),OnWhichDist,0,%(_init),%(_metric)]%(_n0)%(_s1)\q[%(_unit),OnWhichDist,1,%(_init),%(_metric)]%(_n1)\n"
+		--
+		
+	}
+	--
+	_output
+	--
+	"\n\![*]\q[Convert Another,unitselect]     \![*]\q[Cancel,Cancel]"
+}
+
+
+OnWhichDist
+{
+	_ft = TOINT(reference0)
+	_which = reference1
+	_metric = reference2
+	LOGGING("%(_ft) and %(_which)")
+	
+	distconversionarray[_ft] = _which
+	distconversionarray[_ft+2] = _metric
+	--
+	Select.convdist
+}
+
+Select.disttoconvert
+{
+	"\![open,inputbox,OnStartDist]"
+	--
+	Select.distconvmenu
+}
+
+OnStartDist
+{
+	LOGGING("arrived at onstartdist==================")
+	if GETTYPE(reference0) != 1 && GETTYPE(reference0) != 2 || ((GETTYPE(reference0)) == 3 && (ISREALSTR(reference0) != 1))
+	{
+		LOGGING("is it arrived?====================")
+		LOGGING("type is %GETTYPE(reference0) and realable is %ISREALSTR(reference0)====================")
+		Select.disttoconvert
+	}
+	else
+	{
+		if GETTYPE(reference0) == 3 || GETTYPE(reference0) == 2
+		{
+			//take string, suss out sig figs
+			//no, i think there's a positional function in yaya
+			_avar = reference0
+			
+			if GETTYPE(reference0) == 2
+			//if real, convert to string
+			{
+				TOSTR(_avar)
+			}
+			if STRSTR(_avar,'.',0) != -1
+			//if there is a decimal within
+			{
+				_len = STRLEN(_avar)
+				_pos = STRSTR(_avar,'.',0)
+				//now we have the position of the decimal
+				//find how many slots from the end it is?
+				//simple subtraction of the total length minus _pos
+				distfigs = _len-_pos
+			}
+			else
+			{
+				distfigs = 0
+			}
+		}
+		else
+		//if int
+		{
+			distfigs = 0
+			//zero sig figs
+		}
+		
+		LOGGING("can i set the variable?===================")
+		startdist[0] = TOREAL(reference0)
+		Select.convdist
+	}
+}
+
+Select.convdist
+{
+	_from = distconversionarray[0]
+	_to = distconversionarray[1]
+	_fmet = TOLOWER(distconversionarray[2])
+	_tmet = TOLOWER(distconversionarray[3])
+	
+	_init = startdist[0]
+	_conc = _init
+	
+	if _from == _to
+	{
+		startdist[1] = startdist[0]
+	}
+	elseif _fmet == _tmet
+	//metric to metric
+	{
+		if _from == "m"
+		{
+			if _to == "km"
+			{
+				_conc = _init/1000.0
+			}
+		}
+		elseif _from == "km"
+		{
+			if _to == "m"
+			{
+				_conc = _init*1000.0
+				
+			}
+		}
+		startdist[1] = _conc
+	}
+	elseif _fmet == "meter"
+	{
+		LOGGING("starting from metric")
+		//metric to imperial
+		if _from == "km"
+		{
+			//km to m
+			_conc = _init*1000
+		}
+		
+		//meters to feet, for all
+		_conc = _conc/0.3048
+		
+		if _to == "mi"
+		{
+			//convert feet to miles
+			_conc = _conc/5280.0
+		}
+		
+		startdist[1] = _conc
+	}
+	elseif _from == "ft"
+	{
+		LOGGING("starting from feet")
+		LOGGING("to %(_tmet)")
+		if _tmet == "meter"
+		{
+			LOGGING("feet to metric")
+			//from feet to meters
+			_conc = 0.3048*_init
+			
+			if _to == "km"
+			{
+				//if to kilometers, actually
+				_conc /= 1000.0
+			}
+		}
+		elseif _to == "mi"
+		{
+			//from feet to miles
+			_conc = _init/5280.0
+		}
+		startdist[1] = _conc
+	}
+	elseif _from == "mi"
+	{
+		LOGGING("starting from miles")
+		//miles to feet
+		_conc = _init*5280
+		LOGGING("%(_conc) after miles to feet")
+		if _tmet == "meter"
+		{
+			LOGGING("feet to metric")
+			//meters to feet
+			_conc = _conc*0.3048
+			LOGGING("%(_conc) after feet to metric")
+			
+			if _to == "km"
+			{
+				//meters to km
+				_conc = _conc/1000.0
+			}
+		}
+		startdist[1] = _conc
+	}
+	--
+	Select.distconvmenu
+}
+
+
+Select.massconvmenu
+{
+	if ISVAR('startmass') != 1; startmass = IARRAY
+	if ISVAR('massfigs') != 1; massfigs = 0
+	
+	_zero = 0
+	_massarray = ("Grams","Kilograms","Ounces","Pounds")
+	_massabrv = ("g","kg","oz","lb")
+	
+	_s0 = ""
+	_n0 = ""
+	_s1 = ""
+	_n1 = ""
+	
+	if startmass[0] != ""; {_zero = startmass[0]}
+	
+	_len = ARRAYSIZE(_massarray)
+	_output = ""
+	
+	"%(s0)\b2\_q%(tmo)Mass/Weight: \f[bold,1]\q[%(ChopZero(_zero)),masstoconvert]\f[bold,0] %(massconversionarray[0])     \f[bold,1]%(ChopZero(startmass[1])) \f[bold,0]%(massconversionarray[1])\n\n[half]\_l[3em]\f[bold,1]From:\_l[10em]To:\f[bold,0]\n"
+	--
+	for _var = 0; _var < _len; _var++
+	{
+		_unit = _massarray[_var]
+		_init = _massabrv[_var]
+		_metric = SUBSTR(_unit,-5,4)
+		//LOGGING("===============================")
+		//LOGGING("the unit is %(_unit), the initial value is %(_init) and the array is %(distconversionarray)")
+		//LOGGING("===============================")
+		if massconversionarray[0] == _init
+		{
+			_s0 = "\_l[0.5em](x) \f[underline,1]"
+			_n0 = "\f[underline,0]"
+		}
+		else
+		{
+			_s0 = "\_l[2em]"
+			_n0 = ""
+		}
+		--
+		if massconversionarray[1] == _init
+		{
+			_s1 = "\_l[8.5em](x) \f[underline,1]"
+			_n1 = "\f[underline,0]"
+		}
+		else
+		{
+			_s1 = "\_l[10em]"
+			_n1 = ""
+		}
+		--
+		_output += "%(_s0)\q[%(_unit),OnWhichMass,0,%(_init),%(_metric)]%(_n0)%(_s1)\q[%(_unit),OnWhichMass,1,%(_init),%(_metric)]%(_n1)\n"
+		--
+		
+	}
+	--
+	_output
+	--
+	"\n\![*]\q[Convert Another,unitselect]     \![*]\q[Cancel,Cancel]"
+}
+
+
+OnWhichMass
+{
+	_ft = TOINT(reference0)
+	_which = reference1
+	_metric = reference2
+	LOGGING("%(_ft) and %(_which)")
+	
+	massconversionarray[_ft] = _which
+	massconversionarray[_ft+2] = _metric
+	--
+	Select.convmass
+}
+
+Select.masstoconvert
+{
+	"\![open,inputbox,OnStartMass]"
+	--
+	Select.massconvmenu
+}
+
+OnStartMass
+{
+	LOGGING("arrived at onstartmass==================")
+	if GETTYPE(reference0) != 1 && GETTYPE(reference0) != 2 || ((GETTYPE(reference0)) == 3 && (ISREALSTR(reference0) != 1))
+	{
+		LOGGING("is it arrived?====================")
+		LOGGING("type is %GETTYPE(reference0) and realable is %ISREALSTR(reference0)====================")
+		Select.masstoconvert
+	}
+	else
+	{
+		if GETTYPE(reference0) == 3 || GETTYPE(reference0) == 2
+		{
+			//take string, suss out sig figs
+			//no, i think there's a positional function in yaya
+			_avar = reference0
+			
+			if GETTYPE(reference0) == 2
+			//if real, convert to string
+			{
+				TOSTR(_avar)
+			}
+			if STRSTR(_avar,'.',0) != -1
+			//if there is a decimal within
+			{
+				_len = STRLEN(_avar)
+				_pos = STRSTR(_avar,'.',0)
+				//now we have the position of the decimal
+				//find how many slots from the end it is?
+				//simple subtraction of the total length minus _pos
+				massfigs = _len-_pos
+			}
+			else
+			{
+				massfigs = 0
+			}
+		}
+		else
+		//if int
+		{
+			massfigs = 0
+			//zero sig figs
+		}
+		
+		LOGGING("can i set the variable?===================")
+		startmass[0] = TOREAL(reference0)
+		Select.convmass
+	}
+}
+
+Select.convmass
+{
+	_from = massconversionarray[0]
+	_to = massconversionarray[1]
+	_fmet = TOLOWER(massconversionarray[2])
+	_tmet = TOLOWER(massconversionarray[3])
+	
+	_init = startmass[0]
+	_conc = _init
+	
+	if _from == _to
+	{
+		startmass[1] = startmass[0]
+	}
+	elseif _fmet == _tmet
+	//metric to metric
+	{
+		if _from == "g"
+		{
+			if _to == "kg"
+			{
+				_conc = _init/1000.0
+			}
+		}
+		elseif _from == "kg"
+		{
+			if _to == "g"
+			{
+				_conc = _init*1000.0
+				
+			}
+		}
+		startmass[1] = _conc
+	}
+	elseif _fmet == "gram"
+	{
+		//metric to imperial
+
+		//km to gram
+		if _from == "kg"
+		{
+			_conc = _init*1000
+		}
+		
+		//gram to oz
+		_conc = _conc/28.34952
+		
+		if _to == "lb"
+		{
+			_conc = _conc/16.0
+		}
+		
+		startmass[1] = _conc
+	}
+	elseif _from == "oz"
+	{
+		if _tmet == "gram"
+		{
+			//oz to gram
+			_conc = _init*28.34952
+			
+			if _to == "kg"
+			{
+				_conc = _conc/1000.0
+			}
+		}
+		elseif _to == "lb"
+		{
+			_conc = _init/16.0
+		}
+		startmass[1] = _conc
+	}
+	elseif _from == "lb"
+	{
+		//lb to oz
+		_conc = _init*16
+		
+		if _tmet == "gram"
+		{
+			//oz to gram
+			_conc = _conc*28.34952
+			if _to == "kg"
+			{
+				//gram to kg
+				_conc = _conc/1000.0
+			}
+		}
+		startmass[1] = _conc
+	}
+	--
+	Select.massconvmenu
+}
+
+OnExecuteHTTPComplete
+{
+	"\b2 the link worked\n\n%(reference)"
+}
+
+OnExecuteHTTPFailure 
+{
+	"\b2 the link failed\n\n %(reference)"
+}

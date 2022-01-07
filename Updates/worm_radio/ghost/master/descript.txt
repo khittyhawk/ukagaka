@@ -19,6 +19,6 @@ seriko.defaultsurfacedirectoryname,Radio
 
 //http://www.convertico.com/ is handy for making .icos
 icon,rtower.ico
-//icon.minimize,filename.ico
+icon.minimize,rtowerc.ico
 balloon,broadcast
 recommended.balloon,broadcast //Recommended balloon name. If you try to switch to anything else, you will get a strong warning.

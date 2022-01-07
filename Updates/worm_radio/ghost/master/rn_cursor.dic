@@ -26,6 +26,14 @@ OnMouseClick
 			"%(k0)"
 		}
 	}
+	elseif reference4 == "L Button"
+	{
+		"\1\![bind,unit circle,,0]"
+	}
+	elseif reference4 == "R Button" && unitcircleactive[0] == 1
+	{
+		OnChangeColors
+	}
 }
 
 
@@ -48,6 +56,13 @@ OnMouseDoubleClick
 
 MouseDoubleClickSakura
 {
+	if reference4 == "Button1"
+	{
+		spamon = 0
+		--
+		"s0"
+	}
+	--
 	OpenSakuraMenu
 }
 
@@ -57,7 +72,23 @@ MouseDoubleClickKero
 	--
 	if SHIORI3FW.ShellName == "Radio"
 	{
-		"-bzzt-"
+		if unitcircleactive[1] == 1
+		{
+			OnChooseCircle
+		}
+		else
+		{
+			_output = ""
+			"\b2-bzzt-\n\n"
+			--
+			for _var = 0; _var < ARRAYSIZE(veg); _var++
+			{
+				_veg = veg[_var]
+				_output += "\_b[\Dev_Tools\Jnums\%(_veg).png,inline,option=use_self_alpha]"
+			}
+			--
+			_output
+		}
 		
 	}
 	elseif SHIORI3FW.ShellName == "Ship"
@@ -150,8 +181,9 @@ OnMouseDragStart
 {
     if reference3 == 0
 	{
+		//might be able to make the sail flow in relation to the direction of the mouse, as per reference2
+		//could also do something with x and y coordinates (references 0 and 1)
 		_b = BalloonCheck
-     
 		if _b == 1
 		{
 		   "\C%(s0)"
@@ -181,9 +213,9 @@ OnMouseDragStart
 OnMouseDragEnd
 // (＾＾)ｂ Inbuilt!
 {
+	LOGGING("the mouse is dragging===============")
 	if reference3 == 0
 	{
-		"%(s0)\![get,property,OnMe,currentghost.scope(0).rect]"
 		_b = BalloonCheck
      
 		if _b == 1
@@ -195,10 +227,11 @@ OnMouseDragEnd
 		{
 		   "%(s0)"
 		}
+		--
+		"\![get,property,OnMe,currentghost.scope(0).rect]"
 	}
 	elseif reference3 == 1
 	{
-		"%(k0)\![get,property,OnMe2,currentghost.scope(1).rect]"
 		_b = BalloonCheck
      
 		if _b == 1
@@ -210,6 +243,8 @@ OnMouseDragEnd
 		{
 		   "%(k0)"
 		}
+		--
+		"\![get,property,OnMe,currentghost.scope(0).rect]"
 	}
 }
 
@@ -273,7 +308,17 @@ OnMouseLeaveAll
 OneWingedAngle
 {
 	//LOGGING("%x_cursor,%y_cursor")
-	stopfunction = 0
+	_type = reference0
+	if _type == "wiggle"
+	{
+		stopfunction = 0
+	}
+	elseif _type == "follow"
+	{
+		stopfollow = 0
+		seetime = 0
+	}
+	--
 	"\![get,property,OnWhereRU,system.cursor.pos]"
 }
 
@@ -288,6 +333,10 @@ OnWhereRU
 	if stopfunction == 0
 	{
 		OnAngleBetween
+	}
+	elseif stopfollow == 0
+	{
+		OnRadAngle
 	}
 }
 
@@ -334,9 +383,9 @@ OnMe2
 OnAngleBetween
 {
 	quadrant = ""
-	x_distance = (x_cursor-dialme2[0])
-	y_distance = (y_cursor-dialme2[1])
-	h_distance = SQRT(POW(x_distance,2)+POW(y_distance,2))
+	x_distance = (x_cursor-dialme2[0]) //distance between the cursor and the dial in the x direction
+	y_distance = (y_cursor-dialme2[1]) //distance between the cursor and the dial in the y direction
+	h_distance = SQRT(POW(x_distance,2)+POW(y_distance,2)) //the hypotenuse, or the straight line distance between the cursor and the dial
 	
 	slope = (y_distance/x_distance)
 	remaining = slope/(pi/2)
@@ -411,6 +460,260 @@ OnAngleBetween
 	}			  
 	//"%(k0)%(x_distance),%(y_distance), %quadrant"
 	//now how do i make the ghost respond to the cursor :thonking:
-
 }
 
+radarray
+{
+	_radarray = (0,0.523590,0.785397,1.047197,1.570795,1.570795,2.094393,2.356192,2.617992,3.14159,3.665188,3.926988,4.188787,4.712385,5.497782,5.759582,6.203180)
+	
+	//0.261795,1.178084,1.701694,2.356193,3.141590,3.403389,4.319686,4.843284,5.497783,6.544979,7.461276,7.984875,8.639373,9.817469,11.126464,11.740963
+	//0.261795,0.654494,0.916297,1.308996,1.570795,1.832594,2.225293,2.487092,2.879791,3.403389,3.796088,4.057887,4.450586,5.105084,5.628682,5.981381
+	
+	_midangles = IARRAY
+	
+	for _val = 0; _val < (ARRAYSIZE(_radarray)-1); _val++
+	{
+		_rad1 = _radarray[_val]
+		_rad2 = _radarray[_val+1]
+		
+		_radmid = (_rad1+_rad2)/2
+		
+		_midangles ,= _radmid
+		
+	}
+	--
+	LOGGING(_midangles)
+	LOGGING(ARRAYSIZE(_midangles))
+}
+
+
+OnRadAngle
+{	
+	x_distance = TOREAL(x_cursor-dialme2[0]) 
+	y_distance = TOREAL(y_cursor-dialme2[1]) 
+	h_distance = SQRT(POW(x_distance,2)+POW(y_distance,2))
+
+	slope = (y_distance/x_distance)
+	
+	angle = ATAN(slope)
+	LOGGING("the x is %(x_distance) and the y is %(y_distance)")
+	LOGGING("the slope is %slope and the angle is %angle")
+
+	//"%(k0)The cursor is at (%(x_cursor),%(y_cursor))\n/
+	//My dial is at (%(dialme2[0]),%(dialme2[1]))\n/
+	//The distance between us is %(h_distance)\n/
+	//that is, at %(x_distance) run and %(y_distance) rise\n/
+	//This makes the slope %(slope) and the angle would thus be %(angle)/
+	"\1\s[10]"
+	--
+	_abs = SQRT(POW(angle,2))
+	LOGGING("the absolute value is %(_abs)")
+	if (x_distance <= 0) && (y_distance < 0)
+	//-x,-y
+	{
+		if (x_distance == 0)
+		{
+			nearesttheta = "n"
+		}
+		else
+		{
+			LOGGING("I am in quadrant 2=================")
+			"\i"
+			--
+			quadrant = 2
+			case _abs
+			{
+				//64 = pi        3.14159
+				//63 = 5pi/6     2.617992
+				//   = 3pi/4 (//70,72,76)    2.356192
+				//62 = 2pi/3     2.094393
+				//61 = pi/2      1.570795
+				when 0-0.261795
+				{
+					"[39]"
+				}
+				when 0.261795-0.654494
+				{
+					//nearesttheta = 62
+					"[38]"
+				}
+				when 0.654494-0.916297
+				{
+					//nearesttheta = 70,72,76
+					"[37]"
+				}
+				when 0.916297-1.308996
+				{
+					//nearesttheta = 63
+					"[36]"
+				}
+				when 1.308996-1.570795
+				{
+					//nearesttheta = 64
+					"[35]"
+				}
+			}
+		}
+	}
+	elseif (x_distance > 0) && (y_distance <= 0)
+	//+x,-y
+	{
+		LOGGING("I am in quadrant 1=================")
+		if (y_distance == 0)
+		{
+			nearesttheta = "e"
+		}
+		else
+		{
+			"\i"
+			--
+			quadrant = 1
+			case _abs
+			{
+				//61 = pi/2      1.570795
+				//60 = pi/3      1.047197
+				//77 = pi/4      0.785397
+				//75 = pi/6      0.523590
+				//74 = 0 | 2pi   0 | 6.203180
+				when 0-0.261795
+				{
+					//nearesttheta = 74
+					"[51]"
+				}
+				when 0.261795-0.654494
+				{
+					//nearesttheta = 75
+					"[31]"
+				}
+				when 0.654494-0.916297
+				{
+					//nearesttheta = 77
+					"[33]"
+				}
+				when 0.916297-1.308996
+				{
+					//nearesttheta = 60
+					"[34]"
+				}
+				when 1.308996-1.570795
+				{
+					//nearesttheta = 61
+					"[35]"
+				}
+			}
+		}
+	}
+	elseif (x_distance >= 0) && (y_distance > 0)
+	//+x,+y
+	{
+		LOGGING("I am in quadrant 4=================")
+		if (x_distance == 0)
+		{
+			nearesttheta = "n"
+		}
+		else
+		{
+			"\i"
+			--
+			quadrant = 4
+			case _abs
+			{
+				//74 = 0 | 2pi   0 | 6.203180
+				//73 = 11pi/6    5.759582
+				//71 = 7pi/4     5.497782
+				//68-69 = 3pi/2  4.712385
+				when 0-0.261795
+				{
+					//nearesttheta = 68,69
+					"[51]"
+				}
+				when 0.261795-0.654494
+				{
+					//nearesttheta = 68,69
+					"[50]"
+				}
+				when 0.654494-0.916297
+				{
+					//nearesttheta = 71
+					"[48]"
+				}
+				when 0.916297-1.308996
+				{
+					//nearesttheta = 73
+					"[47]"
+				}
+				when 1.308996-1.570795
+				{
+					"[44]"
+				}
+			}
+		}
+	}
+	elseif (x_distance < 0) && (y_distance >= 0)
+	//-x,+y
+	{
+		LOGGING("I am in quadrant 3=================")
+		if (x_distance == 0)
+		{
+			quadrant = "w"
+		}
+		else
+		{
+			"\i"
+			--
+			quadrant = 3
+			case _abs
+			{
+				//68-69 = 3pi/2  4.712385
+				//67 = 4pi/3     4.188787
+				//66 = 5pi/4     3.926988
+				//65 = 7pi/6     3.665188
+				//64 = pi        3.14159
+				
+				when 0-0.261795
+				{
+					//nearesttheta = 64
+					"[39]"
+				}
+				when 0.261795-0.654494
+				{
+					//nearesttheta = 65
+					"[40]"
+				}
+				when 0.654494-0.916297
+				{
+					//nearesttheta = 66
+					"[41]"
+				}
+				when 0.916297-1.308996
+				{
+					//nearesttheta = 67
+					"[42]"
+				}
+				when 1.308996-1.570795
+				{
+					//nearesttheta = 68,69
+					"[44]"
+				}
+			}
+		}
+	}
+	else
+	//if both are 0, the cursor's on the dot
+	{
+		nearesttheta = "c"
+	}
+	--
+	"\C\1\b2\tthe %x_distance and %y_distance indicates its quadrant is %quadrant\nthe location of the cursor is (%x_cursor,%y_cursor)\nthe location of the dial is %(dialme2)\nthe slope is %(slope), which makes the angle %angle\w8\w8\x[noclear]"
+	--
+	_b = BalloonCheck
+	
+	if _b == 1
+	{
+		"\C"
+	}
+	else
+	{
+		""
+	}	
+}

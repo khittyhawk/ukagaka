@@ -1,0 +1,335 @@
+OnTodo
+{
+	TodoMenu
+}
+
+TodoMenu
+{
+	"\b2\_q%(tmo)%(noscroll)\f[align,center]\f[underline,1]To Do\f[underline,0]\n\n"
+	--
+	if ARRAYSIZE(doitdoitdoit) < 1; {doitdoitdoit = IARRAY}
+	if ARRAYSIZE(completeditems) < 1; {completeditems = IARRAY}
+	if ARRAYSIZE(submenulist) < 1; {submenulist = IARRAY}
+	
+	_subscomp = 0.0
+	_subsall = 0
+	
+	_len = ARRAYSIZE(doitdoitdoit)
+	_output = ""
+	--
+	"\f[align,left]"
+	--
+	if _len <1
+	{
+		"There's nothing here!\n"
+	}
+	else
+	{
+		for _val = 0; _val < (_len); _val++
+		{
+			_it = doitdoitdoit[_val]
+			_ex = "(x)"
+			_sm = "(Submenu?)"
+			
+			
+			
+			if ASEARCH(_it,submenulist) != -1
+			//if the item is a submenu
+			{
+				//find out how many items it has as a submenu, then find out how many completed items it has as a submenu
+				
+				_subitemspos = ASEARCH(_it,submenulist)
+				
+				_subitems = SPLIT(submenulists[_subitemspos],';')
+				_amntsubitems = (ARRAYSIZE(_subitems))-1
+				//how many items^
+				
+				
+				_thissubdone = 0
+				for _el = 0; _el < ARRAYSIZE(sub_done); _el++
+				{
+					if SPLIT(sub_done[_el],';')[0] == _it
+					{
+						_thissubdone += 1
+					}
+				}
+				
+				if ASEARCH(_it,completeditems) != -1
+				//if the item is in the completed list
+				{
+					_output += "\![*]\f[strike,1]\q[%(_it),OnXToggle,%(_it),_hoverme]\f[strike,0]\_l[13em]\f[height,80%](%(_thissubdone)/%(_amntsubitems))\f[height,default]   \_l[16em]\q[%(_ex),OnRemoveItems,%(_it),_hoverme,Remove this item from the list entirely?,comp]\n"
+				}
+				else
+				//otherwise, it is thus pending
+				{
+					_output += "\![*]\q[%(_it),OnOpenSub,%(_it)]\_l[13em]\f[height,80%](%(_thissubdone)/%(_amntsubitems))\f[height,default]   \_l[16em]\q[%(_ex),OnRemoveItems,%(_it),_hoverme,Remove this item from the list entirely?,pend]\n"
+				}
+				_subscomp += _thissubdone
+				_subsall += _amntsubitems
+			}
+			else
+			//if it is not a submenu
+			{
+				if ASEARCH(_it,completeditems) != -1
+				//if the item is in the completed list
+				{
+					_output += "\![*]\f[strike,1]\q[%(_it),OnXToggle,%(_it),_hoverme]\f[strike,0]\_l[16em]\q[%(_ex),OnRemoveItems,%(_it),_hoverme,Remove this item from the list entirely?,comp]\n\_l[2.5em]\f[sup,1]\f[height,+2]\q[%(_sm),OnSubmenu,%(_it),_hoverme,Make this a submenu?]\f[default]\n"
+				}
+				else
+				//otherwise, it is thus pending
+				{
+					_output += "\![*]\q[%(_it),OnXToggle,%(_it)]\_l[16em]\q[%(_ex),OnRemoveItems,%(_it),_hoverme,Remove this item from the list entirely?,pend]\n\_l[2.5em]\f[sup,1]\f[height,+2]\q[%(_sm),OnSubmenu,%(_it),_hoverme,Make this a submenu?]\f[default]\n"
+				}
+				
+			}
+		}
+		_output
+		
+	}
+	--
+	"\f[align,center]\n\n[half]"
+	--
+	if _len >= 1
+	{
+		_donenum = ARRAYSIZE(completeditems)+0.0
+		_percmain = TOINT((_donenum/_len)*100)
+
+		
+		"%(_percmain)% Completed\n"
+		--
+		if ARRAYSIZE(submenulist) > 0
+		{
+			_miniperc = TOINT((_subscomp/_subsall)*100)
+			"\f[height,80%](%(_miniperc)% of all %(_subsall) items)\f[height,default]"
+		}
+		--
+		"\n\n[half]"
+	}
+	--
+	"\q[Add item?,additem]\n/
+	\![*]\q[Return to Tools,funstuff]        \![*]\q[Cancel,Cancel]\e"
+}
+
+Select.additem
+{
+	"\![open,inputbox,OnMakeDo,-1]"
+	--
+	TodoMenu
+}
+
+OnMakeDo
+{
+	_newitem = reference0
+	doitdoitdoit ,= _newitem
+	--
+	pendingitems ,= _newitem
+	--
+	TodoMenu
+}
+
+
+OnXToggle
+{
+	if ASEARCH(reference0,pendingitems) != -1
+	//if the item is pending, we mark it as completed
+	{
+		_pos = ASEARCH(reference0,pendingitems)
+		pendingitems[_pos] = IARRAY
+		completeditems ,= reference0
+	}
+	else
+	//otherwise, add the item back to pending!
+	{
+		if ASEARCH(reference0,completeditems) != -1
+		{
+			_pos = ASEARCH(reference0,completeditems)
+			completeditems[_pos] = IARRAY
+		}
+		--
+		pendingitems = (pendingitems,reference0)
+	}
+	--
+	TodoMenu
+}
+
+
+OnRemoveItems
+{
+	_removable = reference0
+	_pos = ASEARCH(_removable,doitdoitdoit)
+	doitdoitdoit[_pos] = IARRAY
+	if reference5 == "pend"
+	{
+		_pos1 = ASEARCH(_removable,pendingitems)
+		pendingitems[_pos1] = IARRAY
+	}
+	elseif reference5 == "comp"
+	{
+		_pos1 = ASEARCH(_removable,completeditems)
+		completeditems[_pos1] = IARRAY
+	}
+	--
+	TodoMenu
+}
+
+
+//-----------------------------
+//Submenus
+//-----------------------------
+
+
+OnSubmenu
+//this turns a list item into a submenu
+{
+	_menuize = reference0
+	if ISVAR('sub_done') != 1; {sub_done = IARRAY}
+	
+	
+	LOGGING("i have added %_menuize to a submenu==========")
+	LOGGING("its type is %GETTYPE(_menuize)==========")
+	
+	submenulist ,= _menuize //an array of all the list items that are submenus
+	submenulists ,= _menuize //this will be for the submenu items to add
+
+	--
+	"\![raise,OnOpenSub,%(_menuize)]"
+}
+
+OnOpenSub
+//this opens a submenu
+{
+	_header = reference0
+	LOGGING("this is the name of the submenu list item: %_header")
+	"\b2%(noscroll)\_q\n[half]\f[align,center]%(tmo)%_header\n\n\f[align,left]"
+	//the name of the menu item is what the header will be
+	
+	_loc = ASEARCH(_header,submenulist)
+	
+	_ex = "x"
+	
+	_itemlist = SPLIT(submenulists[_loc],';')
+	_len = ARRAYSIZE(_itemlist)
+	_complen = 0.0
+	--
+	if _len == 1
+	{
+		"There's nothing here!\n"
+	}
+	else
+	{
+		_output = ""
+		for _var = 1; _var < _len; _var++
+		{
+			_sub = _itemlist[_var]
+			_combo = _header+';'+_sub
+			if ASEARCH(_combo,sub_done) == -1
+			//if it's not completed
+			{
+				_output += "\q[%(_sub),OnSubComplete,%(_sub),%(_header)]\_l[15em]\q[%(_ex),OnRemoveSub,%(_sub),_hoverme,Remove this item from the list?,%(_header)]\n"
+			}
+			else
+			//if it is completed
+			{
+				_output += "\f[strike,1]\q[%(_sub),OnSubComplete,%(_sub),%(_header)]\f[strike,0]\_l[15em]\q[%(_ex),OnRemoveSub,%(_sub),_hoverme,Remove this item from the list?,%(_header)]\n"
+				_complen += 1
+			}
+		}
+		_output
+	}
+	--
+	"\n\n[half]\f[align,center]"
+	--
+	_perc = TOINT((_complen/(_len-1))*100)
+	
+	"%(_perc)% complete\n\n[half]/
+	\q[Add item?,OnToSub,%(_header)]\n/
+	\![*]\q[Return to Todo List?,OnTodo]       \![*]\q[Cancel,Cancel]"
+	
+}
+
+
+//-----------------------------
+//Submenu Functions
+//-----------------------------
+
+
+
+OnToSub
+{
+	LOGGING("these are the references when adding an item %reference")
+	LOGGING("===============================")
+	_whichsub = reference0
+	"\![open,inputbox,OnAddSub,-1,--reference=%_whichsub]"
+	--
+	"\![raise,OnOpenSub,%(_whichsub)]"
+}
+
+OnAddSub
+//adding a list item to a submenu
+{
+	//so we'll need to know the contents of the new item and to which submenu item to attach it to
+	_newitem = reference0
+	_whichsub = reference2
+
+	//if submenulist is a multi-dimensional array, we can append all new items to the latter part
+	_submenupos = ASEARCH(_whichsub,submenulist)
+	
+	//now we add the new item to the submenu's nested array
+	submenulists[_submenupos] += ";"+_newitem
+	
+	--
+	"\![raise,OnOpenSub,%(_whichsub)]"
+}
+
+OnSubComplete
+{
+	_doneitem = reference0
+	_where = reference1
+	
+	_collection = _where+';'+_doneitem
+	
+	if ASEARCH(_collection,sub_done) != -1
+	//if it already exists
+	{
+		//remove it from completed
+		_loc = ASEARCH(_collection,sub_done)
+		sub_done[_loc] = IARRAY
+	}
+	else
+	//if it doesn't already exist in sub_done array
+	{
+		//add it
+		sub_done ,= _collection
+	}
+	--
+	"\![raise,OnOpenSub,%(_where)]"
+}
+
+
+OnRemoveSub
+{
+	_doneitem = reference0
+	_where = reference3
+	LOGGING("%reference3 =============================")
+	LOGGING("=========================================")
+	
+	_collection = _where+';'+_doneitem
+	
+	if ASEARCH(_collection,sub_done) != -1
+	//if it is completed
+	{
+		//remove it from completed
+		_loc = ASEARCH(_collection,sub_done)
+		sub_done[_loc] = IARRAY
+	}
+	--
+	//it will already exist in submenulists unless something's gone wrong, so...
+	//first find the main category, then remove within it
+	_pos = ASEARCH(_where,submenulist)
+	_withsemi = ";"+_doneitem
+	submenulists[_pos] = REPLACE(submenulists[_pos],_withsemi,'')
+	LOGGING("the item %(_doneitem) has been modified from %(_where)======")
+	--
+	"\![raise,OnOpenSub,%(_where)]"
+	
+}

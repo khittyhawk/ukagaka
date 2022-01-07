@@ -25,7 +25,7 @@
 list of shortcuts:
 -%tmo prevents balloon timeout (until the balloon is clicked)
 -%(Capitalize(envelope)) makes the first letter a capitalized
--
+-%(noscroll) disables autoscrolling to the bottom
 
 
 */
@@ -42,11 +42,8 @@ OnTranslate
 	if washurmouth == "Fuck yes"
 	{
 		_cens = ""
-		if SHIORI3FW.ShellName == "Ship"
-		{
-			_cens = ""
-		}
-		elseif SHIORI3FW.ShellName == "Radio"
+
+		if SHIORI3FW.BalloonName == "broadcast"
 		{
 			_cens = "0"
 		}
@@ -69,8 +66,17 @@ OnTranslate
 		}
 	}
 	--
+	
+	_thismoon = moonmoon[0]
 	_talk = REPLACE(_talk, " reload", " \_a[OnRefresh]reload\_a")
 	_talk = REPLACE(_talk, "online_mode", "\_a[plusline]Online Mode\_a")
+	_talk = REPLACE(_talk, "a_moon","\_b[\Dev_Tools\moon\%(_thismoon).png,inline,--option=use_self_alpha]")
+	
+	_talk = REPLACE(_talk, "dial_g","\_b[\Dev_Tools\dials\green_dial.png,inline,--option=use_self_alpha]")
+	_talk = REPLACE(_talk, "dial_b","\_b[\Dev_Tools\dials\blue_dial.png,inline,--option=use_self_alpha]")
+	_talk = REPLACE(_talk, "dial_r","\_b[\Dev_Tools\dials\red_dial.png,inline,--option=use_self_alpha]")
+	_talk = REPLACE(_talk, "dial_o","\_b[\Dev_Tools\dials\orange_dial.png,inline,--option=use_self_alpha]")
+	
 	
 	_hnum = ""
 	if hour >= 18
@@ -81,8 +87,14 @@ OnTranslate
 	{
 		_hnum = hday
 	}
+	
 	_talk = REPLACE(_talk,"num_aleph","\_b[\Dev_Tools\Hnums\%(_hnum)w.png,inline]")
 	_talk = REPLACE(_talk,"temp_veg","\_b[\Dev_Tools\Jnums\%(veg).png,inline,option=use_self_alpha]")
+	--
+	//check a random number of characters (between 6 and 10?). If no apostrophes, slashes, or parentheses, give it a small chance to be replaced with bzzt?
+	
+	//what about replacing \ with (whatever code can call the dragging surface)\?
+	
 	
 	//---Important other stuff, written by Ponapalt---
 	if reference1 == "" && reference2 == ""
@@ -117,10 +129,17 @@ OnAnchorSelect
 	}
 }
 
+
+//useful shortcuts
 //no timeout
 tmo
 {
 	"\![set,balloontimeout,-1]"
+}
+
+noscroll
+{
+	"\![set,autoscroll,disable]"
 }
 
 i
@@ -132,6 +151,62 @@ i0
 {
 	"\f[italic,0]"
 }
+
+speed
+{
+	"\![set,balloonwait,%(_argv[0])]"
+}
+
+//ellipses of different wait times...
+lps
+{
+	".\w%(_argv[0]).\w%(_argv[0]).\w%(_argv[0])"
+}
+
+
+
+//If you write all your envelopes as lowercase, you can send them through this function whenever you need the first letter capitalized! It'd look something like this: "%(Capitalize(exampleenvelope))"
+Capitalize
+{
+	_word = _argv[0] //Sets _word to the word the user sent
+	_buffer = SUBSTR(_word,0,1) //Storing the first character in _buffer
+	_word = ERASE(_word,0,1) //Erasing the first character from _word
+	_word = INSERT(_word,0,TOUPPER(_buffer)) //Making the character in _buffer uppercase and inserting it back into _word
+	_word //Returns the capitalized word
+}
+
+
+Ord
+{
+	_number = TOSTR(_argv[0])
+	_ones = (_number%10)
+	_tens = (_number/10)
+	
+	if _tens == 1 || _ones > 3
+	{
+		_number = _number+'th'
+	}
+	elseif _ones == 3
+	{
+		_number = _number+'rd'
+	}
+	elseif _ones == 2
+	{
+		_number = _number+'nd'
+	}
+	elseif _ones == 1
+	{
+		_number = _number+'st'
+	}
+	else
+	{
+		_number = _number+'th'
+	}
+	
+	_number
+}
+
+
 
 a0
 {
@@ -201,18 +276,9 @@ s0
 	}
 	elseif SHIORI3FW.ShellName == "Radio"
 	{
-
-		if speakeris == 1
+		if spamon == 1
 		{
 			"\0\s[1]"
-		}
-		elseif speakeris == 2
-		{
-			"\0\s[2]"
-		}
-		elseif speakeris == 3
-		{
-			"\0\s[3]"
 		}
 		else
 		{
@@ -229,11 +295,16 @@ k0
 		_b = BalloonCheck
 		if _b == 0 && stopfunction == 0
 		{
-			"\![raise,OneWingedAngle]"
+			"\![raise,OneWingedAngle,wiggle]"
+		}
+		elseif _b == 0 && stopfollow == 0
+		{
+			"\![raise,OneWingedAngle,follow]"
 		}
 		else
 		{
 			quadrant = "none"
+			nearesttheta = "none"
 		}
 		--
 		case quadrant
@@ -281,6 +352,11 @@ k0
 				"\1\s[10]"
 			}
 		}
+		--
+		case nearesttheta
+		{
+			//
+		}
 	}
 	else
 	{
@@ -288,97 +364,12 @@ k0
 	}
 }
 
-pi
-{
-	3.14159
-}
-
-
 //   ____ __  __ __ __  ____ __      ___   ____   ____  __ 
 //  ||    ||\ || || || ||    ||     // \\  || \\ ||    (( \
 //  ||==  ||\\|| \\ // ||==  ||    ((   )) ||_// ||==   \\ 
 //  ||___ || \||  \V/  ||___ ||__|  \\_//  ||    ||___ \_))
 //                                                         
 
-billdoor
-{
-	"It crumbled"
-	"It was dust"
-	"I can see nothing of what has been engulfed"
-	"What we all will be"
-	"It breaks like chalk in my mouth"
-	"Atoms\w8\w8%(lps6) Particulates\w8\w8%(lps6) Bits\w6 and bits\w6 and%(lps6)"
-}
-
-lps4
-{
-	".\w4.\w4.\w4"
-}
-
-lps6
-{
-	".\w6.\w6.\w6"
-}
-
-lps8
-{
-	".\w8.\w8.\w8"
-}
-
-spooptime
-{
-	"midnight"
-	"daybreak"
-	"twilight"
-	"dusk"
-	"the witching hour"
-}
-
-raveyard
-{
-	_bloonwait = "\![set,balloonwait,5]"
-	if SHIORI3FW.IsGhostExist('Ship of Theseus') || anotherspoopy == 'Ship of Theseus' || SHIORI3FW.IsGhostExist('Radio Nowhere') || anotherspoopy == 'Radio Nowhere'
-	{
-		"%(_bloonwait)...It is I."
-	}
-	if SHIORI3FW.IsGhostExist('Dreamtale Sans') || anotherspoopy == 'Dreamtale Sans'
-	{
-		"Undulating bile"
-	}
-	if SHIORI3FW.IsGhostExist('Hunter and Smoker') || anotherspoopy == 'Hunter and Smoker'
-	{
-		"Poppies\w3 as large as dinner plates"
-	}
-	if SHIORI3FW.IsGhostExist('Dr. W.D. Gaster') || anotherspoopy == 'Dr. W.D. Gaster'
-	{
-		"Gamefowl"
-	}
-	if SHIORI3FW.IsGhostExist('S the Skeleton') || anotherspoopy == 'S the Skeleton'
-	{
-		"Kintsugi"
-	}
-	if SHIORI3FW.IsGhostExist('Spite') || anotherspoopy == 'spitecat'
-	{
-		"it's just a cat"
-	}
-	
-	if anotherspoopy != ""
-	{
-		_bloonwait = "\![set,balloonwait,3]"
-	}
-	"Something\w5\w5 %_bloonwait%(adj) and %(ger)"
-	anotherspoopy = ""
-}
-
-youdidit
-{
-	"%(a0)Yes!\w3 Exactly!\w3 Good job!\w5"
-}
-
-betterlucknexttime
-{
-	"%(s0)Not knowing is a fair answer.\w4 I may ask again.\w5"
-}
 
 adj
 {
@@ -410,8 +401,10 @@ adj
 	"Gallic"
 	"filmy"
 	"heretical"
+	"bone-brittle"
 	"gelid"
 	"erinaceous"
+	"glitchless"
 	"decadent"
 	"foolish"
 	"lamplit"
@@ -427,8 +420,6 @@ adj
 	"inseperable"
 	"current"
 	"incomplete"
-	
-
 }
 
 ger
@@ -437,6 +428,7 @@ ger
 	"clattering"
 	"finned"
 	"seeping"
+	"fire-burnt"
 	"teeming with spores"
 	"swarming with them"
 	"uncloaked"
@@ -482,6 +474,415 @@ ger
 	"smothered in crime"
 }
 
+
+billdoor
+{
+	"It crumbled"
+	"It was dust"
+	"I can see nothing of what has been engulfed"
+	"What we all will be"
+	"It breaks like chalk in my mouth"
+	"Atoms\w8\w8%(lps(6)) Particulates\w8\w8%(lps(6)) Bits\w6 and bits\w6 and%(lps(6))"
+}
+
+
+spooptime
+{
+	"midnight"
+	"daybreak"
+	"twilight"
+	"dusk"
+	"the witching hour"
+}
+
+raveyard
+{
+	_bloonwait = "\![set,balloonwait,5]"
+	if SHIORI3FW.IsGhostExist('Ship of Theseus') || anotherspoopy == 'Ship of Theseus' || SHIORI3FW.IsGhostExist('Radio Nowhere') || anotherspoopy == 'Radio Nowhere'
+	{
+		"%(_bloonwait)...It is I."
+	}
+	if SHIORI3FW.IsGhostExist('Dreamtale Sans') || anotherspoopy == 'Dreamtale Sans'
+	{
+		"Undulating bile"
+		"The cuckoo's nestmate"
+		"A wasp-laden caterpillar"
+	}
+	if SHIORI3FW.IsGhostExist('Hunter and Smoker') || anotherspoopy == 'Hunter and Smoker'
+	{
+		"Poppies\w3 as large as dinner plates"
+	}
+	if SHIORI3FW.IsGhostExist('Dr. W.D. Gaster') || anotherspoopy == 'Dr. W.D. Gaster'
+	{
+		"Gamefowl"
+	}
+	if SHIORI3FW.IsGhostExist('S the Skeleton') || anotherspoopy == 'S the Skeleton'
+	{
+		"Kintsugi"
+	}
+	if SHIORI3FW.IsGhostExist('Spite') || anotherspoopy == 'spitecat'
+	{
+		"it's just a cat"
+	}
+	if SHIORI3FW.IsGhostExist('Hydrate') || anotherspoopy == 'Hydrate'
+	{
+		"Tantalus in %(ANY('Hades,Tartarus'))"
+	}
+	
+	if anotherspoopy != ""
+	{
+		_bloonwait = "\![set,balloonwait,3]"
+	}
+	"Something\w5\w5 %_bloonwait%(adj) and %(ger)"
+	anotherspoopy = ""
+}
+
+prons
+{
+	"he,him,his,is,s"
+	"she,her,hers,is,s"
+	"they,their,theirs,are,re"
+}
+
+veg : array
+{
+	"acorn squash"
+	"apple"
+	"barrel"
+	"beetroot"
+	"buckwheat"
+	"carrot"
+	"carrot1"
+	"cattle turnip"
+	"cauliflower"
+	"cedar tree"
+	"celery"
+	"chicory"
+	"chili pepper"
+	"cypress tree"
+	"eggplant"
+	"four o'clock flower"
+	"goose"
+	"gorse"
+	"heather"
+	"heliotrope"
+	"hemp"
+	"honey"
+	"horseradish"
+	"ivy"
+	"juniper"
+	"lambslettuce"
+	"lambs lettuce"
+	"medlar"
+	"olive"
+	"pear"
+	"pickaxe"
+	"pig"
+	"potiron"
+	"potiron1"
+	"pumpkin"
+	"pumpkin1"
+	"rampion"
+	"sauvin juniper"
+	"sugar maple"
+	"sunflower"
+	"truffle"
+	"water caltrop"
+	"water caltrop1"
+	"water caltrop2"
+	"water caltrop3"
+	"winter squash"
+}
+
+no_sun
+{
+	switch day
+	{
+		{
+			//no day 0
+		}
+		{
+			//day one
+			"rains of frogs"
+			"partly sunny, with a possible cold front moving in in the later afternoon"
+			"early morning starshowers, becoming clear around noon"
+			"partly cloudy, clearing up in the late afternoon, leading to clear visions of the moon in the evening onward"
+			"Severe Weather Alert! All citizens are expected to quarantine in response to reports of a new airborne pathogen that results in spontaneous uncontrolled singing and dancing"
+			"encroaching red smoke that serves as a harbinger of the approach of the Eater of Names.\w5 Citizens are advised to obey curfew\w4, lest they risk the loss of the elements of their identity entwined with their name.\w5 Trans citizens who wish their birth name be forgotten are advised to stop by any municipal office and pick up a factsheet on the proper safety protocols for the manipulation of an entity of such caliber.\w5 Local LGBT groups also stress the importance of having a Spotter and a Medium during the procedure"
+		}
+		{
+			//DAY 2
+			"inverted gravity"
+			"wind gusts leading to emotional chills and the occasional slight feeling of hauntological recognition"
+			"hollow, brittle winds, echoing as though from caverns host to the bones of the unquiet dead"
+			"visions of the moon, as seen through several lenses, cold enough to see your breath in"
+			"a feverish intensity that will adhere itself to a lucky - or unlucky - host"
+			"a particular\w8\w8\w8\w8\w8"
+		}
+		{
+			//DAY 3
+			"Howling sunsets with a small chance of intestinal inversion.\w6 Be sure to wear eye protection if you might find yourself beneath its gaze this evening."
+			"ion storms off the horizon of the fourth moon"
+			"gravitational neap tides"
+			"shifting colors through the skeletons of dead leaves"
+			"roiling whirlpools of methane at spots"
+			"the roaring suction of the void"
+		}
+		{
+			//DAY 4
+			"Tonight begins the annual pilgrimage of the mad men. Shopkeepers are reminded to itemize the purchases made and the leaves they receive in payment, so they can be properly compensated in legal tender."
+			"incandescent eigengrau"
+			"cold winds from the south"
+			"Allergen notice: the cats of Ulthar tread abroad tonight. Citizens sensitive to animal dander should be advised to stay inside and close to an air filter"
+			"the elfin masters tennis open. Be alert for projectiles"
+			"bouts of mock-Elizabethean lyricism"
+		}
+		{
+			//DAY 5
+			"heavy mist"
+			"agitation in deciduous trees. Citizens are encouraged to ignore pareidolic whispers emanating from the shaking of these leaves."
+			"lightning storms carrying the sound of hoofbeats"
+			"the three-dimensional shadow of a four-dimensional entity is expected to hover over the landscape later this afternoon into this evening. Citizens are unlikely to feel any ill-effects in their current dimensions"
+			"a downpour carrying marine fish"
+			"intermittent hail"
+		}
+		{
+			//DAY 6
+			"light mist"
+			"a glitch in damage register. Citizens who crouch while wielding a dual-bladed weapon will suffer no damage to their person. This is expected to be patched out before the night is over, so anyone who wishes to run with scissors should try sooner rather than later."
+			"a chorale of bells from everywhere and nowhere as the sun reaches its zenith. Citizens are instructed to stop all activity in the half hour leading up to the event, as they will find themselves awestruck and in a trance as the peals echo away"
+			"sunny, with possible flurries"
+			"the fog comes in on little cats' feet"
+			"the decaying bodies of beetles, so numerous that the ground will crunch to walk upon all those glittering, discarded shells"
+		}
+		{
+			//DAY 7
+			"a silvery haze glittering with malice"
+			"sunny"
+			"certain shades of the color blue are briefly expected to gain sapience around 16:05 tonight. A full list of the expected wavelengths is available from the usual municipal authorities"
+			"heavy snowfall through the night, tapering off in the early morning"
+			"a tightness of the skin"
+			"countervening solar winds"
+		}
+		{
+			//DAY 8
+			"intermittent swarms of locusts"
+			"ragged winds, tending towards sharpness at sheer angles. Citizens are encouraged to wear thick coats and keep all bare skin covered."
+			"a flurry of insect hatchlings burrowing from beneath the soil and erupting into the sky"
+			"intermittent snowfall"
+			"glittering rains"
+			"peculiar"
+		}
+		{
+			//DAY 9
+			"The Harvester of Eyes rides tonight.\w3 Citizens are reminded to thoroughly inspect their decoys\w3 and ensure they are well-maintained\w3, especially if they intend to go out tonight."
+			"scattered thunderstorms in the evening"
+			"clear"
+			"scattered storms with walking lightning"
+			"temperature inversions leading to an ambient sense of suffocation"
+			"mild temperatures, with gusts of wind in the higher elevations"
+		}
+		{
+			//DAY 10
+			"a swarm of several hovering mouths"
+			"lingering fog in the early morning, tapering off to the occasional slight drizzle around noon"
+			"a low blood pressure front moving in"
+			"howling winds that gutter the candles on your mantlepiece"
+			"electrical storms that cause home illumination to flicker"
+			"dry"
+		}
+		{
+			//DAY 11
+			"the furious sleep of colorless green ideas"
+			"flurries in the afternoon"
+			"the Heavenly Tiger may place His pawprint on this town tonight. Persons and property are expected to bear no ill effects"
+			"the slight misalignment of the stars, just enough to rouse the Old Gods from their slumber, but not enough to free them from their uncanny prisons, leaving them to rend themselves to pieces as they attempt their escape"
+			"pregnant mosquitoes"
+			"an uncanny whistling on the air that only children can hear"
+		}
+		{
+			//DAY 12
+			"a purulescent miasma in the lower elevations"
+			"clear for most of the day, becoming hazy later on"
+			"rains of liquid jewels that crystallize upon hitting leaf blades"
+			"a heavy mist that presumes to birth collossi"
+			"sleet and freezing rain"
+			"a surge of understanding and excessive empathy"
+		}
+		{
+			//DAY 13
+			"sunny, with a chance of scattered cloud formations"
+			"the mirage of skeletal warriors limping through the streets, who moan when you reach out to them but otherwise do not respond to your touch"
+			"moderate-to-heavy fatigue"
+			"the breaking of the chains that bind the planet to its motions, allowing citizens a glimpse into the Great Gin whose shrieks and thews power the dance of the spheres before the damage is repaired"
+			"clouds coalesing under ceilings"
+			"minimal humidity and blaring sunlight"
+		}
+		{
+			//DAY 14
+			"toxic fumes spewing from cracks in the groaning earth that shudder underfoot"
+			"patches of small hailstones that rattle one's bones but otherwise have no effect"
+			"the bloom from the tiger's tread may seed yet again"
+			"the mast of grand kelp"
+			"groaning as old oaks rouse from their deep slumber"
+			"snow"
+		}
+		{
+			//DAY 15
+			"a lack of sunlight.\w5 Citizens should expect to stare upwards into the sky all day and find a welkin of countless twinkling stars poking through a carpet of blackness"
+			"acid rainshowers"
+			"clear and sonorant night. The humming of the spheres should be especially audible"
+			"blue skies and bullet-sharp rainfall"
+			"sudden filling of local arroyos with a water-like substance"
+			"light snow showers"
+		}
+		{
+			//DAY 16
+			"heavy rains and wind gusts of up to %(RAND(17)+2) mph"
+			"warm rains"
+			"mostly clear skies, with occasional glitches. Citizens should not be alarmed"
+			"glittering clouds of mites"
+			"the sense that the life you are living is not the life you should have\w5, that something, somehow, has rearranged reality such that you are somewhere you were not supposed to be"
+			"flurries intermixed with fluttering scaled wings"
+		}
+		{
+			//DAY 17
+			"especially noisy rainshowers"
+			"the flocking of spears from the heavens. Citizens hit by these darts will experience temporary deaths until the storm passes. As such, all mortuary activity and certification of death will be put on hold."
+			"a warm, wet breeze, carrying the slight scent of saliva"
+			"a feather-light humming as the bones of wyrms ride beneath the soil"
+			"a blue filter when seen through humans or gooseberry eyes"
+			"wintry mix"
+		}
+		{
+			//DAY 18
+			"clear, with the occasional light breeze"
+			"a murmuration of starlings"
+			"ice beams that chill the breast"
+			"an openness in all friendship"
+			"the feeling of being watched by things that should not bear such intelligence"
+			"a wintry mix, becoming rain by late evening"
+		}
+		{
+			//DAY 19
+			"local meteorologists predict an incoming front of semiotically-disruptive waveforms. Municipal neural nets are set up to safely redirect them from reaching citizens on ground level; citizens should nevertheless be alert for symptoms of mild aphasia."
+			"timeline flux. Oracles and prediction modelers are allowed to continue business provided they prominently display this disclaimer."
+			"the fringes of a dying tropical storm"
+			"praise be, for there shall be the descent of lovers from the heavens"
+			"the wet cracking sound of grass growing"
+			"...and the sky will open up"
+		}
+		{
+			//DAY 20
+			"high winds, possibily leading to migratory sand dunes"
+			"the devil rides on the far plains"
+			"magnetic rippling that makes ones teeth quiver"
+			"a green mist along the horizon"
+			"cloudy, with wind gusts of up to 7 mph"
+			"from the sun that 'round me rolled in it's autumn tint of gold - from the lightning in the sky as it passed me flying by (when the rest of heaven was blue)"
+		}
+		{
+			//DAY 21
+			"partly cloudy"
+			"the mating of the seasons"
+			"the processional march of the souls of the damned. Especially doughty citizens who hear the cries of their loved ones are encouraged to seek out and break the manacles that bind them to the jailor"
+			"sleet and freezing rains"
+			"a shift in ones' proprioception"
+			"a small chance of tornado formation in the morning"
+		}
+		{
+			//DAY 22
+			"momentary time loops. Citizens are advised to take thorough notes for later comparison"
+			"howling calls.\w5 Beware of frog spawn."
+			"anomalous rain showers"
+			"winds cold enough to chill one's teeth"
+			"pockets of old time\w4, where one can feel ghosts"
+			"late-afternoon [REDACTED]"
+		}
+		{
+			//DAY 23
+			"radio disru\_q - bzzt - \_q\w5-ons"
+			"gamma ray bursts"
+			"anomalous light sprinkles"
+			"partly-sunny"
+			"blacklight fluorescence of mutations"
+			"the forbidden weather"
+		}
+		{
+			//DAY 24
+			"mild firework-like sparks showering from the sun"
+			"effervescent rainbows"
+			"a brief hailstorm in the mid-afternoon"
+			"unusually hot temperatures"
+			"the localized numbing of taste buds so all has the sapor of lightly-buttered mashed potatoes"
+			"crimes"
+		}
+		{
+			//DAY 25
+			"incoming pressure changes leading to heavy fatigue among the human population"
+			"otherworldly signals overriding phatic commnication"
+			"thunderstorms through the night"
+			"the sense of being watched that is expected to persist for several days"
+			"dry, with brisk breezes"
+			"risky breezes"
+		}
+		{
+			//DAY 26
+			"clouds of irritability. Citizens are reminded to be kind to retail and food service workers, and all employees are reminded that they are entitled to work half days at twice their base rate of pay."
+			"a dry spell that may herald an oncoming drought"
+			"the bones of the earth may try to reassemble themselves, and possibly generate small earthquakes"
+			"winds heavy enough to tip cars"
+			"rivers of golden thread snaking from the skies"
+			"brisk feathers of dawn-pink flower petals"
+		}
+		{
+			//DAY 27
+			"limited visibility around sunset"
+			"dry firestorms possible"
+			"dry conditions; be alert for possible wildfires"
+			"the winds will make a pact with the cats, and carry them aloft on witches' brooms"
+			"the chattering of gulls"
+			"the unopened eye that sees all, plus intermittent showers in the late afternoon"
+		}
+		{
+			//DAY 28
+			"potential crackling sounds around wood-burning stoves"
+			"condensation of honey-bright gums on right angles"
+			"the flesh of trees"
+			"humid"
+			"rain that falls at shallow angles"
+			"rough winds kicking up sandstorms that may coalesce into shards of seaglass"
+		}
+		{
+			//DAY 29
+			"mostly sunny"
+			"possible infection of triangles whose angles sum up to greater than 180°"
+			"the echoes of giants"
+			"high humidity all day, only breaking overnight in the early morning"
+			"the flooding of the radio waves with advertisements"
+			"the shrapnel of the Gotterdammerung"
+		}
+		{
+			//DAY 30
+			"partly cloudy"
+			"a steady drizzle for most of the afternoon"
+			"the sudden appearance of rapidly unpeeling oranges"
+			"pearlescent clouds bearing wishes"
+			"inflammable flyers choking the skies"
+			"rains of obsolescent money"
+		}
+		{
+			//DAY 31
+			"brief moments of the sensation of weightlessness"
+			"the sudden recognition of one's own ephemerality"
+			"clear, with moderate winds in the later hours"
+			"music that will harmonize with any else that is played"
+			"pink-and-blue clouds tasting of candy floss"
+			"the sudden aging of all born in leap times"
+		}
+	}
+}
+
 usersfolder
 {
 	"start bar"
@@ -519,168 +920,7 @@ filetype
 	".ttf"
 }
 
-
-prons
-{
-	"he,him,his,is,s"
-	"she,her,hers,is,s"
-	"they,their,theirs,are,re"
-}
-
-//As the name implies, this checks if the balloon is currently open or not. This was written by Levidre!
-//To use it I would do this, so you don't have to copy this whole chunk of code:
-//_b = BalloonCheck
-//if _b == 0 //_b will be 0 if the balloon is not open, or 1 if it is open
-BalloonCheck
-{
-	if ASEARCH("Status",var.req.key) != -1
-    {
-        _currentstatus = var.req.value[ASEARCH("Status",var.req.key)]
-        if "balloon" _in_ _currentstatus
-        {
-            1
-        }
-        else
-        {
-            0
-        }
-    }
-}
-
-//adapted by Zichqec from Levidre's ballooncheck
-MenuCheck
-{
-    if ASEARCH("Status",var.req.key) != -1
-    {
-        _currentstatus = var.req.value[ASEARCH("Status",var.req.key)]
-        if "choosing" _in_ _currentstatus; 1
-        else; 0
-    }
-    else; 0
-}
-
-
-//This function exists to help make pools of dialogue have not-ridiculous probabilities! Please take a look at the pools in aitalk to get an idea how this works. If you need help with it, there's a full explanation on Zi's website: https://zichqec.github.io/s-the-skeleton/functions.html
-Pool
-{
-    if TOINT(_argv[1]); EVAL("%(_argv[0])")
-}
-
-
-//If you write all your envelopes as lowercase, you can send them through this function whenever you need the first letter capitalized! It'd look something like this: "%(Capitalize(exampleenvelope))"
-Capitalize
-{
-	_word = _argv[0] //Sets _word to the word the user sent
-	_buffer = SUBSTR(_word,0,1) //Storing the first character in _buffer
-	_word = ERASE(_word,0,1) //Erasing the first character from _word
-	_word = INSERT(_word,0,TOUPPER(_buffer)) //Making the character in _buffer uppercase and inserting it back into _word
-	_word //Returns the capitalized word
-}
-
-hrom
-{
-	"Ch"
-	"H"
-	--
-	"a"
-	--
-	"nn"
-	"n"
-	--
-	"u"
-	--
-	"kk"
-	"k"
-	--
-	"a"
-	--
-	"h"
-	""
-}
-
-hbless
-{
-	if ishanu == 1
-	{
-		"May you overthrow your oppressors\w6 and may the rebuilding go as smooth as oil."
-	}
-	elseif ishanu == 8
-	{
-		"May you always look for the light\w6 and may you always find it."
-	}
-	else
-	{
-		_spare = (RAND(6))
-		if ASEARCH(hb_yr,_spare) != 1
-		{
-			switch _spare
-			{
-				"May you be uncompromising in who you are in the face of adversity."
-				"May your community rally by your side\w6 and may your hammer strike true."
-				"May your resources go far when times feel lowest."
-				"May the strength of your cunning outweigh the bluster of your enemies."
-				"May you take strength in those you love and those who love you\w6 and may the latter be more numerous than you fear."
-				"May you recognize your victories\w6 and may you never be afraid to celebrate them."
-			}
-			--
-			hb_yr ,= _spare
-		}
-		else
-		{
-			"%(hbless)"
-		}
-	}
-}
-
-h_d
-{
-	if hour >= 18; "%(hday6)"
-	else; "%(hday)"
-}
-
-h_m
-{
-	if hour >= 18; "%(hmonth6)"
-	else; "%(hmonth)"
-}
-
-h_y
-{
-	if hour >= 18; "%(hyear6)"
-	else; "%(hyear)"
-}
-
-Select.heard_han
-{
-	heard_h = 1
-}
-
-veg
-{
-	"rampion"
-	"goose"
-	"pear"
-	"apple"
-	"beetroot"
-	"cattle turnip"
-	"celery"
-	"chicory"
-	"heliotrope"
-	"medlar"
-	"lambslettuce"
-	"lambs lettuce"
-	"pig"
-	"cauliflower"
-	"honey"
-	"juniper"
-	"pickaxe"
-	"horseradish"
-	"water caltrop"
-	"water caltrop1"
-	"water caltrop2"
-	"water caltrop3"
-}
-
+//back to useful functions/shortcuts
 nowhour //hour12 displays the hour like a 12 hour clock, except for 12 which is displayed as 0
 {
 	if hour12 == 0; "12"
@@ -705,6 +945,7 @@ ap //AM or PM - ampm is 0 during am, and 1 during pm
  	if ampm == 0; "AM"
  	else; "PM"
 }
+
 
 wd //Abbreviated week day
 {
@@ -753,6 +994,10 @@ nowmonth //The current month name
 		_month--
 		if _month < 1; _month = 12
 	}
+	if ISINTSTR(_argv[0]) == 1 || GETTYPE(_argv[0]) == 1
+	{
+		_month = _argv[0]
+	}
 	
 	if _month == 1; "January"
 	elseif _month == 2; "February"
@@ -768,31 +1013,98 @@ nowmonth //The current month name
 	else; "December"
 }
 
+monthmatch
+{
+	_month = TOLOWER(_argv[0])
+	
+	if "jan" _in_ _month; "January"
+	elseif "feb" _in_ _month; "February"
+	elseif "mar" _in_ _month; "March"
+	elseif "apr" _in_ _month; "April"
+	elseif "may" _in_ _month; "May"
+	elseif "jun" _in_ _month; "June"
+	elseif "jul" _in_ _month; "July"
+	elseif "aug" _in_ _month; "August"
+	elseif "sep" _in_ _month; "September"
+	elseif "oct" _in_ _month; "October"
+	elseif "nov" _in_ _month; "November"
+	elseif "dec" _in_ _month; "December"
+	else; 0
+}
+
+momatch
+{
+	_month = TOLOWER(_argv[0])
+	
+	if "jan" _in_ _month; 1
+	elseif "feb" _in_ _month; 2
+	elseif "mar" _in_ _month; 3
+	elseif "apr" _in_ _month; 4
+	elseif "may" _in_ _month; 5
+	elseif "jun" _in_ _month; 6
+	elseif "jul" _in_ _month; 7
+	elseif "aug" _in_ _month; 8
+	elseif "sep" _in_ _month; 9
+	elseif "oct" _in_ _month; 10
+	elseif "nov" _in_ _month; 11
+	elseif "dec" _in_ _month; 12
+	else; 0
+}
+
 leapyear //Checks if this is a leap year
 {
-	if year % 4 != 0; 0
-	elseif year % 100 != 0; 1
-	elseif year % 400 != 0; 0
+	_year = year
+	if _argv[0] != ""
+	{
+		_year = _argv[0]
+	}
+	
+	if _year % 4 != 0; 0
+	elseif _year % 100 != 0; 1
+	elseif _year % 400 != 0; 0
 	else; 1
 }
 
-monthdays
+md
 {
-	md = ("",31,28,31,30,31,30,31,31,30,31,30,31)
-	if leapyear; {md[2] = 29}
+	switch _argv[0]
+	{
+		""
+		31
+		{
+			if leapyear(_argv[1]); 29
+			else; 28
+		}
+		31
+		30
+		31
+		30
+		31
+		31
+		30
+		31
+		30
+		31
+	}
 }
 
 tomorrowis
 {
-	monthdays
-	
 	_year = GETTIME()[0]
 	_month = GETTIME()[1]
 	_day = (GETTIME()[2]+1)
 	
-	LOGGING("%_month, %_day===============")
+	if _argv != ""
+	{
+		_year = TOINT(_argv[0])
+		_month = TOINT(_argv[1])
+		_day = (TOINT(_argv[2])+1)
+	}
 	
-	if (_day) > md[_month]
+	LOGGING("%(_argv[0]), %(_argv[1]), %(_argv[2])===============")
+	LOGGING("%_month, %_day, %_year===============")
+	
+	if (_day) > md(_month)
 	{
 		_day = 1
 		_month = _month+1
@@ -803,40 +1115,17 @@ tomorrowis
 		}
 	}
 	
-	tommonth = _month
-	tomday = _day
-	tomyear = _year
+	if _argv[0] == ""
+	{
+		tommonth = _month
+		tomday = _day
+		tomyear = _year
+	}
+	_return = (_month,_day,_year)
+	
+	_return
 }
 
-Ord
-{
-	_number = TOSTR(_argv[0])
-	_ones = (_number%10)
-	_tens = (_number/10)
-	
-	if _tens == 1 || _ones > 3
-	{
-		_number = _number+'th'
-	}
-	elseif _ones == 3
-	{
-		_number = _number+'rd'
-	}
-	elseif _ones == 2
-	{
-		_number = _number+'nd'
-	}
-	elseif _ones == 1
-	{
-		_number = _number+'st'
-	}
-	else
-	{
-		_number = _number+'th'
-	}
-	
-	_number
-}
 
 //i altered some times below to make it make more sense to my timekeeping
 timeslot //From the GT template. Breaking down the day into a few distinct chunks so you dont have to add checks for every hour.
@@ -848,6 +1137,132 @@ timeslot //From the GT template. Breaking down the day into a few distinct chunk
 	elseif hour >= 18 && hour <= 20; "evening" //6-8pm
 	elseif hour >= 21 && hour <= 24; "latenight" //9pm-12am
 	else; "earlymorning" //1-4am
+}
+
+youdidit
+{
+	"%(a0)Yes!\w3 Exactly!\w3 Good job!\w5"
+}
+
+betterlucknexttime
+{
+	"%(s0)Not knowing is a fair answer.\w4 I may ask again.\w5"
+}
+
+
+//since the Hebrew calendar begins at sunset (or 1800), these three envelopes check whether it is before or after 1800 in order to return the correct Hebrew date
+h_d
+{
+	if hour >= 18; "%(hday6)"
+	else; "%(hday)"
+}
+
+h_m
+{
+	if hour >= 18; "%(hmonth6)"
+	else; "%(hmonth)"
+}
+
+h_y
+{
+	if hour >= 18; "%(hyear6)"
+	else; "%(hyear)"
+}
+
+hrom
+//I thought having a randomly-generated spelling for Hanukkah was funny
+{
+	"Ch"
+	"H"
+	--
+	"a"
+	--
+	"nn"
+	"n"
+	--
+	"u"
+	--
+	"kk"
+	"k"
+	--
+	"a"
+	--
+	"h"
+	""
+}
+
+hbless
+{
+	if ishanu == 1
+	{
+		"May you overthrow your oppressors\w6 and may the rebuilding go as smooth as oil."
+	}
+	elseif ishanu == 8
+	{
+		"May you always look for the light\w6 and may you always find it."
+	}
+	else
+	{
+		_spare = (RAND(6))
+		if ASEARCH(hb_yr,_spare) != -1
+		{
+			switch _spare
+			{
+				"May you be uncompromising in who you are in the face of adversity."
+				"May your community rally by your side\w6 and may your hammer strike true."
+				"May your resources go far when times feel lowest."
+				"May the strength of your cunning outweigh the bluster of your enemies."
+				"May you take strength in those you love and those who love you\w6 and may the latter be more numerous than you fear."
+				"May you recognize your victories\w6 and may you never be afraid to celebrate them."
+			}
+			--
+			hb_yr ,= _spare
+		}
+		else
+		{
+			"%(hbless)"
+		}
+	}
+}
+
+Select.heard_han
+{
+	heard_h = 1
+}
+
+jour
+{
+	LOGGING("%GETTYPE(_argv)!===============")
+	LOGGING("%_argv is the argument!===============")
+	if _argv[0] == ""
+	{
+		if jmonth > 11 || jmonth < 0
+		{
+			"temp_veg Today is the %Ord(jdate) Sanculottide,\nthe %(jmd[1]), Year %(jyear)"
+		}
+		else
+		{
+			"temp_veg Today is %Capitalize(decadi), the %Ord(jdate) of %(jmd[0]),\nDay of the %(Capitalize(jmd[1])), Year %(jyear)"
+		}
+	}
+	else
+	{
+		_jmonth = _argv[0]
+		_jmd = _argv[1]
+		_jdate = _argv[2]
+		_jmd[1] = _argv[3]
+		_decadi = _argv[4]
+		_jyear = _argv[5]
+		
+		if _jmonth > 11 || _jmonth < 0
+		{
+			"temp_veg the %Ord(_jdate) Sanculottide,\nthe %(_jmd[1]), Year %(_jyear)"
+		}
+		else
+		{
+			"temp_veg %Capitalize(_decadi), the %Ord(_jdate) of %(_jmd[0]),\nDay of the %(Capitalize(_jmd[1])), Year %(_jyear)"
+		}
+	}
 }
 
 
@@ -907,6 +1322,12 @@ OnRiddleFs
 	"\e"
 }
 
+Select.wordswordswords
+{
+	"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+}
+
+
 Select.dirtybit
 {
 	goodgollygosh = ("bitch","fuck","prostitute","shit","damn","whore")
@@ -920,3 +1341,236 @@ Select.ssp_downloads
 	ntwyey = "none","changed"
 	ntwtarg = "ghost","shell","balloon","plugin","headline"
 }
+
+
+
+//As the name implies, this checks if the balloon is currently open or not. This was written by Levidre!
+//To use it I would do this, so you don't have to copy this whole chunk of code:
+//_b = BalloonCheck
+//if _b == 0 //_b will be 0 if the balloon is not open, or 1 if it is open
+BalloonCheck
+{
+	if ASEARCH("Status",var.req.key) != -1
+    {
+        _currentstatus = var.req.value[ASEARCH("Status",var.req.key)]
+        if "balloon" _in_ _currentstatus
+        {
+            1
+        }
+        else
+        {
+            0
+        }
+    }
+}
+
+//adapted by Zichqec from Levidre's ballooncheck
+MenuCheck
+{
+    if ASEARCH("Status",var.req.key) != -1
+    {
+        _currentstatus = var.req.value[ASEARCH("Status",var.req.key)]
+        if "choosing" _in_ _currentstatus; 1
+        else; 0
+    }
+    else; 0
+}
+
+
+//This function exists to help make pools of dialogue have not-ridiculous probabilities! Please take a look at the pools in aitalk to get an idea how this works. If you need help with it, there's a full explanation on Zi's website: https://zichqec.github.io/s-the-skeleton/functions.html
+Pool
+{
+    if TOINT(_argv[1]); EVAL("%(_argv[0])")
+}
+
+isk
+{
+	if SHIORI3FW.IsVisible[1] == 1
+	{
+		""
+	}
+	else
+	{
+		"\e"
+	}
+}
+
+pi
+{
+	3.14159
+}
+
+ROUNDEX
+//modified from Steve
+{
+    _num =_argv[0]
+    _to =_argv[1]
+	LOGGING("%_num and %(_to)")
+
+    if !_to
+	{
+        _to=1
+	}
+	
+	if TOINT(_num) == 0
+	{
+		LOGGING("%_num and %TOINT(_num)")
+		_place = _num
+		_pv = 0
+		//if only a decimal/fraction
+		while _pv < 6
+		{
+			LOGGING(_pv)
+			_place *= 10
+			if TOINT(_place) != 0
+			{
+				//done
+				LOGGING("%_pv and %_place and break it")
+				_to += _pv
+				LOGGING("%_to is what i'm setting it to")
+				break
+			}
+			_pv += 1
+		}
+	}
+	
+	if GETTYPE(_to) == 1
+	{
+		_div = POW(10,_to)
+		_to = (1/_div)
+	}
+	
+	LOGGING("%_num and %(_to)")
+	
+    _num *= (1.0/_to)
+    _num = ROUND(_num)*_to
+	
+	if _argv[2] == 'chop'
+	{
+		_num = (_num,_to)
+	}
+	
+    _num
+}
+
+ChopZero
+//returns a real number as a string with the proper amount of decimal significant figures
+{
+	_num = _argv[0]
+	
+	_sigfigs = _argv[1]
+	if !_sigfigs
+	{
+        _sigfigs = 1
+	}
+	
+	_result = ROUNDEX(_num,_sigfigs,'chop')
+	_num = _result[0]
+	
+	_sigs = _result[1]
+	_pv = 0
+	
+	while TOINT(_sigs) == 0
+	{
+		_sigs *= 10
+		_pv++
+		LOGGING("the sum is %(_pv) and the sigs are %(_sigs)")
+	}
+	
+	LOGGING("the number is %(_num) and the sig figs are %(_sigs), %(_sigfigs)")
+	
+	_num = TOSTR(_num)
+	_pos = STRSTR(_num,'.',0)
+	
+	LOGGING("the place is %(_pv) and the position is %(_pos)")
+	
+	_pos = _pos + _pv + 1
+	
+	_len = STRLEN(_num)-_pos
+	LOGGING("the number is %(_num); the position is %(_pos), the length is %(_len)")
+	_newnum = ERASE(_num,_pos,_len)
+	_newnum
+}
+
+/*
+Flag //Checks to see if a flag exists. Returns 1 if yes, returns 0 if no
+{
+    if ASEARCH(_argv[0],MiscFlags) != -1; 1
+    else; 0
+}
+
+RemoveFlag : void //Removes all instances of a flag in the array
+{
+    _elements = ASEARCHEX(_argv[0],MiscFlags)
+    if ARRAYSIZE(_elements) == 0; 0 //If there was no flag to erase
+    else
+    {
+        for _i = ARRAYSIZE(_elements) - 1; _i >= 0; _i-- //Goes from the end of the list to the start, so the elements stay in the same positions while we erase
+        {
+            _current = _elements[_i]
+            MiscFlags[_current] = IARRAY
+        }
+        1
+    }
+}
+
+MiscFlags ,= "Whatever flag"
+To check if a flag is set, you write  if Flag("Whatever flag")
+And to remove a flag, you write RemoveFlag("Whatever flag")
+You'll also want to put MiscFlags = IARRAY into OnFirstBoot somewhere, to initialize this
+*/
+
+/*
+//Written by Zichqec https://zichqec.github.io/s-the-skeleton/
+
+//This function is intended to replace the functionality of an old SAORI(?) that I found and couldn't get working. It lets multiple characters say different things at the same time.
+
+//To call the function, you can either call the function in your code like this:
+//Parallel(0,"Dialogue for the Sakura!",1,"Dialogue for the Kero!")
+//Or in dialogue like this:
+//"%(Parallel(0,'Dialogue for the Sakura!',1,'Dialogue for the Kero!'))"
+
+//You can call any characters, in any order, and in any amount. Every other tag is a character tag, so you should write a number, the dialogue that goes with that number.
+//%(Parallel(5,'Char 5 dialogue',37,'Char 37 dialogue',0,'Sakura dialogue',9,'Char 9 dialogue'))
+
+//Please take care when writing the tags. I think I worked out all the infinite loop problems, but if your ghost ever crashes while using this function, do let me know and I'll see what I can do to fix it!
+
+//You cannot write sakurascript tags within the Parallel tag, and if you want to write an apostrophe, you should write it as ##
+
+Parallel
+{
+	//Initializing variables
+	_output = ""
+	_chararray = IARRAY
+	_textarray = IARRAY
+	
+	_i = 0
+	while _i < _argc //Sorts each argument into characters and dialogue
+	{
+		_chararray ,= _argv[_i]
+		_i++
+		_textarray ,= REPLACE(_argv[_i],"##","'") //Changes ## to an apostrophe, change it if you like
+		_i++
+	}
+	--
+	while ARRAYSIZE(_chararray) > 0 //Repeats until all dialogues have been outputted
+	{
+		_i = 0
+		_output += "\![quicksection,1]"
+		while _i < ARRAYSIZE(_chararray) //Loops through each char and displays a single character of dialogue, erases any dialogues/chars that have become empty
+		{
+			if STRLEN(_textarray[_i]) == 0
+			{
+				_chararray[_i] = IARRAY
+				_textarray[_i] = IARRAY
+				continue
+			}
+			_output += "\p[" + _chararray[_i] + "]" + SUBSTR(_textarray[_i],0,1)
+			_textarray[_i] = ERASE(_textarray[_i],0,1)
+			_i++
+		}
+		_output += "\![quicksection,0]\w1"
+	}
+	_output
+}
+*/

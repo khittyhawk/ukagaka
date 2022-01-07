@@ -114,3 +114,38 @@ menu.sidebar.alignment,bottom
 //menu.background.bitmap.filename,menu_background.png
 //menu.foreground.bitmap.filename,menu_foreground.png
 //menu.sidebar.bitmap.filename,menu_sidebar.png
+
+
+sakura.bindgroup7.name,grille,Art Deco
+sakura.bindgroup8.name,grille,Asclepioid
+sakura.bindgroup9.name,grille,Arabesque
+sakura.bindgroup10.name,grille,Fat Deco
+sakura.bindgroup11.name,grille,Malucetum
+sakura.bindgroup12.name,grille,Lightner Rune
+sakura.bindgroup13.name,grille,Darkner Rune
+
+sakura.bindoption7.group,grille,mustselect
+sakura.bindgroup7.default,1
+
+sakura.menu,hidden
+
+
+kero.bindgroup6.name,unit circle,Middleweight Circle
+kero.bindgroup8.name,unit circle,Pi
+kero.bindgroup9.name,unit circle,Digits
+kero.bindgroup4.name,unit circle,Arctan
+
+kero.bindgroup7.name,unit circle,disk
+
+kero.bindgroup8.addid,6,7
+kero.bindgroup9.addid,6,7
+kero.bindgroup4.addid,6,7
+
+
+kero.bindgroup160.name,color,green
+kero.bindgroup161.name,color,orange
+kero.bindgroup162.name,color,blue
+kero.bindgroup163.name,color,red
+
+
+kero.menu,hidden

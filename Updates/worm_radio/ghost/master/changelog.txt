@@ -1,9 +1,23 @@
+Update 01-06-22
+
+-Rearranged the Main Menu to economize space; this DOES MEAN that the option to close out of the ghost entirely has been moved, but its new position is such that it is more likely you will accidentally close the menu when you mean to close out of the ghost rather than vice versa
+-Rearranged several sub-menus: the menus are now Preferences (the appearance of the ghost); Settings (what sort of dialogue the ghost will say); Tools (fun or useful tools built into the ghost); Functions (native SSP functions the ghost can do for itself or for your computer)
+-On that note: The Tools menu now contains 1) a customizable To-Do list!; 2) a unit circle around the kero's dial in the Radio shell; and 3) the ability to convert Gregorian dates to different calendars!
+-Text noting the moon phase has now been replaced with an icon; the moon phase the ghost displays should also be more accurate now
+-Added two more dressup options for the Radio sakura's speaker
+-The ghost can respond to pings from other ghosts now!
+-Auto Updates are enabled! The ghost will tell you if there's an update waiting in queue.
+-Miscellaneous randomtalk, Jacobin calendar icons, and bugfixes
+
+---
+
 Quick Patch Patch 11-29-21
 
 -Hannukah dialogues should actually show now.
 -Added explanations of the alternative calendars
 -Reduced the header on the big balloon to show more of the menus.
 
+---
 
 Quick Patch 11-28-21
 
@@ -11,6 +25,7 @@ Quick Patch 11-28-21
 -Added more images for the Jacobin calendar
 -Minor bugfixes and randomtalk
 
+---
 
 Update 11-27-21
 
@@ -19,7 +34,7 @@ Update 11-27-21
 -More randomtalk
 -Various bugfixes
 
---
+---
 
 Update 11-20-21
 
