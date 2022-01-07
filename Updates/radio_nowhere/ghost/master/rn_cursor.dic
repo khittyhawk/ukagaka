@@ -78,16 +78,7 @@ MouseDoubleClickKero
 		}
 		else
 		{
-			_output = ""
-			"\b2-bzzt-\n\n"
-			--
-			for _var = 0; _var < ARRAYSIZE(veg); _var++
-			{
-				_veg = veg[_var]
-				_output += "\_b[\Dev_Tools\Jnums\%(_veg).png,inline,option=use_self_alpha]"
-			}
-			--
-			_output
+			"-bzzt-"
 		}
 		
 	}

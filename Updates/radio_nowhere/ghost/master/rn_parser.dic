@@ -544,7 +544,7 @@ prons
 	"they,their,theirs,are,re"
 }
 
-veg : array
+veg
 {
 	"acorn squash"
 	"apple"
