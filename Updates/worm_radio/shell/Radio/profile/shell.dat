@@ -14,8 +14,8 @@ Char.VirtualDesktop,5748092a-4369-47c0-9900-47e364cc97cb
 dateinput.left,641
 Char0.center,1705
 scriptbox.top,191
-Char1.centery,770
-Char1.center,1558
+Char1.centery,945
+Char1.center,1294
 char1.bind.savearray,6=0 8=0 9=0 4=0 7=0 160=0 161=0 162=0 163=0
 seriko.scaling.percent.x,100
 seriko.scaling.balloon.percent.x,100
