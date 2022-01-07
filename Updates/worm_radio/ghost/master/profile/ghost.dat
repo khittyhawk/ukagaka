@@ -7,11 +7,11 @@ dateinput.top,492
 Char.VirtualDesktop,5748092a-4369-47c0-9900-47e364cc97cb
 dateinput.left,641
 Update.TestMode,1
-Char0.center,1705
+Char0.center,1679
 scriptbox.top,191
 shell,shell\Radio\
 FirstBoot,booted
-Char1.center,1294
+Char1.center,1440
 shell.ischanged.2,1
 inputbox.top,245
 update.lastexec,694810158

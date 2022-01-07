@@ -695,8 +695,6 @@ OnRadAngle
 		nearesttheta = "c"
 	}
 	--
-	"\C\1\b2\tthe %x_distance and %y_distance indicates its quadrant is %quadrant\nthe location of the cursor is (%x_cursor,%y_cursor)\nthe location of the dial is %(dialme2)\nthe slope is %(slope), which makes the angle %angle\w8\w8\x[noclear]"
-	--
 	_b = BalloonCheck
 	
 	if _b == 1

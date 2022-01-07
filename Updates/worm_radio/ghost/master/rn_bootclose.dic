@@ -317,6 +317,7 @@ RebootVars
 	
 	--
 	dawnduskmenu = "    "
+	stopfollow = 1
 	lastTalk = ""
 	waitingcommuS = IARRAY
 	waitingcommuM = IARRAY
@@ -420,6 +421,7 @@ OnVanishButtonHold
 UpdateVars
 {
 	if !ISVAR('stopfunction'); {stopfunction = 1}
+	if !ISVAR('stopfollow'); {stopfunction = 1}
 	if !ISVAR('urname'); {urname = "My good bitch"}
 	if !ISVAR('aitalkinterval')
 	{
