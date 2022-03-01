@@ -213,12 +213,12 @@ a0
 	if SHIORI3FW.IsVisible[1] == 1
 	{
 		//if the kero is here
-		"%(s0)"
-		"%(k0)"
+		"%(s0(_argv[0]))"
+		"%(k0(_argv[0]))"
 	}
 	else
 	{
-		"%(s0)"
+		"%(s0(_argv[0]))"
 	}
 }
 
@@ -227,11 +227,11 @@ a1
 	if SHIORI3FW.IsVisible[1] == 1
 	{
 		//if the kero is here
-		"%(k0)"
+		"%(k0(_argv[0]))"
 	}
 	else
 	{
-		"%(s0)"
+		"%(s0(_argv[0]))"
 	}
 }
 
@@ -282,7 +282,14 @@ s0
 		}
 		else
 		{
-			"\0\s[0]"
+			if _argv[0] == 25
+			{
+				"\0\s[25]"
+			}
+			else
+			{
+				"\0\s[0]"
+			}
 		}
 	}
 	
@@ -292,6 +299,7 @@ k0
 {
 	if SHIORI3FW.ShellName == "Radio"
 	{
+		/*
 		_b = BalloonCheck
 		if _b == 0 && stopfunction == 0
 		{
@@ -299,6 +307,7 @@ k0
 		}
 		elseif _b == 0 && stopfollow == 0
 		{
+			LOGGING("i am going to follow")
 			"\![raise,OneWingedAngle,follow]"
 		}
 		else
@@ -306,56 +315,83 @@ k0
 			quadrant = "none"
 			nearesttheta = "none"
 		}
-		--
-		case quadrant
+		*/
+		if stopfunction == 2
 		{
-			when 1
+			break
+		}
+		elseif stopfunction == 0
+		{
+			case quadrant
 			{
-				"\1\s[11]"
+				when 1
+				{
+					"\1\s[11]"
+				}
+				when 2
+				{
+					"\1\s[12]"
+				}
+				when 3
+				{
+					"\1\s[13]"
+				}
+				when 4
+				{
+					"\1\s[14]"
+				}
+				when "n"
+				{
+					"\1\s[15]"
+				}
+				when "e"
+				{
+					"\1\s[16]"
+				}
+				when "s"
+				{
+					"\1\s[17]"
+				}
+				when "w"
+				{
+					"\1\s[18]"
+				}
+				/*
+				when "c"
+				{
+					"\1\s[10]\i[30]"
+				}
+				*/
+				others
+				{
+					"\1\s[10]"
+				}
+				--
+				"\![raise,OneWingedAngle,wiggle]"
 			}
-			when 2
+		}
+		elseif stopfollow == 0
+		{
+			if ISINTSTR(nearesttheta) != 1
+			//if not an integer, it must be 'c'
 			{
-				"\1\s[12]"
+				//an alternativestart spiny thingy
 			}
-			when 3
+			else
 			{
-				"\1\s[13]"
+				"\1\s[10]\i[%(nearesttheta)]"
 			}
-			when 4
+		}
+		else
+		{
+			if _argv[0] == 25
 			{
-				"\1\s[14]"
+				"\1\s[19]"
 			}
-			when "n"
-			{
-				"\1\s[15]"
-			}
-			when "e"
-			{
-				"\1\s[16]"
-			}
-			when "s"
-			{
-				"\1\s[17]"
-			}
-			when "w"
-			{
-				"\1\s[18]"
-			}
-			/*
-			when "c"
-			{
-				"\1\s[10]\i[30]"
-			}
-			*/
-			others
+			else
 			{
 				"\1\s[10]"
 			}
-		}
-		--
-		case nearesttheta
-		{
-			//
 		}
 	}
 	else
@@ -604,9 +640,9 @@ no_sun
 		{
 			//day one
 			"rains of frogs"
-			"partly sunny, with a possible cold front moving in in the later afternoon"
+			"partly sunny, with a possible cold front screaming forth in the later afternoon"
 			"early morning starshowers, becoming clear around noon"
-			"partly cloudy, clearing up in the late afternoon, leading to clear visions of the moon in the evening onward"
+			"partly cloudy, clearing up in the late afternoon, leading to clear visions of the lesser moons in the evening onward"
 			"Severe Weather Alert! All citizens are expected to quarantine in response to reports of a new airborne pathogen that results in spontaneous uncontrolled singing and dancing"
 			"encroaching red smoke that serves as a harbinger of the approach of the Eater of Names.\w5 Citizens are advised to obey curfew\w4, lest they risk the loss of the elements of their identity entwined with their name.\w5 Trans citizens who wish their birth name be forgotten are advised to stop by any municipal office and pick up a factsheet on the proper safety protocols for the manipulation of an entity of such caliber.\w5 Local LGBT groups also stress the importance of having a Spotter and a Medium during the procedure"
 		}
@@ -632,35 +668,35 @@ no_sun
 			//DAY 4
 			"Tonight begins the annual pilgrimage of the mad men. Shopkeepers are reminded to itemize the purchases made and the leaves they receive in payment, so they can be properly compensated in legal tender."
 			"incandescent eigengrau"
-			"cold winds from the south"
+			"cold winds from the south, later splitting into eggshell rivulets"
 			"Allergen notice: the cats of Ulthar tread abroad tonight. Citizens sensitive to animal dander should be advised to stay inside and close to an air filter"
 			"the elfin masters tennis open. Be alert for projectiles"
 			"bouts of mock-Elizabethean lyricism"
 		}
 		{
 			//DAY 5
-			"heavy mist"
+			"suffocatingly heavy mist"
 			"agitation in deciduous trees. Citizens are encouraged to ignore pareidolic whispers emanating from the shaking of these leaves."
 			"lightning storms carrying the sound of hoofbeats"
 			"the three-dimensional shadow of a four-dimensional entity is expected to hover over the landscape later this afternoon into this evening. Citizens are unlikely to feel any ill-effects in their current dimensions"
 			"a downpour carrying marine fish"
-			"intermittent hail"
+			"intermittent hail glamour-borne as diamonds"
 		}
 		{
 			//DAY 6
-			"light mist"
+			"mist as light as downfeathers,\w8 gossamer threads that kiss one's skin with lemon-sweet nostalgia"
 			"a glitch in damage register. Citizens who crouch while wielding a dual-bladed weapon will suffer no damage to their person. This is expected to be patched out before the night is over, so anyone who wishes to run with scissors should try sooner rather than later."
 			"a chorale of bells from everywhere and nowhere as the sun reaches its zenith. Citizens are instructed to stop all activity in the half hour leading up to the event, as they will find themselves awestruck and in a trance as the peals echo away"
-			"sunny, with possible flurries"
+			"sunny, with possible eight-sided flurries"
 			"the fog comes in on little cats' feet"
 			"the decaying bodies of beetles, so numerous that the ground will crunch to walk upon all those glittering, discarded shells"
 		}
 		{
 			//DAY 7
 			"a silvery haze glittering with malice"
-			"sunny"
+			"here comes the sun"
 			"certain shades of the color blue are briefly expected to gain sapience around 16:05 tonight. A full list of the expected wavelengths is available from the usual municipal authorities"
-			"heavy snowfall through the night, tapering off in the early morning"
+			"violent snowfall through the night, tapering off in the early morning and expecting to be reach sub-lethal levels by noon"
 			"a tightness of the skin"
 			"countervening solar winds"
 		}
@@ -676,25 +712,25 @@ no_sun
 		{
 			//DAY 9
 			"The Harvester of Eyes rides tonight.\w3 Citizens are reminded to thoroughly inspect their decoys\w3 and ensure they are well-maintained\w3, especially if they intend to go out tonight."
-			"scattered thunderstorms in the evening"
-			"clear"
-			"scattered storms with walking lightning"
+			"scattered thunderstorms in the evening.\w5 Witches may rove abroad tonight"
+			"erasure of all atmospheric haze.\w6 Citizens should not be alarmed if the horizon looks like\w5, quote\w4 'a bad special effect'\w3"
+			"scattered storms with walking lightning and a chance of spontaneous reamination"
 			"temperature inversions leading to an ambient sense of suffocation"
-			"mild temperatures, with gusts of wind in the higher elevations"
+			"mild temperatures, with gusts of uncanny music in the higher elevations"
 		}
 		{
 			//DAY 10
 			"a swarm of several hovering mouths"
-			"lingering fog in the early morning, tapering off to the occasional slight drizzle around noon"
+			"lingering animal skins in the early morning, tapering off to the occasional slight drizzle around noon"
 			"a low blood pressure front moving in"
 			"howling winds that gutter the candles on your mantlepiece"
 			"electrical storms that cause home illumination to flicker"
-			"dry"
+			"dry fog blanketing the land\w5, bedecking the world an unnatural cant"
 		}
 		{
 			//DAY 11
 			"the furious sleep of colorless green ideas"
-			"flurries in the afternoon"
+			"toothless flurries in the afternoon"
 			"the Heavenly Tiger may place His pawprint on this town tonight. Persons and property are expected to bear no ill effects"
 			"the slight misalignment of the stars, just enough to rouse the Old Gods from their slumber, but not enough to free them from their uncanny prisons, leaving them to rend themselves to pieces as they attempt their escape"
 			"pregnant mosquitoes"
@@ -703,15 +739,15 @@ no_sun
 		{
 			//DAY 12
 			"a purulescent miasma in the lower elevations"
-			"clear for most of the day, becoming hazy later on"
+			"clear for most of the day, becoming irrationally hazy later on"
 			"rains of liquid jewels that crystallize upon hitting leaf blades"
 			"a heavy mist that presumes to birth collossi"
-			"sleet and freezing rain"
+			"\w4sleet and freezing rain\w8\c[line,1]\w4sleet and freezing rain\w8\c[line,1]\w4sleet and freezing rain"
 			"a surge of understanding and excessive empathy"
 		}
 		{
 			//DAY 13
-			"sunny, with a chance of scattered cloud formations"
+			"sunny, with a chance of scattered cloud hallucinations"
 			"the mirage of skeletal warriors limping through the streets, who moan when you reach out to them but otherwise do not respond to your touch"
 			"moderate-to-heavy fatigue"
 			"the breaking of the chains that bind the planet to its motions, allowing citizens a glimpse into the Great Gin whose shrieks and thews power the dance of the spheres before the damage is repaired"
@@ -725,7 +761,7 @@ no_sun
 			"the bloom from the tiger's tread may seed yet again"
 			"the mast of grand kelp"
 			"groaning as old oaks rouse from their deep slumber"
-			"snow"
+			"snow formations.\w7 Citizens should stay on high alert until the all-clear is granted"
 		}
 		{
 			//DAY 15
@@ -734,12 +770,12 @@ no_sun
 			"clear and sonorant night. The humming of the spheres should be especially audible"
 			"blue skies and bullet-sharp rainfall"
 			"sudden filling of local arroyos with a water-like substance"
-			"light snow showers"
+			"light metal-drop showers"
 		}
 		{
 			//DAY 16
 			"heavy rains and wind gusts of up to %(RAND(17)+2) mph"
-			"warm rains"
+			"warm rains that bear the unpleasant odor of gull-sight"
 			"mostly clear skies, with occasional glitches. Citizens should not be alarmed"
 			"glittering clouds of mites"
 			"the sense that the life you are living is not the life you should have\w5, that something, somehow, has rearranged reality such that you are somewhere you were not supposed to be"
@@ -752,16 +788,16 @@ no_sun
 			"a warm, wet breeze, carrying the slight scent of saliva"
 			"a feather-light humming as the bones of wyrms ride beneath the soil"
 			"a blue filter when seen through humans or gooseberry eyes"
-			"wintry mix"
+			"wintry mix featuring unseasonable glitches"
 		}
 		{
 			//DAY 18
-			"clear, with the occasional light breeze"
+			"clear, with the occasional sensual breeze"
 			"a murmuration of starlings"
 			"ice beams that chill the breast"
 			"an openness in all friendship"
 			"the feeling of being watched by things that should not bear such intelligence"
-			"a wintry mix, becoming rain by late evening"
+			"a wintry mix, becoming rain by the flight of the nighthawks"
 		}
 		{
 			//DAY 19
@@ -778,17 +814,17 @@ no_sun
 			"the devil rides on the far plains"
 			"magnetic rippling that makes ones teeth quiver"
 			"a green mist along the horizon"
-			"cloudy, with wind gusts of up to 7 mph"
+			"cloudy, with wind gusts of moribund dragonflies"
 			"from the sun that 'round me rolled in it's autumn tint of gold - from the lightning in the sky as it passed me flying by (when the rest of heaven was blue)"
 		}
 		{
 			//DAY 21
-			"partly cloudy"
+			"partly cloudy apian swarms"
 			"the mating of the seasons"
 			"the processional march of the souls of the damned. Especially doughty citizens who hear the cries of their loved ones are encouraged to seek out and break the manacles that bind them to the jailor"
-			"sleet and freezing rains"
+			"calcified sleet and freezing rains"
 			"a shift in ones' proprioception"
-			"a small chance of tornado formation in the morning"
+			"a chance of small tornado formation in the morning"
 		}
 		{
 			//DAY 22
@@ -804,7 +840,7 @@ no_sun
 			"radio disru\_q - bzzt - \_q\w5-ons"
 			"gamma ray bursts"
 			"anomalous light sprinkles"
-			"partly-sunny"
+			"partly-sunny\w8, partly-spaghettification"
 			"blacklight fluorescence of mutations"
 			"the forbidden weather"
 		}
@@ -812,18 +848,18 @@ no_sun
 			//DAY 24
 			"mild firework-like sparks showering from the sun"
 			"effervescent rainbows"
-			"a brief hailstorm in the mid-afternoon"
+			"a brief storm of eyelessness in the mid-afternoon"
 			"unusually hot temperatures"
-			"the localized numbing of taste buds so all has the sapor of lightly-buttered mashed potatoes"
+			"the localized numbing of taste buds\w3 so all\w3 has the sapor of lightly-buttered mashed potatoes"
 			"crimes"
 		}
 		{
 			//DAY 25
 			"incoming pressure changes leading to heavy fatigue among the human population"
 			"otherworldly signals overriding phatic commnication"
-			"thunderstorms through the night"
+			"thunderstorms and the shrieks of foxes through the night"
 			"the sense of being watched that is expected to persist for several days"
-			"dry, with brisk breezes"
+			"dry, with the red-eyed ululations of loons"
 			"risky breezes"
 		}
 		{
@@ -837,9 +873,9 @@ no_sun
 		}
 		{
 			//DAY 27
-			"limited visibility around sunset"
-			"dry firestorms possible"
-			"dry conditions; be alert for possible wildfires"
+			"limited visibility around sunset due to haloes lighting upon those fated to die.\w5 All visited by these haloes should make flexible arrangements for transport to local emergency rooms and urgent care centers in the coming month.\w5 Remember:\w4 municipal authorities are aiming for a 75% survivorship rate among the haloed this year\w4, and with the aid of the community\w3, they hope to reach this goal"
+			"dry firestorms possible.\w4 Citizens who expect to light matches should take care to ignite them in an oxygen-less environment"
+			"dry conditions; be alert for possible wildfires and wily coyotes"
 			"the winds will make a pact with the cats, and carry them aloft on witches' brooms"
 			"the chattering of gulls"
 			"the unopened eye that sees all, plus intermittent showers in the late afternoon"
@@ -849,23 +885,23 @@ no_sun
 			"potential crackling sounds around wood-burning stoves"
 			"condensation of honey-bright gums on right angles"
 			"the flesh of trees"
-			"humid"
+			"%(i)humid%(i0)"
 			"rain that falls at shallow angles"
 			"rough winds kicking up sandstorms that may coalesce into shards of seaglass"
 		}
 		{
 			//DAY 29
-			"mostly sunny"
+			"mostly sunny with the sky tinged the angiomatic colors of pia mater"
 			"possible infection of triangles whose angles sum up to greater than 180°"
 			"the echoes of giants"
-			"high humidity all day, only breaking overnight in the early morning"
+			"high delusions of immortality all day, only breaking overnight in the early morning"
 			"the flooding of the radio waves with advertisements"
 			"the shrapnel of the Gotterdammerung"
 		}
 		{
 			//DAY 30
-			"partly cloudy"
-			"a steady drizzle for most of the afternoon"
+			"partly analog"
+			"a steady drizzle over your house and your house only for most of the afternoon"
 			"the sudden appearance of rapidly unpeeling oranges"
 			"pearlescent clouds bearing wishes"
 			"inflammable flyers choking the skies"
@@ -875,13 +911,49 @@ no_sun
 			//DAY 31
 			"brief moments of the sensation of weightlessness"
 			"the sudden recognition of one's own ephemerality"
-			"clear, with moderate winds in the later hours"
+			"clear, with moderate violins in the later hours"
 			"music that will harmonize with any else that is played"
 			"pink-and-blue clouds tasting of candy floss"
 			"the sudden aging of all born in leap times"
 		}
 	}
 }
+
+
+/*
+************************************************************************
+					Tricky Envelopes
+************************************************************************
+[Writing] [Advanced]
+Write an envelope with both singular and plural entries, and 10 dialogues that make use of it.
+
+Extra credit: As above, but making use of multiple envelopes in each dialogue.
+*/
+
+uncanny
+{
+	"corrosion"
+	"the Event"
+	"unbroken colors"
+	"discordant notes"
+	"acids"
+	"disagreement"
+	"cancelled weather"
+	"the broken and the damned"
+	"prosody"
+	"gold bars"
+	"several litres[sic] of blood"
+}
+
+gobbledegook
+{
+	"Ich verstehe nur Bahnhof?" //I just understand train station (German)
+	"五里霧中?\w5\nGorimuchuu?" //five-li-fog-in //as if (one is) navigating five li in deep fog" (Japanese)
+	"Skjønne ikke bæra?" // I don't understand berries (Norwegian Trondheim/trønder dialect)
+
+}
+
+
 
 usersfolder
 {
@@ -1137,6 +1209,114 @@ timeslot //From the GT template. Breaking down the day into a few distinct chunk
 	elseif hour >= 18 && hour <= 20; "evening" //6-8pm
 	elseif hour >= 21 && hour <= 24; "latenight" //9pm-12am
 	else; "earlymorning" //1-4am
+}
+
+seasonis
+{
+	_month = GETTIME[1]
+	_day = GETTIME[2]
+	
+	LOGGING("%_month and %_day")
+	LOGGING("%_argv")
+	
+	if _argv[0] != ""
+	{
+		_month = _argv[0]
+		_day = _argv[1]
+	}
+	
+	
+	_winter = "winter"
+	_spring = "spring"
+	_summer = "summer"
+	_autumn = "autumn"
+	
+	if hemisphere == 's'
+	{
+		LOGGING("it is the southern hemisphere")
+		_winter = "summer"
+		_spring = "autumn"
+		_summer = "winter"
+		_autumn = "spring"
+	}
+	
+	_dspr = 21
+	_dsum = 21
+	_daut = 21
+	_dwin = 21
+	
+	if ISINTSTR(astro_events[0]) == 1
+	{
+		_dspr = TOINT(astro_events[0])
+	}
+	if ISINTSTR(astro_events[1]) == 1
+	{
+		_dsum = TOINT(astro_events[1])
+	}
+	if ISINTSTR(astro_events[2]) == 1
+	{
+		_daut = TOINT(astro_events[2])
+	}
+	if ISINTSTR(astro_events[3]) == 1
+	{
+		_dwin = TOINT(astro_events[3])
+	}
+	
+	LOGGING("%astro_events")
+	LOGGING("%GETTYPE(_dwin)")
+	
+	switch _month
+	{
+		"" //nothing for month 0
+		_winter
+		_winter
+		{
+			if _day < _dspr
+			{
+				_winter
+			}
+			else
+			{
+				_spring
+			}
+		}
+		_spring
+		_spring
+		{
+			if _day < _dsum
+			{
+				_spring
+			}
+			else
+			{
+				_summer
+			}
+		}
+		_summer
+		_summer
+		{
+			if _day < _daut
+			{
+				_summer
+			}
+			else
+			{
+				_autumn
+			}
+		}
+		_autumn
+		_autumn
+		{
+			if _day < _dwin
+			{
+				_autumn
+			}
+			else
+			{
+				_winter
+			}
+		}
+	}
 }
 
 youdidit

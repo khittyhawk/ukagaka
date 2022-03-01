@@ -1,250 +1,686 @@
+//__/\\\\\\\\\\\\\\\______________________________/\\\\\\\\\\\\__________________        
+// _\///////\\\/////______________________________\/\\\////////\\\________________       
+//  _______\/\\\___________________________________\/\\\______\//\\\_______________      
+//   _______\/\\\___________/\\\\\_____/\\\\\\\\\\\_\/\\\_______\/\\\_____/\\\\\____     
+//    _______\/\\\_________/\\\///\\\__\///////////__\/\\\_______\/\\\___/\\\///\\\__    
+//     _______\/\\\________/\\\__\//\\\_______________\/\\\_______\/\\\__/\\\__\//\\\_   
+//      _______\/\\\_______\//\\\__/\\\________________\/\\\_______/\\\__\//\\\__/\\\__  
+//       _______\/\\\________\///\\\\\/_________________\/\\\\\\\\\\\\/____\///\\\\\/___ 
+//        _______\///___________\/////___________________\////////////________\/////_____
+
+/*
+Here is a customizable to-do list for you to implement in your own ghosts! Pretty much everything on this page is meant to be self-contained, for easy insertion. All required variables are set within or prior to the function where they are used, so nothing needs to be added to first boot!
+
+The main requirements are
+	1) Uncomment the personal envelopes at the bottom of the page, or replace %(tmo) and %(noscroll) as instructed
+	2) Add a link to 'OnTodoPage' somewhere in your ghost. A menu is generally a good place.
+	3) Change the return option on the To-do landing page from 'funstuff' to whatever menu you want your ghost to return to.
+	4) Add 'rn_todo.dic' to your yaya.txt (rename as desired)
+
+*/
+
+//-----------------------------------------------------------------------------------------------------
+//      ______                     ___  _                                  _    _                   
+//    .' ___  |                  .' ..](_)                                / |_ (_)                  
+//   / .'   \_|  .--.   _ .--.  _| |_  __   .--./) __   _   _ .--.  ,--. `| |-'__   .--.   _ .--.   
+//   | |       / .'`\ \[ `.-. |'-| |-'[  | / /'`\;[  | | | [ `/'`\]`'_\ : | | [  |/ .'`\ \[ `.-. |  
+//   \ `.___.'\| \__. | | | | |  | |   | | \ \._// | \_/ |, | |    // | |,| |, | || \__. | | | | |  
+//    `.____ .' '.__.' [___||__][___] [___].',__`  '.__.'_/[___]   \'-;__/\__/[___]'.__.' [___||__] 
+//                                        ( ( __))                                                  
+//-----------------------------------------------------------------------------------------------------
+
+
+OnTodoPage
+//landing page
+{
+	if !ISVAR('yesno_skip'); {yesno_skip = "Don't skip"}
+	if !ISVAR('copen'); {copen = "\f[strike,1]"}
+	if !ISVAR('cclose'); {cclose = "\f[strike,0]"}
+	--
+	if yesno_skip == 'Skip' && reference0 != 'artificial'
+	{
+		OnTodo
+	}
+	else
+	{
+		if !ISVAR('stats_onoff'); {stats_onoff = 'Show'}
+		if !ISVAR('perc_onoff'); {perc_onoff = 'Show'}
+		if !ISVAR('dele_onoff'); {dele_onoff = 'Show'}
+		if !ISVAR('see_premade'); {see_premade = 'Hide'}
+		if !ISVAR('down_stay'); {down_stay = 'Keep'}
+		if !ISVAR('m_dist'); {m_dist = 16}
+		if !ISVAR('s_dist'); {s_dist = 15}
+		
+		"\b2\_q%(tmo)%(noscroll)\f[align,center]\f[underline,1]Configure To Do\f[underline,0]\n/
+		\![*]\q[Main Todo list,OnTodo]\n\n\f[align,left]"
+		/*
+		\![*]\q[Premade to-do lists,opt_premade]: %(see_premade)\n"
+		--
+		if see_premade == "Show"
+		{
+			"\_l[1.5em]\![*]\q[Ghost Dev,OnDefaultTodo]\n"
+		}
+		*/
+		--
+		"\![*]Main menu (x) distance: \q[%(m_dist),main_num]\n/
+		\_l[1.5em]Example: \_l[%(m_dist)em](x)\n/
+		\![*]Submenu (x) distance: \q[%(s_dist),sub_num]\n/
+		\_l[1.5em]Example: \_l[%(s_dist)em](x)\n/
+		\![*]\q[Show stats,seestats]: %(stats_onoff)"
+		--
+		if stats_onoff == 'Show'
+		{
+			"...\n/
+			\_l[1.5em]\q[Percent completed,seeperc]: %(perc_onoff)\n/
+			\_l[1.5em]\q[Completed items deleted,seedele]: %(dele_onoff)\n"
+		}
+		else
+		{
+			"\n"
+		}
+		--
+		"\![*]\q[Bump completed items?,down_items]: %(down_stay)\n/
+		\![*]\q[Skip this page?,skip_landing]: %(yesno_skip)\n\n/
+		\![*]\q[Return to Tools,funstuff]        \![*]\q[Cancel,Cancel]\n\e"
+		//end of the to-do landing page and configuration menu!
+		//at the bottom, I have this list return to my tools menu, called 'funstuff'; you can change this item to go to whereever you want
+	}
+}
+
+//----------------------------------------
+//---Toggles for configuration settings---
+//----------------------------------------
+
+Select.main_num
+{
+	"\![open,sliderinput,OnXDist,-1,%(m_dist),5,20,--reference=main]"
+	
+}
+
+Select.sub_num
+{
+	"\![open,sliderinput,OnXDist,-1,%(s_dist),5,20,--reference=sub]"
+	
+}
+
+OnXDist
+{
+	if reference2 == 'main'
+	{
+		m_dist = TOINT(reference0)
+	}
+	elseif reference2 == 'sub'
+	{
+		s_dist = TOINT(reference0)
+	}
+	--
+	OnTodoPage
+	
+}
+
+Select.seestats
+{
+	if stats_onoff != "Show"
+	{
+		stats_onoff = "Show"
+		perc_onoff = "Show"
+		dele_onoff = "Show"
+	}
+	else
+	{
+		stats_onoff = "Hide"
+		perc_onoff = "Hide"
+		dele_onoff = "Hide"
+	}
+	--
+	OnTodoPage
+}
+
+Select.seeperc
+{
+	if perc_onoff != "Show"
+	{
+		perc_onoff = "Show"
+	}
+	else
+	{
+		perc_onoff = "Hide"
+	}
+	--
+	OnTodoPage
+}
+
+Select.seedele
+{
+	if dele_onoff != "Show"
+	{
+		dele_onoff = "Show"
+	}
+	else
+	{
+		dele_onoff = "Hide"
+	}
+	--
+	OnTodoPage
+}
+
+Select.skip_landing
+{
+	if yesno_skip != "Skip"
+	{
+		yesno_skip = "Skip"
+	}
+	else
+	{
+		yesno_skip = "Don't skip"
+	}
+	--
+	OnTodoPage
+}
+
+
+Select.opt_premade
+{
+	if see_premade != "Hide"
+	{
+		see_premade = "Hide"
+	}
+	else
+	{
+		see_premade = "Show"
+	}
+	--
+	OnTodoPage
+}
+
+Select.down_items
+{
+	if down_stay != "Keep"
+	{
+		down_stay = "Keep"
+	}
+	else
+	{
+		down_stay = "Bump"
+	}
+	--
+	OnTodoPage
+}
+
+
+//-------------------------------------------------------------------------------------
+//   ,--------.                ,--.           ,--.   ,--.                        
+//   '--.  .--',---. ,-----. ,-|  | ,---.     |   `.'   | ,---. ,--,--, ,--.,--. 
+//      |  |  | .-. |'-----'' .-. || .-. |    |  |'.'|  || .-. :|      \|  ||  | 
+//      |  |  ' '-' '       \ `-' |' '-' '    |  |   |  |\   --.|  ||  |'  ''  ' 
+//      `--'   `---'         `---'  `---'     `--'   `--' `----'`--''--' `----'  
+//-------------------------------------------------------------------------------------
+
+
+
 OnTodo
+//opens the To-do Menu
 {
 	TodoMenu
 }
 
 TodoMenu
+//the menu itself
 {
 	"\b2\_q%(tmo)%(noscroll)\f[align,center]\f[underline,1]To Do\f[underline,0]\n\n"
+	//this opens the to-do menu in the big balloon, with the title 'To-Do' centered
+	//scroll to the bottom of this document for an explanation of %(tmo) and %(noscroll)
 	--
 	if ARRAYSIZE(doitdoitdoit) < 1; {doitdoitdoit = IARRAY}
 	if ARRAYSIZE(completeditems) < 1; {completeditems = IARRAY}
 	if ARRAYSIZE(submenulist) < 1; {submenulist = IARRAY}
+	if !ISVAR('all_complete'); {all_complete = 0}
+	if !ISVAR('subs_complete'); {subs_complete = 0}
+	
+	//these three if statements check if the following arrays exist by checking how many items they have; if they don't have any items, it sets them as empty arrays that we can then populate
+	//this is useful so we don't have to set these as empty arrays in first boot
+	
+	//'doitdoitdoit' is the array of items on the main level of the to-do list
+	//'completeditems' is the array of items that have been completed
+	//'submenulist' is the array of items on the main level of the to-do list that are expanded into submenus; these submenus can be opened and be populated with items of their own
 	
 	_subscomp = 0.0
 	_subsall = 0
+	//these two are set to allow the ghost to show the total percentage of completed items
 	
 	_len = ARRAYSIZE(doitdoitdoit)
-	_output = ""
+	_output = "" //this _output is important, as it'll be what displays the items
+	_output2 = "" //if the user wants completed items to go to the bottom of the list, we store them here
+	
+	_copen = "\f[strike,1]"
+	_cclose = "\f[strike,0]"
 	--
 	"\f[align,left]"
 	--
-	if _len <1
+	if _len < 1
+	//if the list of tasks to do is empty
 	{
 		"There's nothing here!\n"
 	}
 	else
 	{
 		for _val = 0; _val < (_len); _val++
+		//we scroll through all the items in 'doitdoitdoit'
+		//_val is just a placeholder (literally!) variable to identify which position in the 'doitdoitdoit' array we are in
 		{
 			_it = doitdoitdoit[_val]
 			_ex = "(x)"
 			_sm = "(Submenu?)"
+			_tdist = m_dist-3
+			//the above local variables pretty much just exist so I don't have to write as many letters all the time
 			
 			
 			
+			//---------------------------------------------------------------------
+			//---first, we check if the item in 'doitdoitdoit' also is a submenu---
+			//---------------------------------------------------------------------
 			if ASEARCH(_it,submenulist) != -1
-			//if the item is a submenu
+			//is the item in our list of submenus?
 			{
-				//find out how many items it has as a submenu, then find out how many completed items it has as a submenu
-				
 				_subitemspos = ASEARCH(_it,submenulist)
+				//if so, find the position of the item in the 'submenulist' array
 				
+				
+				//--------------------------------------------
+				//---how many items does this submenu have?---
+				//--------------------------------------------
 				_subitems = SPLIT(submenulists[_subitemspos],';')
+				//'submenulists' is set in a later function which is called when an item is made into a submenu
+				//the items populating this submenu are separated in the 'submenulists' array by ';'
 				_amntsubitems = (ARRAYSIZE(_subitems))-1
-				//how many items^
+				//how many items this submenu has^
+				//the first element of the array will be the name of the submenu, so the items listed in the submenu will be one fewer than the total number of items in the array
 				
 				
+				
+				//--------------------------------
+				//---is this submenu completed?---
+				//--------------------------------
 				_thissubdone = 0
+				//this variable counts how many submenus are completed so the ghost can display the percentage of items completed
 				for _el = 0; _el < ARRAYSIZE(sub_done); _el++
+				//_el is another placeholder value, mostly because _val is already taken; it's just an abbreviation of "element"
+				//'sub_done' is set later
 				{
 					if SPLIT(sub_done[_el],';')[0] == _it
+					//if the first element of 'sub_done' is the main list entry we are looking at
 					{
 						_thissubdone += 1
 					}
 				}
 				
+				if _amntsubitems == _thissubdone
+				{
+					/*
+				}
+				
+				
 				if ASEARCH(_it,completeditems) != -1
 				//if the item is in the completed list
 				{
-					_output += "\![*]\f[strike,1]\q[%(_it),OnXToggle,%(_it),_hoverme]\f[strike,0]\_l[13em]\f[height,80%](%(_thissubdone)/%(_amntsubitems))\f[height,default]   \_l[16em]\q[%(_ex),OnRemoveItems,%(_it),_hoverme,Remove this item from the list entirely?,comp]\n"
+					*/
+					if down_stay == "Bump"
+					{
+						_output2 += "\![*]%(_copen)\q[%(_it),OnOpenSub,%(_it),_hoverme]%(_cclose)\_l[%(_tdist)em]\f[height,80%](%(_thissubdone)/%(_amntsubitems))\f[height,default]   \_l[%(m_dist)em]\q[%(_ex),OnRemoveItems,%(_it),_hoverme,Remove this item from the list entirely?,comp]\n"
+					}
+					else
+					{
+						_output += "\![*]%(_copen)\q[%(_it),OnOpenSub,%(_it),_hoverme]%(_cclose)\_l[%(_tdist)em]\f[height,80%](%(_thissubdone)/%(_amntsubitems))\f[height,default]   \_l[%(m_dist)em]\q[%(_ex),OnRemoveItems,%(_it),_hoverme,Remove this item from the list entirely?,comp]\n"
+					}
+					//okay so
+					//the item is offset with an sstp marker. the item is struck out. the item is listed and clicking it will allow the user to toggle its completed state
+					//as it is a submenu, the to-do list also displays how many of its submenu items are completed out of the total.
+					//finally, the ghost contains an option to remove the item from the main list; this link has a tooltip to explain such
 				}
 				else
 				//otherwise, it is thus pending
 				{
-					_output += "\![*]\q[%(_it),OnOpenSub,%(_it)]\_l[13em]\f[height,80%](%(_thissubdone)/%(_amntsubitems))\f[height,default]   \_l[16em]\q[%(_ex),OnRemoveItems,%(_it),_hoverme,Remove this item from the list entirely?,pend]\n"
+					_output += "\![*]\q[%(_it),OnOpenSub,%(_it)]\_l[%(_tdist)em]\f[height,80%](%(_thissubdone)/%(_amntsubitems))\f[height,default]   \_l[%(m_dist)em]\q[%(_ex),OnRemoveItems,%(_it),_hoverme,Remove this item from the list entirely?,pend]\n"
+					//as these are submenus
+					//the item is offset with an sstp marker
+					//clicking on the listed item will open the submenu.
+					//the to-do list displays how manhy items arein this submenu are completed out of the total
+					//you can also remove this item from the main list entirely; the link also has a tooltip
 				}
+				
 				_subscomp += _thissubdone
 				_subsall += _amntsubitems
 			}
 			else
-			//if it is not a submenu
+			//------------------------------------------------
+			//---if the item in to-do list is not a submenu---
+			//------------------------------------------------
 			{
 				if ASEARCH(_it,completeditems) != -1
 				//if the item is in the completed list
 				{
-					_output += "\![*]\f[strike,1]\q[%(_it),OnXToggle,%(_it),_hoverme]\f[strike,0]\_l[16em]\q[%(_ex),OnRemoveItems,%(_it),_hoverme,Remove this item from the list entirely?,comp]\n\_l[2.5em]\f[sup,1]\f[height,+2]\q[%(_sm),OnSubmenu,%(_it),_hoverme,Make this a submenu?]\f[default]\n"
+					if down_stay == "Bump"
+					{
+						_output2 += "\![*]%(_copen)\q[%(_it),OnXToggle,%(_it),_hoverme]%(_cclose)\_l[%(m_dist)em]\q[%(_ex),OnRemoveItems,%(_it),_hoverme,Remove this item from the list entirely?,comp]\n\_l[2.5em]\f[sup,1]\f[height,+2]\q[%(_sm),OnSubmenu,%(_it),_hoverme,Make this a submenu?]\f[default]\n"
+					}
+					else
+					{
+						_output += "\![*]%(_copen)\q[%(_it),OnXToggle,%(_it),_hoverme]%(_cclose)\_l[%(m_dist)em]\q[%(_ex),OnRemoveItems,%(_it),_hoverme,Remove this item from the list entirely?,comp]\n\_l[2.5em]\f[sup,1]\f[height,+2]\q[%(_sm),OnSubmenu,%(_it),_hoverme,Make this a submenu?]\f[default]\n"
+					}
+					//the item is offset with an sstp marker. the item is struck out. the item is listed and clicking it will allow the user to toggle its completed state
+					//finally, the ghost contains an option to remove the item from the main list; this link has a tooltip to explain such
+					//very closely below it, we also have an option to turn this item into a submenu; this link has a tooltip to explain such
 				}
 				else
 				//otherwise, it is thus pending
 				{
-					_output += "\![*]\q[%(_it),OnXToggle,%(_it)]\_l[16em]\q[%(_ex),OnRemoveItems,%(_it),_hoverme,Remove this item from the list entirely?,pend]\n\_l[2.5em]\f[sup,1]\f[height,+2]\q[%(_sm),OnSubmenu,%(_it),_hoverme,Make this a submenu?]\f[default]\n"
+					_output += "\![*]\q[%(_it),OnXToggle,%(_it)]\_l[%(m_dist)em]\q[%(_ex),OnRemoveItems,%(_it),_hoverme,Remove this item from the list entirely?,pend]\n\_l[2.5em]\f[sup,1]\f[height,+2]\q[%(_sm),OnSubmenu,%(_it),_hoverme,Make this a submenu?]\f[default]\n"
+					//the item is offset with an sstp marker. the item is listed and clicking it will allow the user to toggle its completed state
+					//finally, the ghost contains an option to remove the item from the main list; this link has a tooltip to explain such
+					//very closely below it, we also have an option to turn this item into a submenu; this link has a tooltip to explain such
 				}
 				
 			}
 		}
-		_output
+		_full = _output + _output2
+		_full
+		//this displays the items in the to-do list that we put together in all that code above
 		
 	}
 	--
-	"\f[align,center]\n\n[half]"
+	"\f[align,center]\n\n[25]"
 	--
-	if _len >= 1
+	if _len >= 1 && perc_onoff == 'Show'
+	//if there are items on the to-do list
 	{
 		_donenum = ARRAYSIZE(completeditems)+0.0
+		//this takes the number of completed items and turns it into a float
 		_percmain = TOINT((_donenum/_len)*100)
+		//this divides the length of all the items on the main to-do list by the amount of completed items
+		//we need the number of completed items to be a float so the quotient will be a decimal that we can then multiply by 100 to get the percentage of items completed
 
 		
-		"%(_percmain)% Completed\n"
+		"%(_percmain)% Completed"
 		--
 		if ARRAYSIZE(submenulist) > 0
+		//if there are items in the submenus, then we add the total percentage of completed items as well
 		{
 			_miniperc = TOINT((_subscomp/_subsall)*100)
-			"\f[height,80%](%(_miniperc)% of all %(_subsall) items)\f[height,default]"
+			"   \f[height,80%](%(_miniperc)% of all %(_subsall) items)\f[height,default]"
 		}
 		--
-		"\n\n[half]"
+		"\n[half]"
+	}
+	--
+	if (subs_complete > 0 || all_complete > 0) && dele_onoff == 'Show'
+	{
+		"\n[40]Total completed items deleted: %(subs_complete+all_complete)\n"
+		//this shows the user how many completed items they have deleted, and so the user hopefully won't get too upset at their progress going down as they delete items from the lists to clean em up
+		--
+		if all_complete > 0
+		{
+			"Total submenus cleared: %(all_complete)\n"
+			//we also track to total main list items cleared for extra accomplishment points
+		}
+		--
+		"\n[half]"
 	}
 	--
 	"\q[Add item?,additem]\n/
-	\![*]\q[Return to Tools,funstuff]        \![*]\q[Cancel,Cancel]\e"
+	\![*]\q[Configure,OnTodoPage,artificial]        \![*]\q[Cancel,Cancel]\n\e"
+	//end of the main to-do menu!
+	//add an item to the list
+	//at the bottom, I have this list return to the landing page
 }
+
+
+//----------------------------------
+//---------Adding an Item-----------
+//----------------------------------
 
 Select.additem
 {
 	"\![open,inputbox,OnMakeDo,-1]"
+	//opens an input box
 	--
 	TodoMenu
+	//automatically returns to the main To-do menu
+	//this means the to-do menu automatically refreshes when the input box opens
 }
 
 OnMakeDo
+//interprets the input of the added item
 {
 	_newitem = reference0
+	//i save the input (reference0) as a local variable
+	//it's a useful habit to get into in case i want to modify the input somehow, but it's not strictly necessary here 
+	
 	doitdoitdoit ,= _newitem
+	//add the item to the list of items displayed on the main to-do list
 	--
+	//not sure if i need this double dash break, but just in case
+	
 	pendingitems ,= _newitem
+	//if the user adds a new item, i'm assuming it's not already completed. regardless, it's just a click if it is
 	--
 	TodoMenu
+	//automatically returns to the main To-do menu after interpretation
+	//this means the to-do menu refreshes when the input is submitted
 }
 
 
+//--------------------------------------------------
+//----------Marking Items as 'Completed'------------
+//--------------------------------------------------
+
 OnXToggle
+//this is triggered when the user clicks on a listed item
 {
-	if ASEARCH(reference0,pendingitems) != -1
+	_selitem = reference0
+	//setting the argument to a local variable (abbreviation of "selected item")
+	
+	if ASEARCH(_selitem,pendingitems) != -1
 	//if the item is pending, we mark it as completed
 	{
-		_pos = ASEARCH(reference0,pendingitems)
+		_pos = ASEARCH(_selitem,pendingitems)
+		//we find the location of the item in 'pending items'
 		pendingitems[_pos] = IARRAY
-		completeditems ,= reference0
+		//we remove the item from 'pendingitems', as it is no longer pending
+		completeditems ,= _selitem
+		//we add the item to 'completeditems'
 	}
 	else
 	//otherwise, add the item back to pending!
 	{
-		if ASEARCH(reference0,completeditems) != -1
+		if ASEARCH(_selitem,completeditems) != -1
 		{
-			_pos = ASEARCH(reference0,completeditems)
+			//if the item is in 'completeditems'
+			_pos = ASEARCH(_selitem,completeditems)
+			//we find its location in 'completeditems'
 			completeditems[_pos] = IARRAY
+			//and then remove the item from 'completeditems'
 		}
 		--
-		pendingitems = (pendingitems,reference0)
+		pendingitems = (pendingitems,_selitem)
+		//whether or not the item is in 'completeditems', we add the item to 'pendingitems'
 	}
 	--
 	TodoMenu
+	//automatically returns to the main To-do menu after toggling
 }
 
 
 OnRemoveItems
+//removing an item from the to-do menu entirely
 {
 	_removable = reference0
+	//setting the argument to a local variable
+	
 	_pos = ASEARCH(_removable,doitdoitdoit)
 	doitdoitdoit[_pos] = IARRAY
+	//find the location of the item in 'doitdoitdoit' (the array of all the entries in the main to-do list)
+	//remove the item from 'doitdoitdoit'
+	
+	
 	if reference5 == "pend"
+	//if the item comes from the pending list
 	{
 		_pos1 = ASEARCH(_removable,pendingitems)
 		pendingitems[_pos1] = IARRAY
+		//we find the location of the item in the pending list and remove it from 'pendingitems'
 	}
 	elseif reference5 == "comp"
+	//if the item comes from the list of completed items
 	{
 		_pos1 = ASEARCH(_removable,completeditems)
 		completeditems[_pos1] = IARRAY
+		//we find the location of the item in the list of completed items and remove it from 'completeditems'
+		all_complete++
+		//kick up the number of deleted completed items
 	}
 	--
 	TodoMenu
+	//automatically returns to the main To-do menu after toggling
 }
 
 
-//-----------------------------
-//Submenus
-//-----------------------------
+//---------------------------------------------------------
+//    __       _                                    
+//   / _\_   _| |__  _ __ ___   ___ _ __  _   _ ___ 
+//   \ \| | | | '_ \| '_ ` _ \ / _ \ '_ \| | | / __|
+//   _\ \ |_| | |_) | | | | | |  __/ | | | |_| \__ \
+//   \__/\__,_|_.__/|_| |_| |_|\___|_| |_|\__,_|___/
+//                                        
+//----------------------------------------------------------
 
+//-------------------------------------------------------
+//---Creating a submenu from an entry on the main list---
+//-------------------------------------------------------
 
 OnSubmenu
-//this turns a list item into a submenu
+//when the user clicks on an entry in the main to-do list, this turns the entry into a submenu
 {
 	_menuize = reference0
+	//set the argument to a local variable
 	if ISVAR('sub_done') != 1; {sub_done = IARRAY}
+	//this creates the array 'sub_done' if it doesn't already exist
 	
 	
 	LOGGING("i have added %_menuize to a submenu==========")
 	LOGGING("its type is %GETTYPE(_menuize)==========")
+	//these logging functions are just useful for troubleshooting
 	
-	submenulist ,= _menuize //an array of all the list items that are submenus
-	submenulists ,= _menuize //this will be for the submenu items to add
+	submenulist ,= _menuize //an array of all the items that are submenus
+	submenulists ,= _menuize //this will be populated with nested arrays holding all the items in each respective submenu
+	//the above two arrays can technically be combined into one, but it is easier to make them two different ones when evaluating whether a main entry item is a submenu or not
+	//if they are one array, you'll have to make sure to grab the first item of the split array every time you want to evaluate it
+	//just be careful the arrays don't get desynced!
 
 	--
 	"\![raise,OnOpenSub,%(_menuize)]"
+	//if we make an item into a submenu, it seems only polite to immediately open that submenu we just made!
 }
+
+
+
+
+
+//---------------------------------------
+//-----------Opening a submenu-----------
+//---------------------------------------
 
 OnOpenSub
 //this opens a submenu
 {
 	_header = reference0
-	LOGGING("this is the name of the submenu list item: %_header")
-	"\b2%(noscroll)\_q\n[half]\f[align,center]%(tmo)%_header\n\n\f[align,left]"
+	//setting the argument to a local variable
+	LOGGING("this is the name of the submenu list item: %_header")  //logging function for troubleshooting
+	
+	
+	
+	"\b2%(tmo)%(noscroll)\_q\n[half]\f[align,center]%_header\n\n\f[align,left]"
 	//the name of the menu item is what the header will be
+	//scroll to the bottom of this document for an explanation of %(tmo) and %(noscroll)
+	
 	
 	_loc = ASEARCH(_header,submenulist)
+	//the position of the item in 'submenulist'
 	
 	_ex = "x"
+	//just for ease of formatting
 	
 	_itemlist = SPLIT(submenulists[_loc],';')
+	//right. so here's where we need to do some splitting of nested arrays
+	//thankfully, we are already seeking out one specific submenu and immediately put the nested entries into their own array, so we tamp down on complication
+	//so we end up with an array of the items in the submenu (including the name of the submenu)
 	_len = ARRAYSIZE(_itemlist)
+	//length of the items in the submenu (including the name of the submenu)
 	_complen = 0.0
+	//for evaluating the percentage of completed submenu items
+	
+	_copen = "\f[strike,1]"
+	_cclose = "\f[strike,0]"
 	--
+	//now we start displaying the rest of the menu
 	if _len == 1
 	{
 		"There's nothing here!\n"
+		//the default value if the only element of the array is the header
 	}
 	else
 	{
 		_output = ""
+		_output2 = ""
+		//the variable whose contents will be displayed after the loop is finished
+		
 		for _var = 1; _var < _len; _var++
+		//placeholder variable; it's '_var' here because i felt it might be less confusing if it didn't share the same local variabe name as its main counterpart
 		{
 			_sub = _itemlist[_var]
+			//the submenu entry the ghost is currently looking at
 			_combo = _header+';'+_sub
+			//we combine the header and the item for a single element to search in 'sub_done'
+			//(see below for an explanation of 'sub_done')
 			if ASEARCH(_combo,sub_done) == -1
-			//if it's not completed
+			//if the item is not yet completed (i.e., not present in 'sub_done')
 			{
-				_output += "\q[%(_sub),OnSubComplete,%(_sub),%(_header)]\_l[15em]\q[%(_ex),OnRemoveSub,%(_sub),_hoverme,Remove this item from the list?,%(_header)]\n"
+				_output += "\q[%(_sub),OnSubComplete,%(_sub),%(_header)]\_l[%(s_dist)em]\q[%(_ex),OnRemoveSub,%(_sub),_hoverme,Remove this item from the list?,%(_header)]\n"
+				//clicking on the item will toggle it as completed or not. clicking on the 'x' will remove the item from the list. hovering over the 'x' will show a tooltip
 			}
 			else
 			//if it is completed
 			{
-				_output += "\f[strike,1]\q[%(_sub),OnSubComplete,%(_sub),%(_header)]\f[strike,0]\_l[15em]\q[%(_ex),OnRemoveSub,%(_sub),_hoverme,Remove this item from the list?,%(_header)]\n"
+				if down_stay == "Bump"
+				{
+					_output2 += "%(_copen)\q[%(_sub),OnSubComplete,%(_sub),%(_header)]%(_cclose)\_l[%(s_dist)em]\q[%(_ex),OnRemoveSub,%(_sub),_hoverme,Remove this item from the list?,%(_header)]\n"
+				}
+				else
+				{
+					_output += "%(_copen)\q[%(_sub),OnSubComplete,%(_sub),%(_header)]%(_cclose)\_l[%(s_dist)em]\q[%(_ex),OnRemoveSub,%(_sub),_hoverme,Remove this item from the list?,%(_header)]\n"
+				}
+				//strike through the item. clicking on the item will toggle it from being completed. clicking on the 'x' will remove the item from the list. hovering over the 'x' will show a tooltip
 				_complen += 1
+				//add one to the list of completed items for later evaluation of percent complete
 			}
 		}
-		_output
+		_full = _output + _output2
+		_full
 	}
 	--
 	"\n\n[half]\f[align,center]"
 	--
 	_perc = TOINT((_complen/(_len-1))*100)
-	
-	"%(_perc)% complete\n\n[half]/
-	\q[Add item?,OnToSub,%(_header)]\n/
+	//calculating the percentage of completed items
+	//we use (len-1) as the dividend because we don't want to include the header as an item to complete
+	if perc_onoff == 'Show'
+	{
+		"%(_perc)% complete\n\n[half]"
+	}
+	--
+	"\q[Add item?,OnToSub,%(_header)]\n/
 	\![*]\q[Return to Todo List?,OnTodo]       \![*]\q[Cancel,Cancel]"
-	
+	//adding an item to this submenu
+	//returning to the main todo list
 }
 
 
@@ -255,13 +691,21 @@ OnOpenSub
 
 
 OnToSub
+//add an item to this submenu
 {
 	LOGGING("these are the references when adding an item %reference")
 	LOGGING("===============================")
+	//logging for troubleshooting
+	
+	
 	_whichsub = reference0
+	//setting the argument to a local variable
 	"\![open,inputbox,OnAddSub,-1,--reference=%_whichsub]"
+	//opening the input box to add an item
+	//we also pass along the name of the submenu as an argument so the ghost knows which submenu to add this new item to
 	--
 	"\![raise,OnOpenSub,%(_whichsub)]"
+	//then we automatically open the submenu we are adding the item to
 }
 
 OnAddSub
@@ -270,66 +714,172 @@ OnAddSub
 	//so we'll need to know the contents of the new item and to which submenu item to attach it to
 	_newitem = reference0
 	_whichsub = reference2
+	//%(_whichsub) is a new variable local to this function. i have given it the same name as the variable in the calling function for comprehension's sake, but it's not the same variable
 
-	//if submenulist is a multi-dimensional array, we can append all new items to the latter part
+	//'submenulist' is the sister function to the multidimensional array 'submenulists'
 	_submenupos = ASEARCH(_whichsub,submenulist)
+	//find the position of the submenu's name in 'submenulist'
 	
 	//now we add the new item to the submenu's nested array
 	submenulists[_submenupos] += ";"+_newitem
+	//we need to make sure the new entry is added to the end of the correct element of 'submenulists'
+	//though i'm calling 'submenulists' a multidimensional array, the nested array is actually a string that can be easily split by ';'
 	
 	--
 	"\![raise,OnOpenSub,%(_whichsub)]"
+	//after the new entry is submitted, we return to submenu again, refreshing it with our new item added
 }
+
+
+
+
+//------------------------------------------
+//---Toggling a submenu item as completed---
+//------------------------------------------
 
 OnSubComplete
 {
 	_doneitem = reference0
 	_where = reference1
+	//we need to pass along both the item and the submenu it belongs to
 	
 	_collection = _where+';'+_doneitem
+	//we need to combine the name of the submenu and the name of the item to check if it exists
 	
 	if ASEARCH(_collection,sub_done) != -1
-	//if it already exists
+	//if it already exists as completed
 	{
-		//remove it from completed
 		_loc = ASEARCH(_collection,sub_done)
 		sub_done[_loc] = IARRAY
+		//find the position of the item
+		//remove it from 'sub_done'
+		//this makes it read as pending
 	}
 	else
 	//if it doesn't already exist in sub_done array
 	{
-		//add it
+		//add it to the array as a completed entry
 		sub_done ,= _collection
 	}
 	--
 	"\![raise,OnOpenSub,%(_where)]"
+	//automatically refresh back to the submenu in question
 }
 
+
+//-----------------------------------
+//---Remove an item from a submenu---
+//-----------------------------------
 
 OnRemoveSub
 {
 	_doneitem = reference0
 	_where = reference3
+	//pass along arguments for what item and where it is located
+	
 	LOGGING("%reference3 =============================")
 	LOGGING("=========================================")
+	//logging for troubleshooting
 	
 	_collection = _where+';'+_doneitem
+	//combine which submenu the item is located on and what it is for searching purposes
 	
 	if ASEARCH(_collection,sub_done) != -1
 	//if it is completed
 	{
-		//remove it from completed
 		_loc = ASEARCH(_collection,sub_done)
 		sub_done[_loc] = IARRAY
+		//find its position in 'sub_done'
+		//remove the item
+		subs_complete++
+		//kick up the number of deleted completed submenu items
 	}
 	--
-	//it will already exist in submenulists unless something's gone wrong, so...
+	//the entry will already exist in submenulists unless something's gone wrong, so...
 	//first find the main category, then remove within it
 	_pos = ASEARCH(_where,submenulist)
+	//find where the submenu title is in 'submenulist'
 	_withsemi = ";"+_doneitem
+	//concatenate a string of a semi-colon and the item
 	submenulists[_pos] = REPLACE(submenulists[_pos],_withsemi,'')
+	//for the submenu title's location in 'submenulists', search for a semi-color and the name of the item and delete
+	
 	LOGGING("the item %(_doneitem) has been modified from %(_where)======")
+	//logging for the sake of troubleshooting
 	--
 	"\![raise,OnOpenSub,%(_where)]"
+	//automatically return to the submenu in question
 	
 }
+
+
+//-------------------------------------------------------------------------------------------------------------------------------
+//     #####                                ######                    #####                                                    
+//    #     # #    #  ####   ####  #####    #     # ###### #    #    #     # #    # ######  ####  #    # #      #  ####  ##### 
+//    #       #    # #    # #        #      #     # #      #    #    #       #    # #      #    # #   #  #      # #        #   
+//    #  #### ###### #    #  ####    #      #     # #####  #    #    #       ###### #####  #      ####   #      #  ####    #   
+//    #     # #    # #    #      #   #      #     # #      #    #    #       #    # #      #      #  #   #      #      #   #   
+//    #     # #    # #    # #    #   #      #     # #       #  #     #     # #    # #      #    # #   #  #      # #    #   #   
+//     #####  #    #  ####   ####    #      ######  ######   ##       #####  #    # ######  ####  #    # ###### #  ####    #   
+//-------------------------------------------------------------------------------------------------------------------------------
+
+
+
+OnDefaultTodo
+{
+	
+	dev_main_entries = "Backend","Booting and Closing","Idle Talk","Menus","Mouse","Text Parsing","Functions","Right-Click Menu","Shell"
+	_backend = "Backend;shell descript;ghost descript;install.txt"
+	_boot = "Booting and Closing;first boot"
+	_talk = "Idle Talk"
+	_menu = "Menus;main menu"
+	_mouse = "Mouse;petting;petting dialogue;hitting;hitting dialogue"
+	_anchor = "Text Parsing"
+	_misc = "Functions"
+	_string = "Right-Click Menu"
+	_shell = "Shell;default sakura pose;sad pose;angry pose;pleased pose;singing pose;hotspots/collisions"
+	dev_sub_menus = _backend,_boot,_talk,_menu,_mouse,_anchor,_misc,_string,_shell
+}
+
+
+OnCategoryTodo
+{
+	"\b2\_q%(tmo)%(noscroll)\f[align,center]\f[underline,1]Ghost Dev Checklist\f[underline,0]\n\n\f[align,left]/
+	Dialogue:/
+	\![*]\q[Booting Dialogue]/
+	Code:/
+	Shellwork:/
+	\![*]\q[Configure,OnTodoPage,artificial]        \![*]\q[Cancel,Cancel]\n\e"
+}
+
+//------------------------------------------
+//Personal envelopes I find useful shortcuts
+//------------------------------------------
+//uncomment the following or replace:
+
+/*
+tmo
+//prevents the balloon from timing out
+//if you don't want to use this, replace all instances of %(tmo) with '"\![set,balloontimeout,-1]"'
+{
+	"\![set,balloontimeout,-1]"
+}
+
+noscroll
+//prevents the ghost from autoscrolling to the bottom of the menu. useful as to-do lists grow fairly long
+//if you don't want to use this, replace all instances of %(noscroll) with '"\![set,autoscroll,disable]"'
+{
+	"\![set,autoscroll,disable]"
+}
+
+On_balloon_tooltip
+//allows the user to hover over an option to display a tooltip
+//if you have the balloontest dic, you already have this
+{
+	if reference3 == "_hoverme"
+	{
+		"%(reference4)"
+	}
+}
+
+*/

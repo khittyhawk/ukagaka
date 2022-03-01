@@ -113,6 +113,7 @@ Select.visualmenu
 	if get_h == ""; {get_h = "Off"}
 	if washurmouth == ""; {washurmouth = "Fuck yes"}
 	if bdate == ""; {bdate = (2,29,1971,'February')}
+	if goggle_speed == ""; {goggle_speed = "Mild"}
 	
 	"%(noscroll)\b2\_q\f[align,center]Preferences\n\n\f[align,left]/
 	\![*]\q[Change username?,gonamae]:\n\_l[2em]Now: %(urname)\n/
@@ -151,6 +152,11 @@ Select.visualmenu
 	if SHIORI3FW.ShellName == "Ship"
 	{
 		"\![*]\q[Change Animation?,togglespeed]:\n\_l[2em]Currently #%(boatspeed)\n"
+	}
+	--
+	if s_dress[1] == 'Googly Eyes'
+	{
+		"\![*]\q[Googlying Intensity?,googleit]: %(goggle_speed)\n"
 	}
 	--
 	"\![*]\q[Alternative Calendars,othercal]:\n"
@@ -209,7 +215,7 @@ Select.funstuff
 //Tools
 {
 	"%(noscroll)\b2\_q\f[align,center]Tools\n\n\f[align,left]/
-	\![*]\q[To-do List,OnTodo]\n"
+	\![*]\q[To-do List,OnTodoPage]\n"
 	--
 	if SHIORI3FW.IsVisible[1] == 1
 	{
@@ -546,6 +552,25 @@ OnFast
 	"\C%(s0)"
 	--
 	togglespeed
+}
+
+Select.googleit
+{
+	if goggle_speed == "None"
+	{
+		goggle_speed = "Mild"
+	}
+	elseif goggle_speed == "Mild"
+	{
+		goggle_speed = "High"
+	}
+	else
+	//if goggle_speed == "High"
+	{
+		goggle_speed = "None"
+	}
+	--
+	Select.visualmenu
 }
 
 //Alternative Calendars
@@ -994,4 +1019,3 @@ Select.CloseGhost
 	--
 	"\w8\w8\-\e"
 }
-

@@ -7,7 +7,7 @@ OnFirstBoot
 // (＾＾)ｂ Inbuilt function! reference0 is how many times the user has uninstalled the ghost
 {
 	InitFirstBoot	
-	"\0\s[0]Cong\_q- bzzt -\_q unlocked the secret frequency\_q- bzzt -\_q broadcast all the ideas %(i)they%(i0)\_q- bzzt - kept contained!\n\nHeresy!\w5 Earworms!\w5 Memetic hazards!\w5\_q- bzzt -\_qthing else %(i)they%(i0) don't want you to hear!\w7\1\s[10]\_q- bzzt -\_q\w5\w5\e"
+	"\![leave,passivemode]\0\s[0]Cong\_q- bzzt -\_q unlocked the secret frequency\_q- bzzt -\_q broadcast all the ideas %(i)they%(i0)\_q- bzzt - kept contained!\n\nHeresy!\w5 Earworms!\w5 Memetic hazards!\w5\_q- bzzt -\_qthing else %(i)they%(i0) don't want you to hear!\w7\1\s[10]\_q- bzzt -\_q\w5\w5\e"
 }
 
 OnInitialize
@@ -25,7 +25,7 @@ OnBoot
 	UpdateVars
 	OnTimeDifference
 	--
-	"%(tmo)"
+	"%(tmo)\![leave,passivemode]"
 	--
 	if autoupdates[1] == 2 && autoupdates[2] == 1
 	//if you told the user yesterday and if autoupdates are on
@@ -318,6 +318,7 @@ RebootVars
 	--
 	dawnduskmenu = "    "
 	stopfollow = 1
+	stopfunction = 1
 	lastTalk = ""
 	waitingcommuS = IARRAY
 	waitingcommuM = IARRAY
@@ -340,7 +341,18 @@ RebootVars
 		saved_chainindex = 0
 	}
 	--
-	"\![get,property,OnMe,currentghost.scope(0).rect]/
+	if dressup_saved[2] == 1
+	{
+		LOGGING("this is the saved dressup")
+		"\![bind,%(dressup_saved[1]),%(dressup_saved[3]),1]"
+	}
+	
+	--
+	LOGGING("these are the saved dressups")
+	LOGGING("%(s_dress)")
+	LOGGING("===================")
+	"\![bind,%(s_dress[1]),%(s_dress[3]),1]/
+	\![get,property,OnMe,currentghost.scope(0).rect]/
 	\![get,property,OnMe2,currentghost.scope(1).rect]"
 }
 
@@ -355,7 +367,7 @@ CloseVars
 	closingTime = GETTIME()
 	//(Year, month, day, day of the week (0-6), hour, minute, second, number of days from the beginning of the year, daylight saving time [0 = false/1 = true])
 	emptymenu = IARRAY
-	
+
 	if CHAIN.IDName != ""
 	{
 		saved_chainname = CHAIN.IDName
@@ -421,7 +433,7 @@ OnVanishButtonHold
 UpdateVars
 {
 	if !ISVAR('stopfunction'); {stopfunction = 1}
-	if !ISVAR('stopfollow'); {stopfunction = 1}
+	if !ISVAR('stopfollow'); {stopfollow = 1}
 	if !ISVAR('urname'); {urname = "My good bitch"}
 	if !ISVAR('aitalkinterval')
 	{
@@ -440,24 +452,28 @@ UpdateVars
 	if !ISVAR('weatherfromnowhere'); {weatherfromnowhere = 0}
 	if !ISVAR('weirdweather'); {weirdweather = "Off"}
 	--
-	if speakeris == 1
+	LOGGING("the speaker is ready to be chosen")
+	if ISVAR('speakeris')
 	{
-		"\![bind,grille,Asclepioid,1]"
+		if speakeris == 1
+		{
+			"\![bind,grille,Asclepioid,1]"
+		}
+		elseif speakeris == 2
+		{
+			"\![bind,grille,Arabesque,1]"
+		}
+		elseif speakeris == 3
+		{
+			"\![bind,grille,Fat Deco,1]"
+		}
+		else
+		{
+			"\![bind,grille,Art Deco,1]"
+		}
+		--
+		ERASEVAR('speakeris')
 	}
-	elseif speakeris == 2
-	{
-		"\![bind,grille,Arabesque,1]"
-	}
-	elseif speakeris == 3
-	{
-		"\![bind,grille,Fat Deco,1]"
-	}
-	else
-	{
-		"\![bind,grille,Art Deco,1]"
-	}
-	--
-	ERASEVAR(speakeris)
 }
 
 InitFirstBoot

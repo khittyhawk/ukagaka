@@ -9,23 +9,13 @@ option,DisableNoDefineSurfaces
 //}
 
 
-group,X.
-{
-	scope,0
-	//Scope is the character this group of surfaces belongs to, in this case the Sakura
-	
-	0,Default
-	//The number is the surface number, and the word is the name you want to assign to it
-}
-
 group,S
 {
 	scope, 0
 	
 	0,Default
-	1,Snek
-	2,Ornate
-	3,Fat default
+	1,Button
+	2,Googlied
 }
 
 

@@ -98,6 +98,8 @@ sstpmarker.x,0
 sstpmarker.y,0
 //8,-18
 
+clickwaitmarker.x,270
+clickwaitmarker.y,-40
 
 sstpmessage.font.height,9
 sstpmessage.font.color.r,150

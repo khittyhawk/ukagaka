@@ -432,16 +432,6 @@ OnRestoreFonts
 	Select.restorefts
 }
 
-
-On_balloon_tooltip
-//this probably should go in func.dic, huh. 
-{
-	if reference3 == "_hoverme"
-	{
-		"%reference4"
-	}
-}
-
 OnChooseFont
 {
 	if ASEARCH(reference0,fontsparty) != -1
@@ -458,3 +448,21 @@ OnChooseFont
 	--
 	OnFindFonts
 }
+
+
+//------------------------------------------
+//Personal envelopes I find useful shortcuts
+//------------------------------------------
+//uncomment the following or replace:
+
+/*
+On_balloon_tooltip
+//allows the user to hover over an option to display a tooltip
+//usually in etc.dic, if you do have it
+{
+	if reference3 == "_hoverme"
+	{
+		"%reference4"
+	}
+}
+*/

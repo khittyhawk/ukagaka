@@ -1,3 +1,17 @@
+Update 02-28-22
+
+-Tweaked the to-do list. You can now send completed items to the bottom of the list.
+-Added singing animations to both the sakura and kero!
+-Added a googly eye dress-up to the Sakura's speaker
+-Replaced instances of mundane weird weather with properly weird weather
+-Added a thematically-appropriate 'waiting' button to the Broadcast balloon
+-(Possibly) fixed an error where the Sakura's speaker wouldn't save when the radio was rebooted
+-Lag issues with random talk should be reduced - they are in the process of being fixed
+-Added more random talk
+-Various bug fixes
+
+---
+
 Update 01-06-22
 
 -Rearranged the Main Menu to economize space; this DOES MEAN that the option to close out of the ghost entirely has been moved, but its new position is such that it is more likely you will accidentally close the menu when you mean to close out of the ghost rather than vice versa

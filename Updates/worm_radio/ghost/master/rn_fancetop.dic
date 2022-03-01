@@ -43,7 +43,7 @@ On_sakura.recommendsites
 //These are the websites linked in the top option of the right click menu. Add your websites here! Follow the format carefully here, on the left is the name you want to display, on the right is the url you want it to link to, and between them should be a | with at least one space on either side. You can add as many spaces as you like, but there always has to be at least one. The links will be given the proper formatting by the FormatLinks function below.
 recommendsites_sakura : array
 {
-	"Worms (temporary)        | https://khittyhawk.github.io"
+	"Find More Worms Here        | https://khittyhawk.github.io/ukagaka"
 }
  
 On_portalrootbutton.caption //Caption for the second list of websites: Portal Sites
@@ -905,6 +905,17 @@ OnShellChanged
 OnDressupChanged
 // (＾＾)ｂ Inbuilt!
 {
+	LOGGING(reference)
+	if reference0 == 0
+	{
+		LOGGING("the sakura's speaker has changed")
+		s_dress = reference
+	}
+	elseif reference0 == 1
+	{
+		dressup_saved = reference
+	}
+	
 	if reference0 == 1 && reference3 == "unit circle" && reference2 == 0
 	{
 		"\C\![set,property,currentghost.seriko.tooltip.scope(1).textlist(L Button).text,]/
@@ -947,7 +958,8 @@ OnSpeakerMenu
 	\q[Fat Deco,OnSpeaker,3]\n/
 	\q[Malucetum,OnSpeaker,4]\n/
 	\q[Lightner Rune,OnSpeaker,5]\n/
-	\q[Darkner Rune,OnSpeaker,6]\n\n/
+	\q[Darkner Rune,OnSpeaker,6]\n/
+	\q[Googly Eyes,OnSpeaker,7]\n\n/
 	\q[Done,Cancel]\e"
 	
 }
@@ -965,10 +977,12 @@ OnSpeaker
 		"\![bind,grille,Malucetum,1]"
 		"\![bind,grille,Lightner Rune,1]"
 		"\![bind,grille,Darkner Rune,1]"
+		"\![bind,grille,Googly Eyes,1]"
 	}
 	--
 	OnSpeakerMenu
 }
+
 
 OnUnitCircle
 {

@@ -19,7 +19,7 @@ charset,UTF-8
 type,shell
 name,Radio
 craftman,Worm
-craftmanurl,none
+craftmanurl,https://khittyhawk.github.io/ukagaka
 
 
 
@@ -123,9 +123,12 @@ sakura.bindgroup10.name,grille,Fat Deco
 sakura.bindgroup11.name,grille,Malucetum
 sakura.bindgroup12.name,grille,Lightner Rune
 sakura.bindgroup13.name,grille,Darkner Rune
+sakura.bindgroup14.name,grille,Googly Eyes
 
 sakura.bindoption7.group,grille,mustselect
 sakura.bindgroup7.default,1
+
+sakura.bindgroup14.addid,15,16,30
 
 sakura.menu,hidden
 

@@ -1,9 +1,0 @@
-Charset,UTF-8
-install,690676247
-homeurl_found,1
-surfacecount,65
-homeurl,https://khittyhawk.github.io/ukagaka/Updates/worm_radio/
-update_result,NG(timeout)
-firstboot,690676269
-commitmemorysize,849250
-lastboot,694840335

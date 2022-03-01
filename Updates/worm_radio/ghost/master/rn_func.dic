@@ -1,3 +1,20 @@
+//    ____    ____   _                     ________                          _    _                          
+//   |_   \  /   _| (_)                   |_   __  |                        / |_ (_)                         
+//     |   \/   |   __   .--.   .---.       | |_ \_|__   _   _ .--.   .---.`| |-'__   .--.   _ .--.   .--.   
+//     | |\  /| |  [  | ( (`\] / /'`\]      |  _|  [  | | | [ `.-. | / /'`\]| | [  |/ .'`\ \[ `.-. | ( (`\]  
+//    _| |_\/_| |_  | |  `'.'. | \__.  _   _| |_    | \_/ |, | | | | | \__. | |, | || \__. | | | | |  `'.'.  
+//   |_____||_____|[___][\__) )'.___.'(_) |_____|   '.__.'_/[___||__]'.___.'\__/[___]'.__.' [___||__][\__) ) 
+//                                                                                                           
+//-------------------------------------------------------------------------------------------------------------
+
+On_balloon_tooltip
+//this probably should go in func.dic, huh. 
+{
+	if reference3 == "_hoverme"
+	{
+		"%(reference4)"
+	}
+}
 
 OnFileDropping
 // (＾＾)ｂ Inbuilt!
@@ -190,14 +207,14 @@ OnInstallCompleteEx
 	_name = reference1
 	_loc = reference2
 	
-	"%(s0)\![set,balloonwait,1.2]It bears the inscription %(_id)"
+	"%(s0)\![set,balloonwait,1.2]It bears the inscription '%(_id)'"
 	--
 	if ASEARCH(_id,dls) != -1
 	{
 		" It is one of ours."
 	}
 	--
-	"\w8\w8 It broods in %(loc).\e"
+	"\w8\w8 It broods in %(_loc).\e"
 	
 }
 
@@ -411,6 +428,33 @@ OnBatteryCritical
 	"%(a1)Plug in your damn computer, %(urname).\e"
 }
 
+OnBalloonClose
+{
+	if stopfollow == 2
+	{
+		stopfollow = 0
+		"\![raise,OneWingedAngle,follow]"
+		LOGGING("following restarted")
+	}
+	--
+	if stopfunction == 2
+	{
+		stopfunction = 0
+		"\![raise,OneWingedAngle,wiggle]"
+		LOGGING("wiggling restarted %stopfunction")
+	}
+}
+
+OnBalloonTimeout
+{
+	if stopfunction == 2
+	{
+		stopfunction = 0
+		"\![raise,OneWingedAngle,wiggle]"
+		LOGGING("wiggling restarted %stopfunction")
+	}
+}
+
 OnSetVar
 {
 	LOGGING("%reference0 and %reference1=====")
@@ -531,6 +575,9 @@ OnOtherGhostVanished
 	"%(s0)\![set,balloonwait,1.5]%(billdoor).\e"
 }
 
+//------------------------------
+//------Personal Functions------
+//------------------------------
 
 OnTestW
 {
@@ -867,6 +914,8 @@ OnWeatherMe
 	{
 		Select.weather_less
 	}
+	--
+	"\x"
 }
 
 Select.noweather

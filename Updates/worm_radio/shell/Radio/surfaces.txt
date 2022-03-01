@@ -54,6 +54,148 @@ surface1
 	
 }
 
+//fast googly
+surface2
+{
+	element0,overlay,surface1000.png,0,0
+	element1,overlay,surface1001.png,0,0
+	element2,overlay,surface1002.png,0,0
+	element3,overlay,surface1003.png,0,0
+	
+	animation6.interval,always
+	animation6.pattern0,overlay,1012,0,0,0
+	animation6.pattern1,overlay,1015,100,0,0
+	animation6.pattern2,overlay,1012,100,0,0
+	animation6.pattern3,overlay,1015,100,0,0
+	animation6.pattern4,overlay,1012,100,0,0
+	animation6.pattern5,overlay,1015,100,0,0
+	animation6.pattern6,overlay,-1,200,0,0
+	
+	
+	animation14.interval,runonce
+	animation14.pattern0,overlay,1027,0,0,0
+	
+	animation20.interval,runonce
+	animation20.pattern0,alternativestart,(21,22,23,24,25,26)
+	
+	
+	animation21.interval,never
+	animation21.pattern0,overlay,2001,0,0,0
+	animation21.pattern1,overlay,-1,15-30,0,0
+	animation21.pattern2,start,(20)
+	
+	animation22.interval,never
+	animation22.pattern0,overlay,2002,0,0,0
+	animation22.pattern1,overlay,-1,15-30,0,0
+	animation22.pattern2,start,(20)
+	
+	animation23.interval,never
+	animation23.pattern0,overlay,2003,0,0,0
+	animation23.pattern1,overlay,-1,15-30,0,0
+	animation23.pattern2,start,(20)
+	
+	animation24.interval,never
+	animation24.pattern0,overlay,2004,0,0,0
+	animation24.pattern1,overlay,-1,15-30,0,0
+	animation24.pattern2,start,(20)
+	
+	animation25.interval,never
+	animation25.pattern0,overlay,2005,0,0,0
+	animation25.pattern1,overlay,-1,15-30,0,0
+	animation25.pattern2,start,(20)
+	
+	animation26.interval,never
+	animation26.pattern0,overlay,2006,0,0,0
+	animation26.pattern1,overlay,-1,15-30,0,0
+	animation26.pattern2,start,(20)
+	
+	animation29.interval,never
+	animation29.pattern0,parallelstop,(21,22,23,24,25,26)
+	
+	
+	//googly shine
+	animation30.interval,runonce
+	animation30.pattern0,overlay,1028,0,0,0
+	
+	//over the speaker
+	animation38.interval,runonce
+	animation38.pattern0,overlay,1030,0,0,0
+	
+	animation39.interval,runonce
+	animation39.pattern0,overlay,1050,0,0,0
+}
+
+//slow googly
+surface3
+{
+	element0,overlay,surface1000.png,0,0
+	element1,overlay,surface1001.png,0,0
+	element2,overlay,surface1002.png,0,0
+	element3,overlay,surface1003.png,0,0
+	
+	animation6.interval,always
+	animation6.pattern0,overlay,1012,0,0,0
+	animation6.pattern1,overlay,1015,100,0,0
+	animation6.pattern2,overlay,1012,100,0,0
+	animation6.pattern3,overlay,1015,100,0,0
+	animation6.pattern4,overlay,1012,100,0,0
+	animation6.pattern5,overlay,1015,100,0,0
+	animation6.pattern6,overlay,-1,200,0,0
+	
+	
+	animation14.interval,runonce
+	animation14.pattern0,overlay,1027,0,0,0
+	
+	animation20.interval,runonce
+	animation20.pattern0,alternativestart,(21,22,23,24,25,26)
+	
+	
+	animation21.interval,never
+	animation21.pattern0,overlay,2001,0,0,0
+	animation21.pattern1,overlay,-1,50-100,0,0
+	animation21.pattern2,start,(20)
+	
+	animation22.interval,never
+	animation22.pattern0,overlay,2002,0,0,0
+	animation22.pattern1,overlay,-1,50-100,0,0
+	animation22.pattern2,start,(20)
+	
+	animation23.interval,never
+	animation23.pattern0,overlay,2003,0,0,0
+	animation23.pattern1,overlay,-1,50-100,0,0
+	animation23.pattern2,start,(20)
+	
+	animation24.interval,never
+	animation24.pattern0,overlay,2004,0,0,0
+	animation24.pattern1,overlay,-1,50-100,0,0
+	animation24.pattern2,start,(20)
+	
+	animation25.interval,never
+	animation25.pattern0,overlay,2005,0,0,0
+	animation25.pattern1,overlay,-1,50-100,0,0
+	animation25.pattern2,start,(20)
+	
+	animation26.interval,never
+	animation26.pattern0,overlay,2006,0,0,0
+	animation26.pattern1,overlay,-1,50-100,0,0
+	animation26.pattern2,start,(20)
+	
+	animation29.interval,never
+	animation29.pattern0,parallelstop,(21,22,23,24,25,26)
+	
+	
+	//googly shine
+	animation30.interval,runonce
+	animation30.pattern0,overlay,1028,0,0,0
+	
+	//over the speaker
+	animation38.interval,runonce
+	animation38.pattern0,overlay,1030,0,0,0
+	
+	animation39.interval,runonce
+	animation39.pattern0,overlay,1050,0,0,0
+}
+
 surface10
 {
 	//base
@@ -272,6 +414,520 @@ surface18
 }
 
 
+surface19
+{
+	//kero singing pose
+	element0,overlay,surface3011.png,0,0
+	
+	animation49.interval,periodic,1
+	animation49.pattern0,alternativestart,(51,52,53,54,55)
+	
+	animation50.interval,periodic,1
+	animation50.pattern0,alternativestart,(56,57,58,59,60)
+	
+	animation51.interval,never
+	animation51.pattern0,overlay,700,0,0,-30
+	animation51.pattern1,overlay,701,200-400,0,-30
+	animation51.pattern2,overlay,700,200-400,0,-30
+	animation51.pattern3,overlay,701,200-400,0,-30
+	animation51.pattern4,overlay,-1,200-400,0,-30
+	
+	animation52.interval,never
+	animation52.pattern0,overlay,701,0,0,-30
+	animation52.pattern1,overlay,700,200-400,0,-30
+	animation52.pattern2,overlay,701,200-400,0,-30
+	animation52.pattern3,overlay,700,200-400,0,-30
+	animation52.pattern4,overlay,-1,200-400,0,-30
+	
+	animation53.interval,never
+	animation53.pattern0,overlay,702,0,0,-30
+	animation53.pattern1,overlay,703,200-400,0,-30
+	animation53.pattern2,overlay,702,200-400,0,-30
+	animation53.pattern3,overlay,703,200-400,0,-30
+	animation53.pattern4,overlay,-1,200-400,0,-30
+	
+	animation54.interval,never
+	animation54.pattern0,overlay,703,0,0,-30
+	animation54.pattern1,overlay,702,200-400,0,-30
+	animation54.pattern2,overlay,703,200-400,0,-30
+	animation54.pattern3,overlay,702,200-400,0,-30
+	animation54.pattern4,overlay,-1,200-400,0,-30
+	
+	animation55.interval,never
+	animation55.pattern0,overlay,704,0,0,-30
+	animation55.pattern1,overlay,705,200-400,0,-30
+	animation55.pattern2,overlay,704,200-400,0,-30
+	animation55.pattern3,overlay,705,200-400,0,-30
+	animation55.pattern4,overlay,-1,200-400,0,-30
+	
+	animation56.interval,never
+	animation56.pattern0,overlay,705,0,0,-30
+	animation56.pattern1,overlay,704,200-400,0,-30
+	animation56.pattern2,overlay,705,200-400,0,-30
+	animation56.pattern3,overlay,704,200-400,0,-30
+	animation56.pattern4,overlay,-1,200-400,0,-30
+	
+	animation57.interval,never
+	animation57.pattern0,overlay,706,0,0,-30
+	animation57.pattern1,overlay,707,200-400,0,-30
+	animation57.pattern2,overlay,706,200-400,0,-30
+	animation57.pattern3,overlay,707,200-400,0,-30
+	animation57.pattern4,overlay,-1,200-400,0,-30
+	
+	animation58.interval,never
+	animation58.pattern0,overlay,707,0,0,-30
+	animation58.pattern1,overlay,706,200-400,0,-30
+	animation58.pattern2,overlay,707,200-400,0,-30
+	animation58.pattern3,overlay,706,200-400,0,-30
+	animation58.pattern4,overlay,-1,200-400,0,-30
+	
+	animation59.interval,never
+	animation59.pattern0,overlay,708,0,0,-30
+	animation59.pattern1,overlay,709,200-400,0,-30
+	animation59.pattern2,overlay,708,200-400,0,-30
+	animation59.pattern3,overlay,709,200-400,0,-30
+	animation59.pattern4,overlay,-1,200-400,0,-30
+	
+	animation60.interval,never
+	animation60.pattern0,overlay,709,0,0,-30
+	animation60.pattern1,overlay,708,200-400,0,-30
+	animation60.pattern2,overlay,709,200-400,0,-30
+	animation60.pattern3,overlay,708,200-400,0,-30
+	animation60.pattern4,overlay,-1,200-400,0,-30
+}
+
+surface25
+{
+	//sakura singing pose
+	element0,overlay,surface1000.png,0,0
+	element1,overlay,surface1001.png,0,0
+	element2,overlay,surface1002.png,0,0
+	element3,overlay,surface1003.png,0,0
+	//element4,overlay,surface798.png,0,-50
+	//element5,overlay,surface800.png,0,-50
+	
+	animation0.interval,talk,4
+	animation0.pattern0,alternativestart,(3,4,5)
+	
+	animation40.interval,runonce
+	animation40.pattern0,overlay,798,0,0,-50
+	
+	animation41.interval,runonce
+	animation41.pattern0,overlay,800,0,0,-50
+	
+	animation50.interval,periodic,1
+	animation50.pattern0,alternativestart,(51,52,53,54,55,56,57,61,62,63,66,67,74)
+	
+	animation51.interval,never
+	animation51.pattern0,overlay,810,0,0,-25
+	animation51.pattern1,overlay,810,100,5,-30
+	animation51.pattern2,overlay,810,100,10,-33
+	animation51.pattern3,overlay,810,100,15,-35
+	animation51.pattern4,overlay,810,100,20,-35
+	animation51.pattern5,overlay,810,100,25,-35
+	animation51.pattern6,overlay,810,100,30,-35
+	animation51.pattern7,overlay,810,100,35,-37
+	animation51.pattern8,overlay,810,100,40,-37
+	animation51.pattern9,overlay,810,100,45,-37
+	animation51.pattern10,overlay,810,100,50,-40
+	animation51.pattern11,overlay,810,100,55,-40
+	animation51.pattern12,overlay,810,100,60,-40
+	animation51.pattern13,overlay,810,100,65,-40
+	animation51.pattern14,overlay,810,100,70,-40
+	animation51.pattern15,overlay,810,100,75,-40
+	animation51.pattern16,overlay,810,100,80,-40
+	animation51.pattern17,overlay,810,100,85,-40
+	animation51.pattern18,overlay,810,100,90,-40
+	animation51.pattern19,overlay,810,100,95,-43
+	animation51.pattern20,overlay,810,100,100,-45
+	animation51.pattern21,overlay,810,100,105,-47
+	animation51.pattern22,overlay,810,100,110,-50
+	animation51.pattern23,overlay,810,100,115,-55
+	animation51.pattern24,overlay,810,100,120,-57
+	animation51.pattern25,overlay,810,100,123,-60
+	animation51.pattern26,overlay,810,100,123,-63
+	animation51.pattern27,overlay,810,100,123,-65
+	animation51.pattern28,overlay,-1,100,0,0
+	
+	animation52.interval,never
+	animation52.pattern0,overlay,811,0,0,-25
+	animation52.pattern1,overlay,811,100,5,-27
+	animation52.pattern2,overlay,811,100,10,-30
+	animation52.pattern3,overlay,811,100,15,-30
+	animation52.pattern4,overlay,811,100,20,-33
+	animation52.pattern5,overlay,811,100,25,-35
+	animation52.pattern6,overlay,811,100,30,-35
+	animation52.pattern7,overlay,811,100,35,-35
+	animation52.pattern8,overlay,811,100,40,-35
+	animation52.pattern9,overlay,811,100,45,-35
+	animation52.pattern10,overlay,811,100,50,-35
+	animation52.pattern11,overlay,811,100,55,-35
+	animation52.pattern12,overlay,811,100,60,-35
+	animation52.pattern13,overlay,811,100,65,-35
+	animation52.pattern14,overlay,811,100,70,-35
+	animation52.pattern15,overlay,811,100,75,-35
+	animation52.pattern16,overlay,811,100,80,-35
+	animation52.pattern17,overlay,811,100,85,-35
+	animation52.pattern18,overlay,811,100,90,-35
+	animation52.pattern19,overlay,811,100,95,-35
+	animation52.pattern20,overlay,811,100,100,-37
+	animation52.pattern21,overlay,811,100,105,-40
+	animation52.pattern22,overlay,811,100,110,-43
+	animation52.pattern23,overlay,811,100,115,-45
+	animation52.pattern24,overlay,811,100,120,-50
+	animation52.pattern25,overlay,811,100,123,-55
+	animation52.pattern26,overlay,811,100,123,-57
+	animation52.pattern27,overlay,811,100,123,-60
+	animation52.pattern28,overlay,-1,100,0,0
+	
+	
+	animation53.interval,never
+	animation53.pattern0,overlay,812,0,0,-25
+	animation53.pattern1,overlay,812,100,5,-27
+	animation53.pattern2,overlay,812,100,10,-30
+	animation53.pattern3,overlay,812,100,15,-30
+	animation53.pattern4,overlay,812,100,20,-33
+	animation53.pattern5,overlay,812,100,25,-35
+	animation53.pattern6,overlay,812,100,30,-35
+	animation53.pattern7,overlay,812,100,35,-35
+	animation53.pattern8,overlay,812,100,40,-35
+	animation53.pattern9,overlay,812,100,45,-35
+	animation53.pattern10,overlay,812,100,50,-35
+	animation53.pattern11,overlay,812,100,55,-35
+	animation53.pattern12,overlay,812,100,60,-35
+	animation53.pattern13,overlay,812,100,65,-35
+	animation53.pattern14,overlay,812,100,70,-35
+	animation53.pattern15,overlay,812,100,75,-35
+	animation53.pattern16,overlay,812,100,80,-35
+	animation53.pattern17,overlay,812,100,85,-35
+	animation53.pattern18,overlay,812,100,90,-35
+	animation53.pattern19,overlay,812,100,95,-35
+	animation53.pattern20,overlay,812,100,100,-37
+	animation53.pattern21,overlay,812,100,105,-40
+	animation53.pattern22,overlay,812,100,110,-43
+	animation53.pattern23,overlay,812,100,115,-45
+	animation53.pattern24,overlay,812,100,120,-50
+	animation53.pattern25,overlay,812,100,123,-55
+	animation53.pattern26,overlay,812,100,123,-57
+	animation53.pattern27,overlay,812,100,123,-60
+	animation53.pattern28,overlay,-1,100,0,0
+	
+	animation54.interval,never
+	animation54.pattern0,overlay,813,0,0,-25
+	animation54.pattern1,overlay,813,100,5,-30
+	animation54.pattern2,overlay,813,100,10,-33
+	animation54.pattern3,overlay,813,100,15,-35
+	animation54.pattern4,overlay,813,100,20,-35
+	animation54.pattern5,overlay,813,100,25,-35
+	animation54.pattern6,overlay,813,100,30,-35
+	animation54.pattern7,overlay,813,100,35,-37
+	animation54.pattern8,overlay,813,100,40,-37
+	animation54.pattern9,overlay,813,100,45,-37
+	animation54.pattern10,overlay,813,100,50,-40
+	animation54.pattern11,overlay,813,100,55,-40
+	animation54.pattern12,overlay,813,100,60,-40
+	animation54.pattern13,overlay,813,100,65,-40
+	animation54.pattern14,overlay,813,100,70,-40
+	animation54.pattern15,overlay,813,100,75,-40
+	animation54.pattern16,overlay,813,100,80,-40
+	animation54.pattern17,overlay,813,100,85,-40
+	animation54.pattern18,overlay,813,100,90,-40
+	animation54.pattern19,overlay,813,100,95,-43
+	animation54.pattern20,overlay,813,100,100,-45
+	animation54.pattern21,overlay,813,100,105,-47
+	animation54.pattern22,overlay,813,100,110,-50
+	animation54.pattern23,overlay,813,100,115,-55
+	animation54.pattern24,overlay,813,100,120,-57
+	animation54.pattern25,overlay,813,100,123,-60
+	animation54.pattern26,overlay,813,100,123,-63
+	animation54.pattern27,overlay,813,100,123,-65
+	animation54.pattern28,overlay,-1,100,0,0
+	
+	animation55.interval,never
+	animation55.pattern0,overlay,814,0,0,-25
+	animation55.pattern1,overlay,814,100,5,-30
+	animation55.pattern2,overlay,814,100,10,-35
+	animation55.pattern3,overlay,814,100,15,-35
+	animation55.pattern4,overlay,814,100,20,-35
+	animation55.pattern5,overlay,814,100,25,-35
+	animation55.pattern6,overlay,814,100,30,-35
+	animation55.pattern7,overlay,814,100,35,-37
+	animation55.pattern8,overlay,814,100,40,-37
+	animation55.pattern9,overlay,814,100,45,-37
+	animation55.pattern10,overlay,814,100,50,-40
+	animation55.pattern11,overlay,814,100,55,-40
+	animation55.pattern12,overlay,814,100,60,-40
+	animation55.pattern13,overlay,814,100,65,-40
+	animation55.pattern14,overlay,814,100,70,-40
+	animation55.pattern15,overlay,814,100,75,-40
+	animation55.pattern16,overlay,814,100,80,-40
+	animation55.pattern17,overlay,814,100,85,-40
+	animation55.pattern18,overlay,814,100,90,-40
+	animation55.pattern19,overlay,814,100,95,-43
+	animation55.pattern20,overlay,814,100,100,-43
+	animation55.pattern21,overlay,814,100,105,-45
+	animation55.pattern22,overlay,814,100,110,-47
+	animation55.pattern23,overlay,814,100,115,-55
+	animation55.pattern24,overlay,814,100,120,-57
+	animation55.pattern25,overlay,814,100,123,-60
+	animation55.pattern26,overlay,814,100,123,-63
+	animation55.pattern27,overlay,814,100,123,-65
+	animation55.pattern28,overlay,-1,100,0,0
+	
+	animation56.interval,never
+	animation56.pattern0,overlay,815,0,0,-25
+	animation56.pattern1,overlay,815,100,5,-27
+	animation56.pattern2,overlay,815,100,10,-30
+	animation56.pattern3,overlay,815,100,15,-30
+	animation56.pattern4,overlay,815,100,20,-33
+	animation56.pattern5,overlay,815,100,25,-35
+	animation56.pattern6,overlay,815,100,30,-35
+	animation56.pattern7,overlay,815,100,35,-35
+	animation56.pattern8,overlay,815,100,40,-35
+	animation56.pattern9,overlay,815,100,45,-35
+	animation56.pattern10,overlay,815,100,50,-35
+	animation56.pattern11,overlay,815,100,55,-35
+	animation56.pattern12,overlay,815,100,60,-35
+	animation56.pattern13,overlay,815,100,65,-35
+	animation56.pattern14,overlay,815,100,70,-35
+	animation56.pattern15,overlay,815,100,75,-35
+	animation56.pattern16,overlay,815,100,80,-35
+	animation56.pattern17,overlay,815,100,85,-35
+	animation56.pattern18,overlay,815,100,90,-35
+	animation56.pattern19,overlay,815,100,95,-35
+	animation56.pattern20,overlay,815,100,100,-37
+	animation56.pattern21,overlay,815,100,105,-40
+	animation56.pattern22,overlay,815,100,110,-43
+	animation56.pattern23,overlay,815,100,115,-45
+	animation56.pattern24,overlay,815,100,120,-50
+	animation56.pattern25,overlay,815,100,123,-55
+	animation56.pattern26,overlay,815,100,123,-57
+	animation56.pattern27,overlay,815,100,123,-60
+	animation56.pattern28,overlay,-1,100,0,0
+	
+	animation57.interval,never
+	animation57.pattern0,overlay,816,0,0,-25
+	animation57.pattern1,overlay,816,100,5,-27
+	animation57.pattern2,overlay,816,100,10,-30
+	animation57.pattern3,overlay,816,100,15,-33
+	animation57.pattern4,overlay,816,100,20,-35
+	animation57.pattern5,overlay,816,100,25,-35
+	animation57.pattern6,overlay,816,100,30,-35
+	animation57.pattern7,overlay,816,100,35,-37
+	animation57.pattern8,overlay,816,100,40,-37
+	animation57.pattern9,overlay,816,100,45,-37
+	animation57.pattern10,overlay,816,100,50,-40
+	animation57.pattern11,overlay,816,100,55,-40
+	animation57.pattern12,overlay,816,100,60,-40
+	animation57.pattern13,overlay,816,100,65,-40
+	animation57.pattern14,overlay,816,100,70,-40
+	animation57.pattern15,overlay,816,100,75,-40
+	animation57.pattern16,overlay,816,100,80,-40
+	animation57.pattern17,overlay,816,100,85,-40
+	animation57.pattern18,overlay,816,100,90,-40
+	animation57.pattern19,overlay,816,100,95,-43
+	animation57.pattern20,overlay,816,100,100,-45
+	animation57.pattern21,overlay,816,100,105,-47
+	animation57.pattern22,overlay,816,100,110,-50
+	animation57.pattern23,overlay,816,100,115,-55
+	animation57.pattern24,overlay,816,100,120,-57
+	animation57.pattern25,overlay,816,100,123,-60
+	animation57.pattern26,overlay,816,100,123,-63
+	animation57.pattern27,overlay,816,100,123,-65
+	animation57.pattern28,overlay,-1,100,0,0
+	
+	animation61.interval,never
+	animation61.pattern0,overlay,810,0,0,-37
+	animation61.pattern1,overlay,810,100,5,-40
+	animation61.pattern2,overlay,810,100,10,-43
+	animation61.pattern3,overlay,810,100,15,-45
+	animation61.pattern4,overlay,810,100,20,-45
+	animation61.pattern5,overlay,810,100,25,-45
+	animation61.pattern6,overlay,810,100,30,-45
+	animation61.pattern7,overlay,810,100,35,-47
+	animation61.pattern8,overlay,810,100,40,-47
+	animation61.pattern9,overlay,810,100,45,-47
+	animation61.pattern10,overlay,810,100,50,-50
+	animation61.pattern11,overlay,810,100,55,-50
+	animation61.pattern12,overlay,810,100,60,-50
+	animation61.pattern13,overlay,810,100,65,-50
+	animation61.pattern14,overlay,810,100,70,-50
+	animation61.pattern15,overlay,810,100,75,-50
+	animation61.pattern16,overlay,810,100,80,-50
+	animation61.pattern17,overlay,810,100,85,-50
+	animation61.pattern18,overlay,810,100,90,-50
+	animation61.pattern19,overlay,810,100,95,-53
+	animation61.pattern20,overlay,810,100,100,-55
+	animation61.pattern21,overlay,810,100,105,-57
+	animation61.pattern22,overlay,810,100,110,-60
+	animation61.pattern23,overlay,810,100,115,-65
+	animation61.pattern24,overlay,810,100,120,-77
+	animation61.pattern25,overlay,810,100,123,-80
+	animation61.pattern26,overlay,810,100,123,-83
+	animation61.pattern27,overlay,810,100,123,-85
+	animation61.pattern28,overlay,-1,100,0,0
+	
+	animation62.interval,never
+	animation62.pattern0,overlay,811,0,0,-47
+	animation62.pattern1,overlay,811,100,5,-50
+	animation62.pattern2,overlay,811,100,10,-53
+	animation62.pattern3,overlay,811,100,15,-53
+	animation62.pattern4,overlay,811,100,20,-55
+	animation62.pattern5,overlay,811,100,25,-55
+	animation62.pattern6,overlay,811,100,30,-55
+	animation62.pattern7,overlay,811,100,35,-57
+	animation62.pattern8,overlay,811,100,40,-57
+	animation62.pattern9,overlay,811,100,45,-57
+	animation62.pattern10,overlay,811,100,50,-57
+	animation62.pattern11,overlay,811,100,55,-57
+	animation62.pattern12,overlay,811,100,60,-57
+	animation62.pattern13,overlay,811,100,65,-57
+	animation62.pattern14,overlay,811,100,70,-57
+	animation62.pattern15,overlay,811,100,75,-57
+	animation62.pattern16,overlay,811,100,80,-57
+	animation62.pattern17,overlay,811,100,85,-57
+	animation62.pattern18,overlay,811,100,90,-57
+	animation62.pattern19,overlay,811,100,95,-57
+	animation62.pattern20,overlay,811,100,100,-65
+	animation62.pattern21,overlay,811,100,105,-67
+	animation62.pattern22,overlay,811,100,110,-70
+	animation62.pattern23,overlay,811,100,115,-75
+	animation62.pattern24,overlay,811,100,120,-77
+	animation62.pattern25,overlay,811,100,123,-80
+	animation62.pattern26,overlay,811,100,123,-83
+	animation62.pattern27,overlay,811,100,123,-85
+	animation62.pattern28,overlay,-1,100,0,0
+	
+	animation63.interval,never
+	animation63.pattern0,overlay,812,0,-10,-33
+	animation63.pattern1,overlay,812,100,-5,-37
+	animation63.pattern2,overlay,812,100,0,-40
+	animation63.pattern3,overlay,812,100,5,-43
+	animation63.pattern4,overlay,812,100,10,-45
+	animation63.pattern5,overlay,812,100,15,-50
+	animation63.pattern6,overlay,812,100,20,-50
+	animation63.pattern7,overlay,812,100,25,-50
+	animation63.pattern8,overlay,812,100,30,-50
+	animation63.pattern9,overlay,812,100,35,-50
+	animation63.pattern10,overlay,812,100,40,-50
+	animation63.pattern11,overlay,812,100,45,-50
+	animation63.pattern12,overlay,812,100,50,-50
+	animation63.pattern13,overlay,812,100,55,-50
+	animation63.pattern14,overlay,812,100,60,-50
+	animation63.pattern15,overlay,812,100,65,-50
+	animation63.pattern16,overlay,812,100,70,-50
+	animation63.pattern17,overlay,812,100,75,-50
+	animation63.pattern18,overlay,812,100,80,-50
+	animation63.pattern19,overlay,812,100,85,-50
+	animation63.pattern20,overlay,812,100,90,-50
+	animation63.pattern21,overlay,812,100,95,-53
+	animation63.pattern22,overlay,812,100,100,-54
+	animation63.pattern23,overlay,812,100,105,-54
+	animation63.pattern24,overlay,812,100,110,-60
+	animation63.pattern25,overlay,812,100,113,-63
+	animation63.pattern26,overlay,812,100,113,-65
+	animation63.pattern27,overlay,812,100,113,-67
+	animation63.pattern28,overlay,-1,100,0,0
+	
+	
+	animation66.interval,never
+	animation66.pattern0,overlay,815,0,0,-27
+	animation66.pattern1,overlay,815,100,5,-33
+	animation66.pattern2,overlay,815,100,10,-35
+	animation66.pattern3,overlay,815,100,15,-35
+	animation66.pattern4,overlay,815,100,20,-35
+	animation66.pattern5,overlay,815,100,25,-37
+	animation66.pattern6,overlay,815,100,30,-37
+	animation66.pattern7,overlay,815,100,35,-40
+	animation66.pattern8,overlay,815,100,40,-40
+	animation66.pattern9,overlay,815,100,45,-40
+	animation66.pattern10,overlay,815,100,50,-40
+	animation66.pattern11,overlay,815,100,55,-40
+	animation66.pattern12,overlay,815,100,60,-40
+	animation66.pattern13,overlay,815,100,65,-40
+	animation66.pattern14,overlay,815,100,70,-40
+	animation66.pattern15,overlay,815,100,75,-40
+	animation66.pattern16,overlay,815,100,80,-40
+	animation66.pattern17,overlay,815,100,85,-40
+	animation66.pattern18,overlay,815,100,90,-40
+	animation66.pattern19,overlay,815,100,95,-40
+	animation66.pattern20,overlay,815,100,100,-43
+	animation66.pattern21,overlay,815,100,105,-45
+	animation66.pattern22,overlay,815,100,110,-47
+	animation66.pattern23,overlay,815,100,115,-50
+	animation66.pattern24,overlay,815,100,120,-55
+	animation66.pattern25,overlay,815,100,123,-57
+	animation66.pattern26,overlay,815,100,123,-60
+	animation66.pattern27,overlay,815,100,123,-63
+	animation66.pattern28,overlay,-1,100,0,0
+	
+	animation67.interval,never
+	animation67.pattern0,overlay,816,0,0,-40
+	animation67.pattern1,overlay,816,100,5,-40
+	animation67.pattern2,overlay,816,100,10,-43
+	animation67.pattern3,overlay,816,100,15,-45
+	animation67.pattern4,overlay,816,100,20,-45
+	animation67.pattern5,overlay,816,100,25,-45
+	animation67.pattern6,overlay,816,100,30,-47
+	animation67.pattern7,overlay,816,100,35,-47
+	animation67.pattern8,overlay,816,100,40,-47
+	animation67.pattern9,overlay,816,100,45,-47
+	animation67.pattern10,overlay,816,100,50,-50
+	animation67.pattern11,overlay,816,100,55,-50
+	animation67.pattern12,overlay,816,100,60,-50
+	animation67.pattern13,overlay,816,100,65,-50
+	animation67.pattern14,overlay,816,100,70,-50
+	animation67.pattern15,overlay,816,100,75,-50
+	animation67.pattern16,overlay,816,100,80,-50
+	animation67.pattern17,overlay,816,100,85,-50
+	animation67.pattern18,overlay,816,100,90,-50
+	animation67.pattern19,overlay,816,100,95,-53
+	animation67.pattern20,overlay,816,100,100,-55
+	animation67.pattern21,overlay,816,100,105,-57
+	animation67.pattern22,overlay,816,100,110,-60
+	animation67.pattern23,overlay,816,100,115,-65
+	animation67.pattern24,overlay,816,100,120,-77
+	animation67.pattern25,overlay,816,100,123,-80
+	animation67.pattern26,overlay,816,100,123,-83
+	animation67.pattern27,overlay,816,100,123,-85
+	animation67.pattern28,overlay,-1,100,0,0
+	
+	
+	animation74.interval,never
+	animation74.pattern0,overlay,813,0,0,-57
+	animation74.pattern1,overlay,813,100,5,-60
+	animation74.pattern2,overlay,813,100,10,-63
+	animation74.pattern3,overlay,813,100,15,-65
+	animation74.pattern4,overlay,813,100,20,-65
+	animation74.pattern5,overlay,813,100,25,-65
+	animation74.pattern6,overlay,813,100,30,-65
+	animation74.pattern7,overlay,813,100,35,-67
+	animation74.pattern8,overlay,813,100,40,-67
+	animation74.pattern9,overlay,813,100,45,-67
+	animation74.pattern10,overlay,813,100,50,-67
+	animation74.pattern11,overlay,813,100,55,-67
+	animation74.pattern12,overlay,813,100,60,-67
+	animation74.pattern13,overlay,813,100,65,-67
+	animation74.pattern14,overlay,813,100,70,-67
+	animation74.pattern15,overlay,813,100,75,-67
+	animation74.pattern16,overlay,813,100,80,-67
+	animation74.pattern17,overlay,813,100,85,-67
+	animation74.pattern18,overlay,813,100,90,-67
+	animation74.pattern19,overlay,813,100,95,-67
+	animation74.pattern20,overlay,813,100,100,-75
+	animation74.pattern21,overlay,813,100,105,-77
+	animation74.pattern22,overlay,813,100,110,-80
+	animation74.pattern23,overlay,813,100,115,-85
+	animation74.pattern24,overlay,813,100,120,-87
+	animation74.pattern25,overlay,813,100,123,-90
+	animation74.pattern26,overlay,813,100,123,-93
+	animation74.pattern27,overlay,813,100,123,-95
+	animation74.pattern28,overlay,-1,100,0,0
+	
+	
+
+}
+
 
 //--------------------------------------------------------
 //----------------------Surface.append--------------------
@@ -279,7 +935,7 @@ surface18
 
 
 //sakura stuff
-surface.append0,1
+surface.append0,1,25
 {
 
 	collisionex0,Speaker,polygon,53,76,66,58,82,53,100,61,110,75,103,117,56,115,52,73
@@ -358,19 +1014,73 @@ surface.append0,1
 	animation13.interval,bind
 	animation13.pattern0,overlay,1026,0,0,0
 	
-	animation20.interval,runonce
-	animation20.pattern0,overlay,1030,0,0,0
+	animation14.interval,bind
+	animation14.pattern0,overlay,1027,0,0,0
 	
-	animation21.interval,runonce
-	animation21.pattern0,overlay,1050,0,0,0
+	animation15.interval,bind + runonce
+	animation15.pattern0,alternativestart,(17,18,19,20,21)
+	
+	animation16.interval,bind + always
+	animation16.pattern0,overlay,2001,0,0,0
+	animation16.pattern1,overlay,2002,0-50000,0,0
+	animation16.pattern2,overlay,2003,0-50000,0,0
+	animation16.pattern3,overlay,2004,0-50000,0,0
+	animation16.pattern4,overlay,2005,0-50000,0,0
+	animation16.pattern5,overlay,2006,0-50000,0,0
+	animation16.pattern6,overlay,2001,0-50000,0,0
+	animation16.pattern7,overlay,2001,0-50000,0,0
+
+	animation17.interval,bind
+	animation17.pattern0,stop,(16)
+	animation17.pattern1,overlay,2002,0,0,0
+	animation17.pattern2,overlay,-1,500-50000,0,0
+	animation17.pattern3,start,(16)
+
+	animation18.interval,bind
+	animation18.pattern0,stop,(16)
+	animation18.pattern1,overlay,2003,0,0,0
+	animation18.pattern2,overlay,-1,500-50000,0,0
+	animation18.pattern3,start,(16)
+	
+	animation19.interval,bind
+	animation19.pattern0,stop,(16)
+	animation19.pattern1,overlay,2004,0,0,0
+	animation19.pattern2,overlay,-1,500-50000,0,0
+	animation19.pattern3,start,(16)
+	
+	animation20.interval,bind
+	animation20.pattern0,stop,(16)
+	animation20.pattern1,overlay,2005,0,0,0
+	animation20.pattern2,overlay,-1,500-50000,0,0
+	animation20.pattern3,start,(16)
+	
+	animation21.interval,bind
+	animation21.pattern0,stop,(16)
+	animation21.pattern1,overlay,2006,0,0,0
+	animation21.pattern2,overlay,-1,500-50000,0,0
+	animation21.pattern3,start,(16)
+	
+	
+	//googly shine
+	animation30.interval,bind
+	animation30.pattern0,overlay,1028,0,0,0
+	
+	//over the speaker
+	animation38.interval,runonce
+	animation38.pattern0,overlay,1030,0,0,0
+	
+	animation39.interval,runonce
+	animation39.pattern0,overlay,1050,0,0,0
 
 }
 
-surface.append10-18
+surface.append10-19
 {
 	collisionex2,Buttons,polygon,45,50,97,43,101,55,46,61
 	collisionex3,L Button,circle,72,109,9
 	collisionex4,R Button,circle,99,109,9
+	//collisionex5,Left Buttons,polygon,45,50,71,45,77,60,46,61
+	//collisionex6,Right Buttons,polygon,73,45,76,59,104,55,100,44
 	
 	//antenna
 	animation1.interval,runonce
@@ -584,6 +1294,8 @@ kero.cursor
 	mouseup0,Buttons,system:hand
 	mouseup1,L Button,system:arrow
 	mouseup2,R Button,system:arrow
+	mouseup3,Left Buttons,system:hand
+	mouseup4,Right Buttons,system:hand
 }
 
 sakura.tooltip

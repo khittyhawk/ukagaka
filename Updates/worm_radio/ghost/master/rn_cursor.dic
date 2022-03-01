@@ -18,11 +18,13 @@ OnMouseClick
 		if stopfunction == 1
 		{
 			stopfunction = 0
+			LOGGING("wiggling is on")
 			"%(k0)"
 		}
 		else
 		{
 			stopfunction = 1
+			LOGGING("wiggling is off")
 			"%(k0)"
 		}
 	}
@@ -175,13 +177,47 @@ OnMouseDragStart
 		//might be able to make the sail flow in relation to the direction of the mouse, as per reference2
 		//could also do something with x and y coordinates (references 0 and 1)
 		_b = BalloonCheck
-		if _b == 1
+		if _b == 1 && s_dress[1] != 'Googly Eyes'
 		{
+			LOGGING("no googlies")
 		   "\C%(s0)"
 		}
-			
+		elseif _b == 1 && s_dress[1] == 'Googly Eyes'
+		{
+			if goggle_speed == "High"
+			{
+				"\C\0\s[2]"
+			}
+			elseif goggle_speed == "Mild"
+			{
+				"\C\0\s[3]"
+			}
+			else
+			//if goggle_speed == "None"
+			{
+				"\C%(s0)"
+			}
+		}
+		elseif s_dress[1] == 'Googly Eyes'
+		{
+			if goggle_speed == "High"
+			{
+				"\0\s[2]"
+			}
+			elseif goggle_speed == "Mild"
+			{
+				"\0\s[3]"
+			}
+			else
+			//if goggle_speed == "None"
+			{
+				"%(s0)"
+			}
+			LOGGING("googlies, no balloon")
+		}
 		else
 		{
+			LOGGING("no googlies, no balloon")
 		   "%(s0)"
 		}
 	}
@@ -211,12 +247,25 @@ OnMouseDragEnd
      
 		if _b == 1
 		{
-		   "\C%(s0)"
+			if s_dress[1] == 'Googly Eyes'
+			{
+				"\C\0\s[0]"
+			}
+			else
+			{
+				"\C%(s0)"
+			}
 		}
-			
 		else
 		{
-		   "%(s0)"
+		   if s_dress[1] == 'Googly Eyes'
+		   {
+			   "\0\s[0]"
+		   }
+		   else
+		   {
+			   "%(s0)"
+		   }
 		}
 		--
 		"\![get,property,OnMe,currentghost.scope(0).rect]"
@@ -235,7 +284,7 @@ OnMouseDragEnd
 		   "%(k0)"
 		}
 		--
-		"\![get,property,OnMe,currentghost.scope(0).rect]"
+		"\![get,property,OnMe2,currentghost.scope(1).rect]"
 	}
 }
 
@@ -302,16 +351,24 @@ OneWingedAngle
 	_type = reference0
 	if _type == "wiggle"
 	{
-		stopfunction = 0
+		if slowthefdown == 1
+		{
+			stopfunction = 2
+			slowthefdown = 0
+		}
+		else
+		{
+			stopfunction = 0
+		}
 	}
 	elseif _type == "follow"
 	{
 		stopfollow = 0
-		seetime = 0
 	}
 	--
 	"\![get,property,OnWhereRU,system.cursor.pos]"
 }
+
 
 //ghost position and cursor position
 OnWhereRU
@@ -384,6 +441,7 @@ OnAngleBetween
 	angle = ATAN(slope)
 	angle2 = ATAN(remaining)
 	
+	
 	if (x_distance <= 0) && (y_distance < 0)
 	//-x,-y
 	{
@@ -437,6 +495,7 @@ OnAngleBetween
 	{
 		quadrant = "c"
 	}
+
 	
 	--
 	_b = BalloonCheck
@@ -448,8 +507,8 @@ OnAngleBetween
 	else
 	{
 		"%(k0)"
-	}			  
-	//"%(k0)%(x_distance),%(y_distance), %quadrant"
+	}
+
 	//now how do i make the ghost respond to the cursor :thonking:
 }
 
@@ -495,8 +554,7 @@ OnRadAngle
 	//The distance between us is %(h_distance)\n/
 	//that is, at %(x_distance) run and %(y_distance) rise\n/
 	//This makes the slope %(slope) and the angle would thus be %(angle)/
-	"\1\s[10]"
-	--
+
 	_abs = SQRT(POW(angle,2))
 	LOGGING("the absolute value is %(_abs)")
 	if (x_distance <= 0) && (y_distance < 0)
@@ -504,14 +562,10 @@ OnRadAngle
 	{
 		if (x_distance == 0)
 		{
-			nearesttheta = "n"
+			nearesttheta = 39
 		}
 		else
 		{
-			LOGGING("I am in quadrant 2=================")
-			"\i"
-			--
-			quadrant = 2
 			case _abs
 			{
 				//64 = pi        3.14159
@@ -521,27 +575,23 @@ OnRadAngle
 				//61 = pi/2      1.570795
 				when 0-0.261795
 				{
-					"[39]"
+					nearesttheta = 39
 				}
 				when 0.261795-0.654494
 				{
-					//nearesttheta = 62
-					"[38]"
+					nearesttheta = 38
 				}
 				when 0.654494-0.916297
 				{
-					//nearesttheta = 70,72,76
-					"[37]"
+					nearesttheta = 37
 				}
 				when 0.916297-1.308996
 				{
-					//nearesttheta = 63
-					"[36]"
+					nearesttheta = 36
 				}
 				when 1.308996-1.570795
 				{
-					//nearesttheta = 64
-					"[35]"
+					nearesttheta = 35
 				}
 			}
 		}
@@ -552,13 +602,11 @@ OnRadAngle
 		LOGGING("I am in quadrant 1=================")
 		if (y_distance == 0)
 		{
-			nearesttheta = "e"
+			nearesttheta = 11
+			//51
 		}
 		else
 		{
-			"\i"
-			--
-			quadrant = 1
 			case _abs
 			{
 				//61 = pi/2      1.570795
@@ -568,28 +616,23 @@ OnRadAngle
 				//74 = 0 | 2pi   0 | 6.203180
 				when 0-0.261795
 				{
-					//nearesttheta = 74
-					"[51]"
+					nearesttheta = 51
 				}
 				when 0.261795-0.654494
 				{
-					//nearesttheta = 75
-					"[31]"
+					nearesttheta = 31
 				}
 				when 0.654494-0.916297
 				{
-					//nearesttheta = 77
-					"[33]"
+					nearesttheta = 33
 				}
 				when 0.916297-1.308996
 				{
-					//nearesttheta = 60
-					"[34]"
+					nearesttheta = 34
 				}
 				when 1.308996-1.570795
 				{
-					//nearesttheta = 61
-					"[35]"
+					nearesttheta = 35
 				}
 			}
 		}
@@ -600,13 +643,10 @@ OnRadAngle
 		LOGGING("I am in quadrant 4=================")
 		if (x_distance == 0)
 		{
-			nearesttheta = "n"
+			nearesttheta = 24
 		}
 		else
 		{
-			"\i"
-			--
-			quadrant = 4
 			case _abs
 			{
 				//74 = 0 | 2pi   0 | 6.203180
@@ -615,27 +655,23 @@ OnRadAngle
 				//68-69 = 3pi/2  4.712385
 				when 0-0.261795
 				{
-					//nearesttheta = 68,69
-					"[51]"
+					nearesttheta = 51
 				}
 				when 0.261795-0.654494
 				{
-					//nearesttheta = 68,69
-					"[50]"
+					nearesttheta = 50
 				}
 				when 0.654494-0.916297
 				{
-					//nearesttheta = 71
-					"[48]"
+					nearesttheta = 48
 				}
 				when 0.916297-1.308996
 				{
-					//nearesttheta = 73
-					"[47]"
+					nearesttheta = 47
 				}
 				when 1.308996-1.570795
 				{
-					"[44]"
+					nearesttheta = 44
 				}
 			}
 		}
@@ -646,13 +682,10 @@ OnRadAngle
 		LOGGING("I am in quadrant 3=================")
 		if (x_distance == 0)
 		{
-			quadrant = "w"
+			nearesttheta = 44
 		}
 		else
 		{
-			"\i"
-			--
-			quadrant = 3
 			case _abs
 			{
 				//68-69 = 3pi/2  4.712385
@@ -663,28 +696,23 @@ OnRadAngle
 				
 				when 0-0.261795
 				{
-					//nearesttheta = 64
-					"[39]"
+					nearesttheta = 39
 				}
 				when 0.261795-0.654494
 				{
-					//nearesttheta = 65
-					"[40]"
+					nearesttheta = 40
 				}
 				when 0.654494-0.916297
 				{
-					//nearesttheta = 66
-					"[41]"
+					nearesttheta = 41
 				}
 				when 0.916297-1.308996
 				{
-					//nearesttheta = 67
-					"[42]"
+					nearesttheta = 42
 				}
 				when 1.308996-1.570795
 				{
-					//nearesttheta = 68,69
-					"[44]"
+					nearesttheta = 44
 				}
 			}
 		}
@@ -695,14 +723,6 @@ OnRadAngle
 		nearesttheta = "c"
 	}
 	--
-	_b = BalloonCheck
-	
-	if _b == 1
-	{
-		"\C"
-	}
-	else
-	{
-		""
-	}	
+	"%(k0)"
+
 }

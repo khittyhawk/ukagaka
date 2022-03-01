@@ -1,3 +1,21 @@
+                                                  
+//---------------------------------------------------------------                                                 
+//            .--. __  __   ___         __.....__      
+//            |__||  |/  `.'   `.   .-''         '.    
+//        .|  .--.|   .-.  .-.   ' /     .-''"'-.  `.  
+//      .' |_ |  ||  |  |  |  |  |/     /________\   \ 
+//    .'     ||  ||  |  |  |  |  ||                  | 
+//   '--.  .-'|  ||  |  |  |  |  |\    .-------------' 
+//      |  |  |  ||  |  |  |  |  | \    '-.____...---. 
+//      |  |  |__||__|  |__|  |__|  `.             .'  
+//      |  '.'                        `''-...... -'    
+//      |   /                                          
+//      `'-'                                           
+//----------------------------------------------------------------
+
+
+
+
 daychange
 {
 	autoupdates[0] = 0
@@ -16,7 +34,7 @@ daychange
 	//if you told the user yesterday
 	{
 		autoupdates[1] = 2
-		//now you can tell the user toda
+		//now you can tell the user today
 	}
 	elseif updortresult[0] == "success"
 	{
@@ -57,16 +75,26 @@ OnSecondChange
 		OnGloriousSpam
 	}
 	--
-	if stopfollow == 0
+	_b = BalloonCheck
+	if stopfunction == 2 && _b == 0
 	{
-		if seetime < 5
+		stopfunction = 0
+	}
+	--
+	if stopfunction == 0
+	{
+		LOGGING("we are stopppppp")
+		_sec = GETSECCOUNT()
+		_diff = _sec - SHIORI3FW.LastAITalkTime
+		if _diff >= aitalkinterval
 		{
-			seetime++
-		}
-		else
-		{
-			"\![raise,OneWingedAngle,follow]"
-			seetime = 0
+			LOGGING("i can speakkkkkk")
+			if (_sec - SHIORI3FW.LastTalkTime) >= 6
+			{
+				LOGGING("dunno what this thing doessssss")
+
+				slowthefdown = 1
+			}
 		}
 	}
 	--
@@ -411,7 +439,9 @@ OnJacobinMonths
 	
 	_jmonth = (_jcal_passed/30)
 	_jdate = (_jcal_passed%30)
-	
+	LOGGING("=====================")
+	LOGGING(_jmonth)
+	LOGGING("=====================")
 	Jacobin_days = ("décadi","primidi","duodi","tridi","quartidi","quintidi","sextidi","septidi","octidi","nonidi")
 	jacobin_months_all = ("Vendémiaire","Brumaire","Frimaire","Nivôse","Pluviôse","Ventôse","Germinal","Floréal","Prairial","Messidor","Thermidor","Fructidor")
 	
@@ -628,8 +658,8 @@ OnPastEquinox
 	LOGGING("final month is %(_mn)")
 	LOGGING("final day is %(_dy)")
 	
-	_sept_left = 30-_j1
-	_sept_left0 = 30-_j0
+	_sept_left = (30-_j1)+1
+	_sept_left0 = (30-_j0)+1
 	LOGGING("%(_sept_left) is the days left in september and %(_dy) are the days of this current month")
 	LOGGING("%(_sept_left0) is the days left in september and %(_dy) are the days of this current month")
 	_jcal_passed = 0
@@ -697,6 +727,7 @@ OnPastEquinox
 		{
 			//if it is the equinox
 			_jcal_passed = 0
+			_yearsince = (_yr-1791)
 		}
 	}
 	--
@@ -1039,4 +1070,73 @@ ishebrewholiday
 		"%(s0)Tonight is the %(Ord(ishanu)) night of %(hrom).\w6 %(hbless)\n"
 		hgreet = 1
 	}
+}
+
+
+OnES
+{
+	_year = GETTIME()[0]
+	
+	if _argv[0] != ""
+	{
+		_year = _argv[0]
+	}
+	
+	regex_spr = "\s+(\d{4}).*3\/(\d{2,3})\s{0,3}(\d+):"
+	regex_sum = "\s+(\d{4}).*6\/(\d{2,3})\s{0,3}(\d+):"
+	regex_aut = "\s+(\d{4}).*9\/(\d{2,3})\s{0,3}(\d+):"
+	regex_win = "\s+(\d{4}).*12\/(\d{2,3})\s{0,3}(\d+):"
+	
+	_file = "var\\srevents.cgi"
+	_buff = ""
+	
+	_spr = ""
+	_sum = ""
+	_aut = ""
+	_win = ""
+	
+	FCHARSET(1)
+	
+	if FOPEN(_file,'r')
+	{
+		for _buff = FREAD(_file); _buff != -1; _buff = FREAD(_file)
+		{
+			if RE_SEARCH (_buff, regex_spr)
+			{
+				//spring equinox
+				if TOINT(RE_GETSTR[1]) == _year
+				{
+					_spr = RE_GETSTR[2]
+				}
+			}
+			if RE_SEARCH (_buff, regex_sum)
+			{
+				//summer solstice
+				if TOINT(RE_GETSTR[1]) == _year
+				{
+					_sum = RE_GETSTR[2]
+				}
+			}
+			if RE_SEARCH (_buff, regex_aut)
+			{
+				//autumn equinox
+				if TOINT(RE_GETSTR[1]) == _year
+				{
+					_aut = RE_GETSTR[2]
+				}
+			}
+			if RE_SEARCH (_buff, regex_win)
+			{
+				//winter solstice
+				if TOINT(RE_GETSTR[1]) == _year
+				{
+					_win = RE_GETSTR[2]
+				}
+			}
+		}
+	}
+	--
+	FCLOSE(_file)
+	--
+	astro_events = (_spr,_sum,_aut,_win)
 }
