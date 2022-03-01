@@ -5,9 +5,9 @@ type,balloon
 name,broadcast
 craftman,Worm
 craftmanw,Worm
-craftmanurl,tbd
+craftmanurl,https://khittyhawk.github.io/ukagaka/
 
-homeurl,tbd
+homeurl,https://khittyhawk.github.io/ukagaka/Updates/broadcast/
 
 
 //readme,filename  //for specialized balloons
