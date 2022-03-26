@@ -1,6 +1,6 @@
-Update ##-##-22
+Update 03-26-22
 
--Something special should happen on April Fool's Day!
+-Something special should happen on April Fools Day!
 -included more Jacobin calendar icons
 -You can now set a custom talk rate by spelling out numerals (e.g., "three minutes" and "3 minutes" should both parse correctly)
 -Added more dialogue

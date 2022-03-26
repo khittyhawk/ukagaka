@@ -181,7 +181,7 @@ file,ghost/master/Dev_Tools/rn_text.dicd65fb61d724820806933a8b096f3e4d0size=71
 file,ghost/master/Dev_Tools/rn_todo.dicaaca6819eb13327fd2712a5a560d49b7size=32181date=2022-01-31T14:54:38
 file,ghost/master/censored.pnga36bc6c2fd72087c21344f854f5479ccsize=186date=2021-11-13T12:33:10
 file,ghost/master/censored0.png6300169e6f54b8b051964f842864b3a0size=217date=2021-11-18T01:37:02
-file,ghost/master/changelog.txt94682d1289ad7ddafd969e5254a08836size=3105date=2022-03-26T17:26:47
+file,ghost/master/changelog.txtc2b2d005cb625d597eeafb9d61ca00absize=3104date=2022-03-26T17:46:26
 file,ghost/master/descript.txtbda56ae6a4142c6e4deccb2152c0ca3asize=600date=2021-12-25T15:20:05
 file,ghost/master/rn_bonus.dic1ddee8e296182f623b3c9d1467c6247dsize=36532date=2021-12-18T12:52:59
 file,ghost/master/rn_bootclose.dicbe2967ccb957e94830f4fb1fdc44c66asize=12856date=2022-02-18T22:04:11
