@@ -1,3 +1,13 @@
+Update ##-##-22
+
+-Something special should happen on April Fool's Day!
+-included more Jacobin calendar icons
+-You can now set a custom talk rate by spelling out numerals (e.g., "three minutes" and "3 minutes" should both parse correctly)
+-Added more dialogue
+
+
+---
+
 Update 02-28-22
 
 -Tweaked the to-do list. You can now send completed items to the bottom of the list.

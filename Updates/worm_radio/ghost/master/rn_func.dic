@@ -135,7 +135,7 @@ OnFailFail
 	}
 	elseif ASEARCH(_ntw,ntw) == 0
 	{
-		" It cries, and it cries, and its arms cast forth to reach us, but worlds we inhabit as too askew."
+		" It cries, and it cries, and its arms cast forth to reach us, but the worlds we inhabit are too askew."
 	}
 	elseif ASEARCH(_ntw,ntw) == 1
 	{
@@ -151,7 +151,7 @@ OnFailFail
 	}
 	elseif ASEARCH(_ntw,ntw) == 4
 	{
-		" The beast it will feed has been slaked by anothere"
+		" The beast it will feed has been slaked by another."
 	}
 	elseif ASEARCH(_ntw,ntw) == 5
 	{

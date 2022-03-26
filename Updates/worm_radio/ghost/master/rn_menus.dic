@@ -751,7 +751,14 @@ OnChangeTalk
 				for _var = 0; _var < _len; _var++
 				{
 					_sect = _newinput[_var]
-					if "min" _in_ _sect
+					LOGGING(_sect)
+					LOGGING(TOINT(isint(_sect)))
+					LOGGING(ISINTSTR(isint(_sect)))
+					if ISINTSTR(isint(_sect)) == 1
+					{
+						_rrate = isint(_sect)
+					}
+					elseif "min" _in_ _sect
 					{
 						_rate = "*60"
 						_time = "minutes"
@@ -770,11 +777,7 @@ OnChangeTalk
 					{
 						_time = "seconds"
 					}
-					elseif ISINTSTR(_sect)
-					{
-						_rrate = _sect
-					}
-					elseif ISREALSTR(_sect)
+					elseif ISINTSTR(_sect) || ISREALSTR(_sect)
 					{
 						_rrate = _sect
 					}

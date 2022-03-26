@@ -66,7 +66,8 @@ OnTranslate
 		}
 	}
 	--
-	
+	_talk = REPLACE(_talk, "1_q", "%(CHR(34))\f[color,50,25,14]")
+	_talk = REPLACE(_talk, "o_q", "\f[color,default]%(CHR(34))")
 	_thismoon = moonmoon[0]
 	_talk = REPLACE(_talk, " reload", " \_a[OnRefresh]reload\_a")
 	_talk = REPLACE(_talk, "online_mode", "\_a[plusline]Online Mode\_a")
@@ -583,50 +584,87 @@ prons
 veg
 {
 	"acorn squash"
+	"amaranth"
+	"amaryllis"
 	"apple"
+	"autumn crocus"
+	"azarole"
+	"baccharis"
+	"barley"
 	"barrel"
 	"beetroot"
+	"black salsify"
 	"buckwheat"
 	"carrot"
-	"carrot1"
 	"cattle turnip"
 	"cauliflower"
 	"cedar tree"
 	"celery"
+	"chequer tree"
+	"chestnut"
 	"chicory"
 	"chili pepper"
 	"cypress tree"
+	"dibber"
+	"donkey"
 	"eggplant"
+	"endive"
+	"fig"
 	"four o'clock flower"
 	"goose"
 	"gorse"
+	"grapes"
+	"harrow"
 	"heather"
 	"heliotrope"
 	"hemp"
 	"honey"
+	"horse"
 	"horseradish"
+	"impatiens"
 	"ivy"
+	"jerusalem artichoke"
 	"juniper"
-	"lambslettuce"
 	"lambs lettuce"
+	"leadwort"
+	"madder"
+	"mignionette"
 	"medlar"
 	"olive"
+	"orange"
+	"ox"
+	"parsnip"
+	"peach"
 	"pear"
+	"pheasant"
 	"pickaxe"
 	"pig"
+	"pistachio"
+	"pomegranate"
+	"potato"
 	"potiron"
-	"potiron1"
+	"primrose"
 	"pumpkin"
-	"pumpkin1"
+	"quince"
 	"rampion"
+	"roller"
+	"saffron"
+	"salsify"
 	"sauvin juniper"
+	"service tree"
+	"skirret"
+	"strawflower"
 	"sugar maple"
 	"sunflower"
+	"tomato"
 	"truffle"
+	"tuberous pea"
+	"turkey"
+	"turnip"
+	"vat"
 	"water caltrop"
-	"water caltrop1"
-	"water caltrop2"
-	"water caltrop3"
+	"watercress"
+	"wine press"
 	"winter squash"
 }
 
@@ -635,7 +673,7 @@ no_sun
 	switch day
 	{
 		{
-			//no day 0
+			"no day 0"
 		}
 		{
 			//day one
@@ -1462,6 +1500,33 @@ OnRomanNumerals
 	_thousplace = ("","M","MM","MMM")
 	
 	_output = _thousplace[_thous] + _hundplace[_hunds] + _tensplace[_tens] + _onesplace[_ones]
+	_output
+}
+
+isint
+{
+	_integers = ("zero","one","two","three","four","five","six","seven","eight","nine","ten","eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen","nineteen","twenty")
+	_bigints = ("thirty","forty","fifty","sixty","seventy","eighty","ninety")
+	//if the user plugs in a number that's not one of these, that's on them
+	_output = ""
+	_num = _argv[0]
+	for _i=0; _i < ARRAYSIZE(_integers); _i++
+	{
+		_int = _integers[_i]
+		if STRSTR(_num,_int,0) != -1
+		{
+			_output = _i
+		}
+	}
+	--
+	for _j=0; _j < ARRAYSIZE(_bigints); _j++
+	{
+		_int = _bigints[_j]
+		if STRSTR(_num,_int,0) != -1
+		{
+			_output += 30 + (_j*10)
+		}
+	}
 	_output
 }
 

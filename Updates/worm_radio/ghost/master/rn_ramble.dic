@@ -23,7 +23,7 @@ OnAiTalk
 		_talk = REPLACE(_talk,"{","(")
 		_talk = REPLACE(_talk,"}",")")
 		TOSTR(EVAL(CHR(0x22) + _talk + CHR(0x22)))
-		lastTalk = ChainTalk
+		lastTalk = _talk
 	}
 	--
 	lastTalk
@@ -43,11 +43,11 @@ RandomTalk
 	{
 		if GETTIME[1] == 10 && GETTIME[2] == 31 && heardwelles != 1
 		{
-			"%{s0}We know now\w4 that in the early years of the twentieth century\w6 this world was being watched closely by intelligences greater than man’s\w5 and yet as mortal as his own.\w6\n\nWe know now\w5 that as human beings busied themselves about their various concerns\w7 they were scrutinized and studied\w5, perhaps almost as narrowly as a man with a microscope might scrutinize\w3 the transient creatures that swarm and multiply in a drop of water.\w5\w5\e:chain=well_s"
+			"%(s0)We know now\w4 that in the early years of the twentieth century\w6 this world was being watched closely by intelligences greater than man’s\w5 and yet as mortal as his own.\w6\n\nWe know now\w5 that as human beings busied themselves about their various concerns\w7 they were scrutinized and studied\w5, perhaps almost as narrowly as a man with a microscope might scrutinize\w3 the transient creatures that swarm and multiply in a drop of water.\w5\w5\e:chain=well_s"
 		}
 		elseif GETTIME[1] == 4 && GETTIME[2] == 1 && heardsnek != 1
 		{
-			//
+			"%(s0)Lost in the Desert\_w[2000]\cSo,\w7 there's a man crawling through the desert...\w8\w8\e:chain=feghoot"
 		}
 		else
 		{
@@ -95,6 +95,7 @@ speakboy : nonoverlap_pool
 			}
 		}
 		"%{s0}Who?\w5\w5%{k0}Who's on first.\w5.\e"
+		"%{k0}Do you see the way the teeth grow?\w5 Like wild roses...\w6%{s0}Wild?\w6 Or merely feral?\w6"
 		"%{s0}What?\w5\w5%{k0}%(lps(4))the second baseman?\w4\e"
 		"%{s0}I don't know.\w5\w5%{k0}He's covering third.\w4\e"
 		"%{s0}The juice.\w4%{k0}Of fruit?\w4%{s0}\nOf meat.\w5\e"
@@ -198,7 +199,10 @@ speakboy : nonoverlap_pool
 	"%{a0}Stresslessness\w5, made of spreading such feelings to another instead.\e"
 	"%{a0}Plutonia\e"
 	"%{a0}Après moi\w4, le déluge.\e"
+	"%{a0}%(speed(0.5))Did you feel that?\w5 The way the world just stuttered?\w6\e"
 	"%{a0}It is an anomaly.\e"
+	"%{a0}You really demand I speak at %(i)your%(i0)\w8\w8 whims?\w8\e"
+	"%{a0}I didn't see it\w6 because I didn't know what I was looking for.\w6\e"
 	"%{a1}Defenestration of plague...\e"
 	"%{a0}Don't dead open inside\e"
 	"%{a1}If you're going to be a thief\w3, don't be a coward.\w5 Steal from the powerful.\w5 Don't merely steal from the powerless and claim it's their fault for not taking the risk to lose what little they have.\w5\e"
@@ -207,7 +211,10 @@ speakboy : nonoverlap_pool
 	_pro = prons
 	"%{a0}Who %(_pro[3]) %(_pro[0])? Who %(_pro[3]) %(_pro[0])? Who %(_pro[3]) %(_pro[0])?\e"
 	"%{a0}Angles of Incidence and Experience.\e"
+	"%{a0}Greener pistachios\w8\e"
+	"%{a0}A nightmare.\w8 A phantasm danger only,\w5 capable of inducing dread from the most mundane or fantastical occurrences.\w6 Incapable of true harm.\w8\e"
 	"%{a0}Katerina\w2 Katerina\e"
+	"%{a0}%(lps(3))Things may go bad if you run,\w5 but they will be worse if you stay%(lps(3))\w8\e"
 	"%{a0}Fixed.\w6\w6 As in 'immovable',\w6 fixed in place.\w6 Cannot be separated.\e"
 	"%{a0}The lion and the unicorn went to sea\w3, in a beautiful pea-green boat.\e"
 	"%{a0}'Nevada' means 'snowy' and 'Las Vegas' means 'the meadows'.\e"
@@ -241,6 +248,7 @@ speakboy : nonoverlap_pool
 	"%{a0}They chitter chatter chitter chatter on endlessly\w3, don't they?\e"
 	"%{a0}All ghosts are liars.\e"
 	"%{a1}Mafia don cuckoo mom\w5\e"
+	"%{a0}One\w5 Two\w5 One\w5 Two\w5 Three\w5 Four\w5 Five\w5 Six\w5 Seven\w5 Ten\w5 Eleven\w5 Ten\w5 Eight\w8\e"
 	"%{a0}WILL.\w8\w8\w8\w8\w8 IT.\w8\w8\w8\w8\w8 WORK?\w8\w8\e"
 	if CHAIN.IDName != "well_s"
 	{
@@ -255,6 +263,10 @@ speakboy : nonoverlap_pool
 		{
 			"\w8\w8\n\n I just thought that was neat."
 		}
+		else
+		{
+			""
+		}
 		--
 		"\w5\e"	
 	}
@@ -267,6 +279,7 @@ speakboy : nonoverlap_pool
 	"%{a0}A thief! A thief!\w4 A dirty sneak-thief!\e"
 	"%{s0}Smells like old\w3, rotten blood under damp floorboards.\e"
 	"%{a0}%(i)Heretic.%(i0)"
+	"%{a0}Have you seen the way time moves the moment ones' eyes have been sewn shut?\w8\e"
 	"%{a0}Bald eagles cry like seagulls.\w6\w6 Red-tailed hawks are the ones that screech.\e"
 	"%{a0}%(i)kallisti, motherfucker.%(i0)"
 	{
@@ -275,6 +288,10 @@ speakboy : nonoverlap_pool
 		if RAND(100) < 50
 		{
 			"\w5\w5 Potatoes are stems\w4, you know."
+		}
+		else
+		{
+			""
 		}
 		--
 		"\w5\e"
@@ -293,6 +310,7 @@ speakboy : nonoverlap_pool
 	"%{a0}Well\w6, it is definitely saliva.\e"
 	"%{s0}Imagine staring at jewelry so long you meld through a wall.\e"
 	"%{a0}Advertisement.\w5\w5 Adversity.\w5\w5\e"
+	"%{a0}She could only break the curse on her brothers if she performed this work and made no sound for the full seven years,\w5 so she sewed her lips shut and drank only soup.\w8\e"
 	"%{a1}Hmmmmmmmmmmmmmmm - \_qbeep\_q\e"
 	"%{s0}What life that blooms when a great thing dies!\w5\e"
 	"%{s0}Tell me of worlds unending\w5, reflected in endless mirrors.\w5\e"

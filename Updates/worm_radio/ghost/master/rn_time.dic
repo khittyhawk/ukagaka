@@ -42,6 +42,11 @@ daychange
 		//there is an update in queue
 	}
 	--
+	if heardsnek == 1
+	{
+		heardsnek = 0
+	}
+	--
 	if get_j == "On"
 	{
 		OnJacobinMonths

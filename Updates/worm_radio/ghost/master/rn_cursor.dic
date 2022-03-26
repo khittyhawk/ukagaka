@@ -80,7 +80,7 @@ MouseDoubleClickKero
 		}
 		else
 		{
-			"-bzzt-"
+			"\b2-bzzt-"
 		}
 		
 	}
