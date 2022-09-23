@@ -96,38 +96,6 @@ table p
 }
 
 
-
-/* td */
-/* { */
-	/* border: solid; */
-/* } */
-
-
-/* .grid */
-/* { */
-	/* columns: 2; */
-	/* column-gap: 40px; */
-	/* column-rule-style: solid; */
-	/* column-rule-color: powderblue; */
-	/* border: 2px solid; */
-/* } */
-
-
-/* .grid div */
-/* { */
-	/* width: 50%; */
-	/* margin: 10px; */
-	/* padding: 10px; */
-	/* border: 2px solid powderblue; */
-}
-
-/* .grid p */
-/* { */
-	/* outline-style: dotted; */
-/* } */
-
-
-
 footer
 {
 	width: 95%;
@@ -147,50 +115,6 @@ footer
 	position: fixed;
 }
 
-/* .topnav */
-/* { */
-	/* position: fixed; */
-	/* border: default; */
-/* } */
-
-/* .tab */
-/* { */
-	/* overflow: hidden; */
-/* } */
-
-/* .tab button */
-/* { */
-  /* background-color: inherit; */
-  /* float: left; */
-  /* border: none; */
-  /* outline: none; */
-  /* cursor: pointer; */
-  /* padding: 14px 16px; */
-  /* transition: 0.3s; */
-/* } */
-
-
-/* .tabcontent */
-/* { */
-  /* display: none; */
-  /* padding: 6px 12px; */
-  /* border: 1px solid #ccc; */
-  /* border-top: none; */
-/* } */
-
-/* article */
-/* { */
-	/* width: 50%; */
-	/* font-size: vmax; */
-/* } */
-
-aside
-{
-  float: right;
-  width: 50%;
-  padding: 10px;
-}
-
 h1
 {
 	text-align: center;
@@ -203,13 +127,4 @@ h3
 	margin: 0;
 	padding: 0;
 }
-
-/* footer */
-/* { */
-	/* width:100%; */
-	/* height:30px; */
-	/* background-color:#666699; */
-	/* opacity:15%; */
-	/* float: bottom; */
-/* } */
 
